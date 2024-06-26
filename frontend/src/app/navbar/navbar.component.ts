@@ -19,23 +19,23 @@ export class NavbarComponent implements OnInit{
       code:"en-uk",
       image:"assets/united-kingdom.png"
     },
-    {
+    /*{
       name:"Français",
       code:"fr-fr",
       image:"assets/france.png"
-    }
+    }*/
   ]
-  constructor(
+ constructor(
     private router : Router,
     private route : ActivatedRoute,
-    public translate: TranslateService,
-    ) { 
+    /*public translate: TranslateService,*/
+    ) {  /*
     router.events.subscribe((url:any) => {
       if (url instanceof NavigationEnd){
       this.currentUrl = url.url;
     }
     translate.use(this.current_language)
-  });
+  });*/
   }
 
   ngOnInit(): void {
@@ -58,11 +58,11 @@ export class NavbarComponent implements OnInit{
     if(language == 'fr-fr'){
       localStorage.setItem('language','fr-fr');
       this.current_language = 'fr-fr';
-      this.translate.use('fr-fr');
+    //  this.translate.use('fr-fr');
     } else { // 'en-uk' + default
       localStorage.setItem('language','en-uk');
       this.current_language = 'en-uk';
-      this.translate.use('en-uk');
+     // this.translate.use('en-uk');
     }
   }
 
