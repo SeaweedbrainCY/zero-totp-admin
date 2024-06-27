@@ -4,9 +4,6 @@
       <a class="navbar-item" (click)="navigateToRoute('/')" >
        <img src="assets/logo_zero_totp_light.png" alt="Logo of Zero TOTP">
       </a>
-      <a class="navbar-item"  href="#" >
-        <img src="assets/logo_zero_totp_light.png" alt="Logo of Zero TOTP">
-       </a>
   
       <a role="button" class="navbar-burger"  id="navbarBurger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" (click)="isNavbarExpanded = !isNavbarExpanded" [ngClass]="{'is-active': isNavbarExpanded}" >
         <span aria-hidden="true"></span>
@@ -19,37 +16,6 @@
       <div class="navbar-start"  >
         <a class="navbar-item" (click)="navigateToRoute('vault')" [ngClass]="{'has-text-weight-bold':currentUrl == '/vault'}">
           {{ 'my_vault' | translate }}
-        </a>
-        <a class="navbar-item" (click)="navigateToRoute('vault/add')" [ngClass]="{'has-text-weight-bold':currentUrl == '/vault/add'}">
-          {{ 'navbar.add' | translate }}
-        </a>
-        <a class="navbar-item" (click)="navigateToRoute('preferences')" [ngClass]="{'has-text-weight-bold':currentUrl == '/preferences'}">
-          {{ 'navbar.preferences' | translate }}
-        </a>
-        <a class="navbar-item" (click)="navigateToRoute('account')" [ngClass]="{'has-text-weight-bold':currentUrl == '/account'}">
-          {{ 'navbar.account' | translate }}
-        </a>
-        <a class="navbar-item" (click)="navigateToRoute('admin')" [ngClass]="{'has-text-weight-bold':currentUrl == '/admin'}" >
-          {{ 'navbar.admin' | translate }}
-        </a>
-      </div>
-      <div class="navbar-start"  >
-        <a class="navbar-item" (click)="changeLocation('#totp')" >
-         {{ 'navbar.how' | translate }}
-        </a>
-        <a class="navbar-item" (click)="changeLocation('#why-zero-totp')" >
-          {{ 'navbar.why' | translate }}
-        </a>
-        <a class="navbar-item" (click)="changeLocation('#never-lose-data')">
-          {{ 'navbar.lose' | translate }}
-        </a>
-        <a class="navbar-item" (click)="changeLocation('#backup-plan')">
-          {{ 'navbar.backup' | translate }}
-        </a>
-      </div>
-      <div class="navbar-start"  >
-        <a class="navbar-item"  (click)="navigateToRoute('vault')">
-          {{ 'navbar.vault_backup' | translate }}
         </a>
       </div>
   
