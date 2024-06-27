@@ -1,4 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import '../node_modules/bulma/bulma.scss';
 
 
+:root {
+    --bulma-primary-h: 206deg;
+    --bulma-primary-s: 74%;
+    --bulma-primary-l: 63%;
+    --bulma-link-h: 206deg;
+    --bulma-link-s: 74%;
+    --bulma-info-h: 206deg;
+    --bulma-info-s: 74%;
+    --bulma-info-l: 63%;
+    --bulma-success-h: 137deg;
+    --bulma-success-s: 26%;
+    --bulma-success-l: 51%;
+    --bulma-warning-h: 43deg;
+    --bulma-warning-l: 67%;
+    --bulma-danger-h: 11deg;
+    --bulma-danger-s: 99%;
+    --bulma-danger-l: 64%;
+  }
