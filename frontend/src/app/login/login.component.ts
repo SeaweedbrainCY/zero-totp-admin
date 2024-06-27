@@ -1,12 +1,12 @@
 import { Component,OnInit } from '@angular/core';
 import { faEnvelope, faLock,  faCheck, faXmark, faFlagCheckered, faCloudArrowUp, faBriefcaseMedical, faEye, faEyeSlash, faKey } from '@fortawesome/free-solid-svg-icons';
-/*import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../common/api-service/api-service.service';
 import { Utils } from '../common/Utils/utils.service';
 
 import { ToastrService } from 'ngx-toastr';
-import { TranslateService } from '@ngx-translate/core';*/
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -38,13 +38,13 @@ export class LoginComponent implements OnInit {
   remember=false;
 
   constructor(
-   // private http: HttpClient,
-    //private router: Router,
-    //private route: ActivatedRoute,
+     private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute,
     //private crypto:Crypto,
-    //private translate: TranslateService,
-    //private toastr: ToastrService,
-    //private utils: Utils,
+    private translate: TranslateService,
+    private toastr: ToastrService,
+    private utils: Utils,
     ) {
     }
 
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
       
     }
 
-    /*
+  
 
   
   
@@ -132,6 +132,6 @@ export class LoginComponent implements OnInit {
 
  
 
-*/
+
  
 }

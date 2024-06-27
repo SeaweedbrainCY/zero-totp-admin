@@ -39,7 +39,7 @@ export class MissingTranslationHelper implements MissingTranslationHandler {
     AppRoutingModule,
     FontAwesomeModule,
     FormsModule,
-    /*ToastrModule.forRoot(),
+    ToastrModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -50,19 +50,19 @@ export class MissingTranslationHelper implements MissingTranslationHandler {
         provide: MissingTranslationHandler,
         useClass: MissingTranslationHelper
       },
-    }),*/
+    }),
     HttpClientModule,
   ],
   providers: [Crypto, Utils],
   bootstrap: [AppComponent]
 })
 export class AppModule { 
-/*
+
   constructor(translate: TranslateService) {
     // translate.addLangs(['fr-fr']); will come soon
     translate.setTranslation('en-uk', defaultLanguage);
     translate.setDefaultLang('en-uk');
-    /* french translation will come soon
+    /* french translation will come soon*/
     translate.use('en-uk');
-  } */
+  } 
 }
