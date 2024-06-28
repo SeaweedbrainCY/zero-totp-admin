@@ -1,12 +1,17 @@
 <section class="hero is-halfheight mt-6" style="min-height: 70vh;">
-    <div class="hero-body is-flex is-flex-direction-column	is-fullheight">
+    <div class="hero-body is-flex is-flex-direction-column is-justify-content-center	is-fullheight">
       <div class="has-text-centered	is-full is-flex is-justify-content-center block">
-        <p class="block"><span class="title is-1 is-full has-text-centered has-text-info has-text-weight-bold">
-            {{ 'login.title' | translate }}</span><br />
+        <div class="is-flex is-justify-content-center is-flex-direction-column">
+          
+        <p class="block"><span class="title is-1 is-full has-text-centered has-text-danger has-text-weight-bold">
+            {{ 'login.title' | translate }}</span><br /> </p>
+            <article class="message is-warning p-6">
+              <div class="message-body">
+                {{ 'login.subtitle' | translate }}
+              </div>
+            </article>
   
-          <span class="has-text-weight-bold has-text-grey">{{ 'login.subtitle' | translate }}</span>
-  
-        </p>
+       </div> 
       </div>
       <div class="has-text-centered columns p-5" *ngIf="warning_message != ''">
         <div class="notification {{warning_message_color}} column is-6 is-offset-3 ">
@@ -16,9 +21,9 @@
       <div class="has-text-centered	is-full ">
         <div class="field block">
           <p class="control has-icons-left has-icons-right">
-             <input class="input " type="email" placeholder="{{'email' | translate}}" name="email" [(ngModel)]="email"/>
+             <input class="input " type="text" placeholder="{{'username' | translate}}" name="username" [(ngModel)]="username"/>
             <span class="icon is-small is-left">
-              <fa-icon [icon]="faEnvelope"></fa-icon>
+              <fa-icon [icon]="faUser"></fa-icon>
             </span>
             <span class="icon is-small is-right">
               <fa-icon [icon]="faCheck"></fa-icon>
@@ -26,7 +31,7 @@
           </p>
          
         </div>
-        <div class="field is-full is-flex is-justify-content-center has-addons">
+        <div class="field is-full is-flex is-justify-content-center has-addons mt-4">
           <p class="control has-icons-left has-icons-right">
          <input class="input block" type="{{isPassphraseVisible ? 'text' : 'password'}}" placeholder="{{'passphrase' | translate}}" name="password" [(ngModel)]="password" (keyup.enter)="login()">
             <span class="icon is-small is-left">
@@ -40,7 +45,7 @@
             
           </div>
         </div>
-        <div class="control has-text-left" style="margin-top: -20px;">
+        <div class="control has-text-left" >
           <label class="checkbox">
             <input type="checkbox" name="remember" [(ngModel)]="remember">
             {{ 'login.remember' | translate }} 

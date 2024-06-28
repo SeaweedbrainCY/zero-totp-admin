@@ -19,7 +19,10 @@
       "vault_backup": "Vault backup",
       "lang": {
         "suggest": "Suggest Others"
-      }
+      },
+      "admin_dash": "Admin Dashboard",
+      "users": "Users",
+      "login_button" : "Login"
     },
     "logout": "Logout",
     "close": "Close",
@@ -38,36 +41,14 @@
     "passphrase": "Passphrase",
     "cancel": "Cancel",
     "login": {
-      "title": "It's time to open your vault !",
-      "subtitle": "This time, you do the magic 🪄",
+      "title": "Zero-TOTP Admin Dashboard",
+      "subtitle": "This dashboard should not be exposed to the internet.",
       "authorize": "Authorize",
       "open_button": "Open my vault",
       "rescue": {
         "part1": "🛟 Troubles logging to your account ? Open a backup on our ",
         "strong": "ultra stable plateform",
         "part2": "Rescue Zero-TOTP"
-      },
-      "backup": {
-        "open_button": "Open a backup",
-        "subtitle": "You can open a Zero-TOTP vault saved on your laptop 💻",
-        "vault_backup": " Vault backup",
-        "unsecure": {
-          "popup": {
-            "title": "You backup may be not secure",
-            "strong": "The verification of the authenticity of your vault failed",
-            "desc": "Your vault may have been modified by someone else or it does not come from Zero-TOTP.",
-            "strong2": "Importing an unsecure backup may lead to security issues and should not be trusted",
-            "button": {
-              "cancel": "Return to safety"
-            },
-            "continue": "I trust this backup"
-          }
-        },
-        "open": {
-          "popup": {
-            "title": "Unlock your vault"
-          }
-        }
       },
       "errors": {
         "session_killed": "For your safety, you have been disconnected because you have reloaded or closed the tab",

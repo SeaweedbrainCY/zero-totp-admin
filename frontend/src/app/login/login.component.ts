@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { faEnvelope, faLock,  faCheck, faXmark, faFlagCheckered, faCloudArrowUp, faBriefcaseMedical, faEye, faEyeSlash, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock,  faCheck, faXmark, faFlagCheckered, faCloudArrowUp, faBriefcaseMedical, faEye, faEyeSlash, faKey } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../common/api-service/api-service.service';
@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  faEnvelope=faEnvelope;
+  faUser=faUser;
   faLock=faLock;
   faCheck=faCheck;
   faXmark=faXmark;
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   faCloudArrowUp=faCloudArrowUp;
   faEye=faEye;
   faEyeSlash=faEyeSlash;
-  email:string = "";
+  username:string = "";
   faBriefcaseMedical=faBriefcaseMedical;
   password:string = "";
   hashedPassword:string = "";
@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
      private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    //private crypto:Crypto,
     private translate: TranslateService,
     private toastr: ToastrService,
     private utils: Utils,
@@ -56,30 +55,13 @@ export class LoginComponent implements OnInit {
 
   
 
-  
-  
-
-  checkEmail() : boolean{
-    const emailRegex = /\S+@\S+\.\S+/;
-    if(!emailRegex.test(this.email)){
-      this.translate.get("login.errors.email").subscribe((translation)=>{
-      this.utils.toastError(this.toastr, translation, "");
-    });
-      return false;
-    } else {
-      return true;
-    }
-  }
 
   
   login(){
-    if(this.email == "" || this.password == ""){
+    if(this.username == "" || this.password == ""){
       this.translate.get("login.errors.empty").subscribe((translation)=>{
         this.utils.toastError(this.toastr,translation,"");
      });
-      return;
-    }
-    if(!this.checkEmail()){
       return;
     }
     this.isLoading = true;
@@ -93,7 +75,7 @@ export class LoginComponent implements OnInit {
 
   postLoginRequest(){
     const data = {
-      email: this.email,
+      username: this.username,
       password: this.password
     }
     this.http.post(ApiService.API_URL+"/login",  data, {withCredentials: true, observe: 'response'}).subscribe((response) => {
