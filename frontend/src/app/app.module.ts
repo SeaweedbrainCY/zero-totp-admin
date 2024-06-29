@@ -15,6 +15,7 @@ import { Utils } from './common/Utils/utils.service';
 import { HttpClientModule,HttpClient } from '@angular/common/http';
 import defaultLanguage from "./../assets/i18n/en-uk.json";
 import { ToastrModule } from 'ngx-toastr';
+import { OverviewComponent } from './overview/overview.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -32,7 +33,8 @@ export class MissingTranslationHelper implements MissingTranslationHandler {
     AppComponent,
     LoginComponent,
     FooterComponent,
-    NavbarComponent
+    NavbarComponent,
+    OverviewComponent
   ],
   imports: [
     BrowserModule,

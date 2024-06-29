@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -28,14 +27,14 @@ export class NavbarComponent implements OnInit{
  constructor(
     private router : Router,
     private route : ActivatedRoute,
-    /*public translate: TranslateService,*/
-    ) {  /*
+    public translate: TranslateService,
+    ) {  
     router.events.subscribe((url:any) => {
       if (url instanceof NavigationEnd){
       this.currentUrl = url.url;
     }
     translate.use(this.current_language)
-  });*/
+  });
   }
 
   ngOnInit(): void {

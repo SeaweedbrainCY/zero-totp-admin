@@ -15,7 +15,10 @@
   
     <div id="navbarBasicExample" class="navbar-menu" [ngClass]="{'is-active': isNavbarExpanded}" >
       <div class="navbar-start"  >
-        <a class="navbar-item" (click)="navigateToRoute('vault')" [ngClass]="{'has-text-weight-bold':currentUrl == '/vault'}">
+        <a class="navbar-item" (click)="navigateToRoute('overview')" [ngClass]="{'has-text-weight-bold':currentUrl == '/overview'}">
+          {{ 'navbar.overview' | translate }}
+        </a>
+        <a class="navbar-item" (click)="navigateToRoute('users')" [ngClass]="{'has-text-weight-bold':currentUrl == '/vault'}">
           {{ 'navbar.users' | translate }}
         </a>
       </div>
