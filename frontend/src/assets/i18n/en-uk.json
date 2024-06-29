@@ -1,83 +1,84 @@
 {
-    "404": {
-      "oops": "Oops!",
-      "not_found": "Page not found.",
-      "desc": "The page you’re looking for doesn’t exist.",
-      "go_home": "Go Home"
-    },
-    "seconds": "seconds",
-    "my_vault": "My vault",
-    "navbar": {
-      "add": "Add a new code",
-      "preferences": "Preferences",
-      "account": "Account",
-      "admin": "Admin",
-      "how": " How TOTP works",
-      "why": "Why Zero-TOTP",
-      "lose": "Never lose your data",
-      "backup": "Backup plan",
-      "vault_backup": "Vault backup",
-      "lang": {
-        "suggest": "Suggest Others"
+  "404": {
+    "desc": "The page you’re looking for doesn’t exist.",
+    "go_home": "Go Home",
+    "not_found": "Page not found.",
+    "oops": "Oops!"
+  },
+  "about": "About",
+  "cancel": "Cancel",
+  "changelog": "Changelog",
+  "close": "Close",
+  "email": "Email",
+  "footer": {
+    "bug": "Report a bug",
+    "opensource": "Open-Source Component"
+  },
+  "loading": "Loading ...",
+  "log_in": "Log in",
+  "login": {
+    "authorize": "Authorize",
+    "errors": {
+      "account_blocked": "Your account has been blocked for security reasons. Please contact the administrator at developer[at]zero-totp.com to unlock it",
+      "confirm_passphrase": "To continue, please confirm your passphrase",
+      "email": "Are your sure about your email ?",
+      "empty": "Did you forget to fill something ?",
+      "hashing": "An error occured while hashing your password. Please, try again",
+      "import_vault": {
+        "error_unknown": "Error : Impossible to import your vault. Unknown error",
+        "invalid_arg": "Error : Impossible to import your vault. It seems to be    corrupted",
+        "invalid_file": "Error : Impossible to import your vault. Impossible to read it",
+        "invalid_type": "Error : Invalid file type",
+        "invalid_version": "Error : Impossible to import your vault. Unsupported version",
+        "key_dec": "Impossible to decrypt your key.",
+        "missing_arg": "Error : Impossible to import your vault. It seems to not be    complete",
+        "no_signature": "Error : Impossible to import your vault. No signature found",
+        "parse_fail": "Error : Impossible to parse your file",
+        "wrong_passphrase": "Wrong passphrase"
       },
-      "admin_dash": "Admin Dashboard",
-      "users": "Users",
-      "login_button" : "Login"
+      "no_connection": "Impossible to chat with the server ! \nCheck your internet connection or status.zero-totp.com",
+      "oauth": "One last step, please confirm your password to complete the synchronization",
+      "rate_limited": "You are rate limited ! Your IP as generated too much failed login attempts in a short period of time. You will be able to try to login again in {{time}} min. If you are using a VPN, try another location or disable it.",
+      "server_error": "Error : Impossible ro retrieve information from the server",
+      "session_end": "For your safety, your session must be renewed every hour.",
+      "session_killed": "For your safety, you have been disconnected because you have reloaded or closed the tab",
+      "session_timeout": "For your safety, you have been disconnected after 10min of inactivity"
     },
-    "logout": "Logout",
-    "close": "Close",
-    "sign_up": "Sign up",
-    "log_in": "Log in",
-    "about": "About",
-    "loading": "Loading ...",
-    "privacy_policy": "Privacy Policy",
-    "changelog": "Changelog",
-    "footer": {
-      "bug": "Report a bug",
-      "opensource": "Open-Source Component"
+    "forgot_passphrase": "Admin passphrase forgotten ?",
+    "open_button": "Open my vault",
+    "remember": "Remember my email address",
+    "rescue": {
+      "part1": "🛟 Troubles logging to your account ? Open a backup on our ",
+      "part2": "Rescue Zero-TOTP",
+      "strong": "ultra stable plateform"
     },
-    "username": "Username",
-    "email": "Email",
-    "passphrase": "Passphrase",
-    "cancel": "Cancel",
-    "login": {
-      "title": "Zero-TOTP Admin Dashboard",
-      "subtitle": "This dashboard should not be exposed to the internet.",
-      "authorize": "Authorize",
-      "open_button": "Open my vault",
-      "rescue": {
-        "part1": "🛟 Troubles logging to your account ? Open a backup on our ",
-        "strong": "ultra stable plateform",
-        "part2": "Rescue Zero-TOTP"
-      },
-      "errors": {
-        "session_killed": "For your safety, you have been disconnected because you have reloaded or closed the tab",
-        "session_timeout": "For your safety, you have been disconnected after 10min of inactivity",
-        "session_end": "For your safety, your session must be renewed every hour.",
-        "oauth": "One last step, please confirm your password to complete the synchronization",
-        "confirm_passphrase": "To continue, please confirm your passphrase",
-        "email": "Are your sure about your email ?",
-        "empty": "Did you forget to fill something ?",
-        "hashing": "An error occured while hashing your password. Please, try again",
-        "no_connection": "Impossible to chat with the server ! \nCheck your internet connection or status.zero-totp.com",
-        "server_error": "Error : Impossible ro retrieve information from the server",
-        "account_blocked": "Your account has been blocked for security reasons. Please contact the administrator at developer[at]zero-totp.com to unlock it",
-        "import_vault": {
-          "invalid_file": "Error : Impossible to import your vault. Impossible to read it",
-          "invalid_type": "Error : Invalid file type",
-          "invalid_version": "Error : Impossible to import your vault. Unsupported version",
-          "no_signature": "Error : Impossible to import your vault. No signature found",
-          "missing_arg": "Error : Impossible to import your vault. It seems to not be    complete",
-          "invalid_arg": "Error : Impossible to import your vault. It seems to be    corrupted",
-          "error_unknown": "Error : Impossible to import your vault. Unknown error",
-          "parse_fail": "Error : Impossible to parse your file",
-          "wrong_passphrase": "Wrong passphrase",
-          "key_dec": "Impossible to decrypt your key."
-        },
-        "rate_limited": "You are rate limited ! Your IP as generated too much failed login attempts in a short period of time. You will be able to try to login again in {{time}} min. If you are using a VPN, try another location or disable it."
-      },
-      "remember": "Remember my email address",
-      "success": "Vault decrypted ✅"
+    "subtitle": "This dashboard should not be exposed to the internet.",
+    "success": "Vault decrypted ✅",
+    "title": "Zero-TOTP Admin Dashboard"
+  },
+  "logout": "Logout",
+  "my_vault": "My vault",
+  "navbar": {
+    "account": "Account",
+    "add": "Add a new code",
+    "admin": "Admin",
+    "admin_dash": "Admin Dashboard",
+    "backup": "Backup plan",
+    "how": " How TOTP works",
+    "lang": {
+      "suggest": "Suggest Others"
     },
-    "unlock": "Unlock"
-  }
+    "login_button": "Login",
+    "lose": "Never lose your data",
+    "preferences": "Preferences",
+    "users": "Users",
+    "vault_backup": "Vault backup",
+    "why": "Why Zero-TOTP"
+  },
+  "passphrase": "Passphrase",
+  "privacy_policy": "Privacy Policy",
+  "seconds": "seconds",
+  "sign_up": "Sign up",
+  "unlock": "Unlock",
+  "username": "Username"
+}

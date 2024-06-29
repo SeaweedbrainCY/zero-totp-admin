@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { faUser, faLock,  faCheck, faXmark, faFlagCheckered, faCloudArrowUp, faBriefcaseMedical, faEye, faEyeSlash, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock,  faCheck, faXmark, faFlagCheckered, faCloudArrowUp, faBriefcaseMedical, faEye, faEyeSlash, faKey, faSuitcaseMedical, faShieldHalved, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../common/api-service/api-service.service';
@@ -17,7 +17,11 @@ export class LoginComponent implements OnInit {
   faLock=faLock;
   faCheck=faCheck;
   faXmark=faXmark;
+  faSuitcaseMedical=faSuitcaseMedical;
+  faShieldHalved=faShieldHalved;
   faKey=faKey;
+  faChevronDown=faChevronDown;
+  faChevronUp=faChevronUp;
   faFlagCheckered=faFlagCheckered;
   faCloudArrowUp=faCloudArrowUp;
   faEye=faEye;
@@ -30,12 +34,11 @@ export class LoginComponent implements OnInit {
   warning_message="";
   warning_message_color="is-warning";
   error_param: string|null=null;
-  isUnsecureVaultModaleActive = false;
-  isPassphraseModalActive = false;
-  login_button="login.open_button"
   isPassphraseVisible=false;
-  isLocalVaultPassphraseVisible=false;
+  reset_admin_passphrase_modal=false;
   remember=false;
+  reset_root_doc_displayed=false;
+  reset_root_pass_displayed=false;
 
   constructor(
      private http: HttpClient,

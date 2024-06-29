@@ -1,4 +1,4 @@
-<section class="hero is-halfheight mt-6" style="min-height: 70vh;">
+<section class="hero is-halfheight mt-6" style="min-height:80vh;">
     <div class="hero-body is-flex is-flex-direction-column is-justify-content-center	is-fullheight">
       <div class="has-text-centered	is-full is-flex is-justify-content-center block">
         <div class="is-flex is-justify-content-center is-flex-direction-column">
@@ -7,7 +7,7 @@
             {{ 'login.title' | translate }}</span><br /> </p>
             <article class="message is-warning p-6">
               <div class="message-body">
-                {{ 'login.subtitle' | translate }}
+                <fa-icon [icon]="faShieldHalved" class="mr-2"></fa-icon> {{ 'login.subtitle' | translate }}
               </div>
             </article>
   
@@ -45,18 +45,15 @@
             
           </div>
         </div>
-        <div class="control has-text-left" >
-          <label class="checkbox">
-            <input type="checkbox" name="remember" [(ngModel)]="remember">
-            {{ 'login.remember' | translate }} 
-          </label>
+        <div class="control has-text-left mt-4 " >
+          <a class="has-text-grey button is-text" style="text-decoration: none;" (click)="reset_admin_passphrase_modal = true"> <fa-icon [icon]="faSuitcaseMedical" class="mr-2"></fa-icon> {{"login.forgot_passphrase" | translate}}</a>
         </div>
         </div>
         <div class="has-text-centered	block">
         
         <div class="field mt-5">
           <div class="control">
-            <button class="button is-info is-medium block " (click)="login()" [ngClass]="{'is-loading': isLoading}" [disabled]="isLoading">{{login_button | translate }}
+            <button class="button is-info is-medium block has-text-white" (click)="login()" [ngClass]="{'is-loading': isLoading}" [disabled]="isLoading">{{"log_in" | translate }}
               </button>
           </div>
         </div>
@@ -68,3 +65,36 @@
     
   </section>
 
+  <div id="reset_admin_passphrase" class="modal modal-fx-fadeInScale" [ngClass]="{'is-active': reset_admin_passphrase_modal}">
+    <div class="modal-background" (click)="reset_admin_passphrase_modal = !reset_admin_passphrase_modal"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Reset admin password</p>
+        <button class="delete" aria-label="close" (click)="reset_admin_passphrase_modal = !reset_admin_passphrase_modal"></button>
+      </header>
+        <section class="modal-card-body">
+          <article class="message is-primary">
+            <div class="message-header" style="cursor:pointer" (click)="reset_root_doc_displayed=!reset_root_doc_displayed">
+              <p><strong>Option 1 - </strong>Reset a non-root admin password</p>
+              <button> <fa-icon [icon]="faChevronUp" *ngIf="reset_root_doc_displayed"></fa-icon> <fa-icon [icon]="faChevronDown" *ngIf="!reset_root_doc_displayed"></fa-icon> </button>
+            </div>
+            <div class="message-body" *ngIf="reset_root_doc_displayed">
+              TODO
+            </div>
+          </article>
+          <article class="message is-primary mt-4">
+            <div class="message-header" style="cursor:pointer" (click)="reset_root_pass_displayed=!reset_root_pass_displayed">
+              <p><strong>Option 2 - </strong>Reset the root password</p>
+              <button> <fa-icon [icon]="faChevronUp" *ngIf="reset_root_pass_displayed"></fa-icon> <fa-icon [icon]="faChevronDown" *ngIf="!reset_root_pass_displayed"></fa-icon> </button>
+            </div>
+            <div class="message-body" *ngIf="reset_root_pass_displayed">
+              TODO
+            </div>
+          </article>
+        </section>
+        <footer class="modal-card-foot is-flex is-justify-content-right">
+            
+        </footer>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="reset_admin_passphrase_modal = !reset_admin_passphrase_modal" ></button>
+  </div>
