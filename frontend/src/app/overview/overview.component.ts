@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faUsersRectangle, faServer } from '@fortawesome/free-solid-svg-icons';
 import { NgChartsConfiguration } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions, ChartType } from "chart.js";
 
@@ -9,8 +9,9 @@ import { ChartConfiguration, ChartOptions, ChartType } from "chart.js";
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent {
-
+  faUsersRectangle=faUsersRectangle
   faChartLine = faChartLine;
+  faServer=faServer;
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     labels: [
       '01/01/2024',

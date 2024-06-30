@@ -1,7 +1,7 @@
 <section class="hero is-halfheight mt-6 p-6" style="min-height: 70vh;">
     <h1 class="is-size-1  has-text-weight-bold"><fa-icon [icon]="faChartLine" class="mr-2"></fa-icon> Overview</h1>
     <article class="m-4 box">
-        <h2 class="is-size-3  has-text-weight-bold">Users Metrics</h2>
+        <h2 class="is-size-3  has-text-weight-bold"><fa-icon [icon]="faUsersRectangle"class="mr-2"></fa-icon> Users Metrics</h2>
         <div class="is-flex is-justify-content-space-between is-flex-wrap-wrap">
             
 
@@ -46,5 +46,32 @@
   </canvas>
 </div>
 
+    </article>
+    <article class="m-4 box">
+        <h2 class="is-size-3  has-text-weight-bold"><fa-icon [icon]="faServer" class="mr-2"></fa-icon> Servers Metrics</h2>
+        <div class="is-flex is-justify-content-space-around is-flex-wrap-wrap">
+            
+
+            <div class="card m-4" style="width:25%">
+                <div class="card-content has-background-warning-light has-text-centered ">
+                    <div class="content has-text-warning is-size-1 has-text-weight-bold" style="width:100%">
+                        0
+                    </div>
+                    <div class="content has-text-warning  has-text-weight-bold" style="width:100%">
+                        rate limited IP
+                    </div>
+                </div>
+                </div>
+                <div class="card m-4" style="width:25%">
+                <div class="card-content has-background-warning-light has-text-centered ">
+                    <div class="content has-text-warning is-size-1 has-text-weight-bold" style="width:100%">
+                        0
+                    </div>
+                    <div class="content has-text-warning  has-text-weight-bold" style="width:100%">
+                        rate limited emails
+                    </div>
+                </div>
+            </div>
+        </div>
     </article>
 </section>
