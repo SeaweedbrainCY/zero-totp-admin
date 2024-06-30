@@ -1,0 +1,77 @@
+<section class="hero is-halfheight mt-6 p-6" style="min-height: 70vh;">
+    <h1 class="is-size-1  has-text-weight-bold"><fa-icon [icon]="faUsers" class="mr-2"></fa-icon> Users</h1>
+    <table class="table is-striped is-fullwidth is-hoverable">
+        <thead>
+            <tr  >
+              <th>ID</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Signup date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+                <td>John Doe</td>
+                <td>john.doe&64;zero-totp.com</td>
+                <td><span class="tag is-success is-light">Verified</span></td>
+                <td class="has-text-grey">01/30/2002</td>
+                <td class="is-flex">
+                    <button class="button is-primary has-text-white mr-2 ml-2"><fa-icon [icon]="faEye"></fa-icon></button>
+                    <button class="button is-warning has-text-white mr-2 ml-2"><fa-icon [icon]="faUserLock"></fa-icon>
+                    </button><button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button>
+                </td>
+              </tr>
+              <tr>
+                <td>1</td>
+                  <td>John Doe</td>
+                  <td>john.doe&64;zero-totp.com</td>
+                  <td><span class="tag is-success is-light">Verified</span></td>
+                  <td>01/30/2002</td>
+                  <td><button class="button is-primary has-text-white mr-2 ml-2"><fa-icon [icon]="faEye"></fa-icon></button><button class="button is-warning has-text-white mr-2 ml-2"><fa-icon [icon]="faUserLock"></fa-icon></button><button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                      <td>John Doe</td>
+                      <td>john.doe&64;zero-totp.com</td>
+                      <td><span class="tag is-success is-light">Verified</span></td>
+                      <td>01/30/2002</td>
+                      <td><button class="button is-primary has-text-white mr-2 ml-2"><fa-icon [icon]="faEye"></fa-icon></button><button class="button is-warning has-text-white mr-2 ml-2"><fa-icon [icon]="faUserLock"></fa-icon></button><button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                          <td>John Doe</td>
+                          <td>john.doe&64;zero-totp.com</td>
+                          <td><span class="tag is-success is-light">Verified</span></td>
+                          <td>01/30/2002</td>
+                          <td><button class="button is-primary has-text-white mr-2 ml-2"><fa-icon [icon]="faEye"></fa-icon></button><button class="button is-warning has-text-white mr-2 ml-2"><fa-icon [icon]="faUserLock"></fa-icon></button><button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button></td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+<div id="reset_admin_passphrase" class="modal modal-fx-fadeInScale"
+    [ngClass]="{'is-active': user_info_modal}">
+    <div class="modal-background" (click)="user_info_modal = !user_info_modal"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">username</p>
+            <button class="delete" aria-label="close" (click)="user_info_modal = !user_info_modal"></button>
+          </header>
+          <section class="modal-card-body content">
+            <ul>
+                <li><strong>ID:</strong> 1</li>
+                <li><strong>Username:</strong> John Doe</li>
+                <li><strong>Email:</strong> john.doe&64;mail.com</li>
+                <li><strong>Signup date:</strong> 01/30/2002</li>
+                <li><strong>Status:</strong> <span class="tag is-success">Verified</span></li>
+            </ul>
+            <div class="is-flex is-justify-content-space-around mt-4">
+                <a class="button is-warning"><fa-icon [icon]="faUserLock" class="mr-2"></fa-icon> Block</a>
+            <a class="button is-danger"><fa-icon [icon]="faTrash" class="mr-2"></fa-icon> Delete</a>
+            </div>
+          </section>
+
+    </div>
+</div>

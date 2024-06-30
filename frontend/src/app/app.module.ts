@@ -20,7 +20,11 @@ import {
   BaseChartDirective,
   provideCharts,
   withDefaultRegisterables,
-  } from 'ng2-charts';export function HttpLoaderFactory(http: HttpClient) {
+  } from 'ng2-charts';
+import { UsersComponent } from './users/users.component';
+
+
+export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
@@ -37,7 +41,8 @@ export class MissingTranslationHelper implements MissingTranslationHandler {
     LoginComponent,
     FooterComponent,
     NavbarComponent,
-    OverviewComponent
+    OverviewComponent,
+   UsersComponent
   ],
   imports: [
     BrowserModule,
