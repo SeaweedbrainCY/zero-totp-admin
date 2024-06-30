@@ -16,8 +16,11 @@ import { HttpClientModule,HttpClient } from '@angular/common/http';
 import defaultLanguage from "./../assets/i18n/en-uk.json";
 import { ToastrModule } from 'ngx-toastr';
 import { OverviewComponent } from './overview/overview.component';
-
-export function HttpLoaderFactory(http: HttpClient) {
+import {
+  BaseChartDirective,
+  provideCharts,
+  withDefaultRegisterables,
+  } from 'ng2-charts';export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
@@ -41,6 +44,7 @@ export class MissingTranslationHelper implements MissingTranslationHandler {
     AppRoutingModule,
     FontAwesomeModule,
     FormsModule,
+    BaseChartDirective,
     ToastrModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
@@ -55,7 +59,7 @@ export class MissingTranslationHelper implements MissingTranslationHandler {
     }),
     HttpClientModule,
   ],
-  providers: [Crypto, Utils],
+  providers: [Crypto, Utils, provideCharts(withDefaultRegisterables()),],
   bootstrap: [AppComponent]
 })
 export class AppModule { 
