@@ -15,7 +15,7 @@ install_api: clean
 
 run_api:
 	echo "Starting API server ..."
-	. .env && . api/venv/bin/activate && cd api && python app.py
+	. .env && . api/venv/bin/activate && cd api && uvicorn app.main:app --reload
 
 run_database:
 	echo "Starting docker database container ..."
