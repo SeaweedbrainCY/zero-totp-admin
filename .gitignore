@@ -2,6 +2,9 @@
 *config.yml
 
 
+# pre commit hook
+.pre-commit-config.yaml
+
 
 # Logs
 logs
