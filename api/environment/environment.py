@@ -14,7 +14,6 @@ class EnvironmentConfig:
         self.config_version = data["config_version"]
         self.frontend_domain = data["frontend_domain"]
         self.frontend_URI = data["frontend_URI"]
-        self.config_version = data["config_version"]
         if data["type"] == "local":
             self.type = "local"
             logging.basicConfig(
@@ -46,9 +45,7 @@ class APIConfig:
             if key not in data:
                 logging.error(f"[FATAL] Load config fail. Was expecting the key api.{key}")
                 exit(1)
-        for key in self.option_config:
-            if key not in data:
-                logging.warning(f"api.{key} is not set. Ignoring it ...")
+
         if "port" not in data:
             logging.warning(f"api.'port' is not set. Using default value: 8080")
             data["port"] = 8080
@@ -88,7 +85,7 @@ class Config:
             if key not in data:
                 exit(1)
         self.environment = EnvironmentConfig(data["environment"] if data["environment"] != None else {})
-        self.api = APIConfig(data["api"] if data["api"] != None else [], self.environment.config_version)
+        self.api = APIConfig(data["api"] if data["api"] != None else [])
         self.database = DatabaseConfig(data["database"] if data["database"] != None else [])
 
 
@@ -102,7 +99,7 @@ try:
         
         except yaml.YAMLError as exc:
             raise Exception(exc)
-except:
+except FileNotFoundError as excep:
     logging.error("[FATAL] Load config fail. Could not open config file. Mount the config file to /api/config/config.yml")
     exit(1)
 
