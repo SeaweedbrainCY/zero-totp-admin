@@ -8,7 +8,9 @@ from zero_totp_db_model.model_init import init_db
 engine = create_engine(
     conf.database.zero_totp_db_uri
 )
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-db = SessionLocal()
 Base = declarative_base()
+db = SQLAl
 init_db(db)
+
