@@ -1,3 +1,4 @@
+a2wsgi==1.10.6
 anyio==4.4.0
 asgiref==3.8.1
 attrs==23.2.0
@@ -11,6 +12,7 @@ Flask-Cors==4.0.1
 Flask-SQLAlchemy==3.1.1
 h11==0.14.0
 httpcore==1.0.5
+httptools==0.6.1
 httpx==0.27.0
 idna==3.7
 inflection==0.5.1
@@ -20,6 +22,7 @@ jsonschema==4.23.0
 jsonschema-specifications==2023.12.1
 MarkupSafe==2.1.5
 mysqlclient==2.2.4
+python-dotenv==1.0.1
 python-multipart==0.0.9
 PyYAML==6.0.1
 referencing==0.35.1
@@ -32,4 +35,7 @@ swagger_ui_bundle==1.1.0
 typing_extensions==4.12.2
 urllib3==2.2.2
 uvicorn==0.30.1
+uvloop==0.19.0
+watchfiles==0.22.0
+websockets==12.0
 Werkzeug==3.0.3
