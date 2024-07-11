@@ -6,9 +6,6 @@ import uvicorn
 from starlette.middleware.cors import CORSMiddleware
 from connexion.middleware import MiddlewarePosition
 from environment.configuration import logging
-import contextlib
-from flask_apscheduler import APScheduler
-from flask_migrate import Migrate
 from datetime import datetime
 from flask import request, redirect, make_response
 
