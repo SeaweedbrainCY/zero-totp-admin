@@ -20,9 +20,22 @@ paths:
               schema:
                 type: object
                 properties:
-                  users:
+                  total_users:
+                    type: integer
+                    description: Total number of users
+                    example: 100
+                  verified_users:
+                    type: integer
+                    description: Total number of verified users
+                    example: 80
+                  blocked_users:
+                    type: integer
+                    description: Total number of blocked users
+                    example: 10
+                  total_user_per_month_over_year:
                     type: array
-                    example: [{"id":1,"username": "foo", "email":"bar", "role":"user", "createdAt":"01/01/2001", "isBlocked":false}]
+                    description: Total number of users per month over the year
+                    example: {"January": 10, "February": 20, "March": 30, "April": 40, "May": 50, "June": 60, "July": 70, "August": 80, "September": 90, "October": 100, "November": 110, "December": 120}
 
         "401":
           description: Unauthorized
