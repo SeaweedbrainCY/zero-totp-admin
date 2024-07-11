@@ -42,12 +42,12 @@ app, flask = create_app()
 @flask.errorhandler(404)
 def not_found(error):
     logging.warning(f"❌  404 error at {datetime.now()} {request.remote_addr} {request.url}")
-    return make_response(redirect(conf.environment.frontend_URI[0] + "/404",  code=302))
+    return {"message": "Not found"}, 404
             
 
 
 
 
 if __name__ == "__main__":
-   uvicorn.run("app:app", host="0.0.0.0", port=conf.api.port, reload=True)
+   uvicorn.run("main:app", host="0.0.0.0", port=conf.api.port, reload=True)
    
