@@ -5,15 +5,13 @@ from .env_requirements_check import test_conf
 
 
 class EnvironmentConfig:
-    required_keys = ["frontend_domain", "config_version", "frontend_URI"]
+    required_keys = [ "config_version"]
     def __init__(self, data) -> None:
         for key in self.required_keys:
             if key not in data:
                 logging.error(f"[FATAL] Load config fail. Was expecting the key environment.{key}")
                 exit(1)
         self.config_version = data["config_version"]
-        self.frontend_domain = data["frontend_domain"]
-        self.frontend_URI = data["frontend_URI"]
         if data["type"] == "local":
             self.type = "local"
             logging.basicConfig(
