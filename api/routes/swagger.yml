@@ -6,15 +6,15 @@ info:
 servers:
   - url: /api/v1
 paths:
-  /stats/users:
+  /stats/users/category:
     get:
-      operationId: controllers.stats.get_users_stats
+      operationId: controllers.stats.get_users_per_category
       tags:
         - Stats
-      summary: Return users' statistics
+      summary: Return users' statistics per category
       responses:
         "200": # status code
-          description: Return users' statistics
+          description: Return users' statistics per category
           content:
             application/json:
               schema:
@@ -32,14 +32,35 @@ paths:
                     type: integer
                     description: Total number of blocked users
                     example: 10
-                  total_user_per_month_over_year:
-                    type: array
-                    description: Total number of users per month over the year
-                    example: {"January": 10, "February": 20, "March": 30, "April": 40, "May": 50, "June": 60, "July": 70, "August": 80, "September": 90, "October": 100, "November": 110, "December": 120}
 
         "401":
           description: Unauthorized
         "403":
           description: Access denied
 
-
+  /stats/users/timechart:
+    get:
+      operationId: controllers.stats.get_user_timechart
+      tags:
+        - Stats
+      summary: Return new users' statistics
+      responses:
+        "200": # status code
+          description: Return new users' statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  new_users_per_months:
+                    type: object
+                    description: New users per month
+                    example: {
+                      "2021-01-01": 10,
+                      "2021-02-01": 20,
+                      "2021-03-01": 30
+                    }
+        "401":
+          description: Unauthorized
+        "403":
+          description: Access denied
