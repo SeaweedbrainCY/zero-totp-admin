@@ -8,7 +8,8 @@
             <div class="card m-4" style="width:25%">
                 <div class="card-content has-background-primary-light has-text-centered ">
                     <div class="content has-text-primary is-size-1 has-text-weight-bold" style="width:100%">
-                        200
+                        <fa-icon [icon]="faCircleNotch" animation="spin" *ngIf="total_user == undefined"></fa-icon>
+                        <span *ngIf="total_user != undefined">{{total_user}}</span>
                     </div>
                     <div class="content has-text-primary  has-text-weight-bold" style="width:100%">
                         Total users
@@ -18,7 +19,8 @@
             <div class="card m-4" style="width:25%">
                 <div class="card-content has-background-success-light has-text-centered ">
                     <div class="content has-text-success is-size-1 has-text-weight-bold" style="width:100%">
-                        150
+                        <fa-icon [icon]="faCircleNotch" animation="spin" *ngIf="total_verified_user == undefined"></fa-icon>
+                        <span *ngIf="total_verified_user != undefined">{{total_verified_user}}</span>
                     </div>
                     <div class="content has-text-success  has-text-weight-bold" style="width:100%">
                         Total verified users
@@ -29,7 +31,8 @@
             <div class="card m-4" style="width:25%">
                 <div class="card-content has-background-danger-light has-text-centered ">
                     <div class="content has-text-danger is-size-1 has-text-weight-bold" style="width:100%">
-                        3
+                        <fa-icon [icon]="faCircleNotch" animation="spin" *ngIf="total_blocked_user == undefined"></fa-icon>
+                        <span *ngIf="total_blocked_user != undefined">{{total_blocked_user}}</span>
                     </div>
                     <div class="content has-text-danger  has-text-weight-bold" style="width:100%">
                         Total blocked users
