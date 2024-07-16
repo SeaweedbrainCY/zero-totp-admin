@@ -104,10 +104,12 @@ paths:
             schema:
               type: object
               properties:
-                email:
+                username:
                   type: string
-                  description: User email
-                  example:
+                  description: Username
+                password:
+                  type: string
+                  description: Password
       responses:
         "200": 
           description: Login successful
