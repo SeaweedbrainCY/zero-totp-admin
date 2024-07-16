@@ -1,5 +1,6 @@
 from flask import request, Response, redirect, make_response
 from database.repositories import user as user_repo
+from database.repositories import rate_limiting as rate_limiting_repo
 import datetime as dt
 
 
@@ -39,6 +40,14 @@ def get_user_timechart():
     
     
     return total_users_per_months
+
+def get_rate_limiting():
+    rate_limited_ip = rate_limiting_repo.get_rate_limited_ip()
+    rate_limited_emails = rate_limiting_repo.get_rate_limited_emails()
+    return {
+        "rate_limited_ip": len(rate_limited_ip),
+        "rate_limited_emails": len(rate_limited_emails),
+    },200
 
 
     
