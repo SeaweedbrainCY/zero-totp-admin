@@ -13,6 +13,7 @@ from flask import request
 
 def create_app():
     app_instance = connexion.FlaskApp(__name__, specification_dir="./routes/")
+   
     #app_instance.add_middleware(
     #CORSMiddleware,
     #position=MiddlewarePosition.BEFORE_ROUTING,
@@ -22,7 +23,10 @@ def create_app():
     #)
     app_instance.add_api("swagger.yml")
 
+
     app = app_instance.app
+    app.instance_relative_config = True
+    app.instance_path = "./"
 
     app.config["SQLALCHEMY_DATABASE_URI"] = conf.database.zero_totp_db_uri
     app.config["SQLALCHEMY_BINDS"] = {
@@ -41,6 +45,7 @@ def create_app():
 
     return app_instance, app,db
 app, flask,db = create_app()
+
 
 
 
