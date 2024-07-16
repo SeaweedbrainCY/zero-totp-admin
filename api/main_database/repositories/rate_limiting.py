@@ -1,5 +1,5 @@
 from zero_totp_db_model.model import RateLimiting
-from database.db import db
+from main_database.db import db
 
 
 def get_rate_limited_ip():

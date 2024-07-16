@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from zero_totp_db_model.model import User
-from database.db import db
+from main_database.db import db
 
 
 def get_all_users():

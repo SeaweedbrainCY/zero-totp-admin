@@ -1,6 +1,6 @@
 from flask import request, Response, redirect, make_response
-from database.repositories import user as user_repo
-from database.repositories import rate_limiting as rate_limiting_repo
+from main_database.repositories import user as user_repo
+from main_database.repositories import rate_limiting as rate_limiting_repo
 import datetime as dt
 
 

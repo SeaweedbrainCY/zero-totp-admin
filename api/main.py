@@ -1,14 +1,15 @@
 import connexion
 from flask_cors import CORS
 from environment.configuration import conf
-from database.db import db
+from main_database.db import db as main_db
+from admin_database.db import db as admin_db
 from zero_totp_db_model.model_init import init_db
 import uvicorn
 from starlette.middleware.cors import CORSMiddleware
 from connexion.middleware import MiddlewarePosition
 from environment.configuration import logging
 from datetime import datetime
-from flask import request, redirect, make_response
+from flask import request
 
 
 def create_app():
@@ -25,13 +26,16 @@ def create_app():
     app = app_instance.app
 
     app.config["SQLALCHEMY_DATABASE_URI"] = conf.database.zero_totp_db_uri
+    app.config["SQLALCHEMY_BINDS"] = {
+        "admin_db": conf.database.zero_totp_admin_uri,
+    }
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["PROPAGATE_EXCEPTIONS"] = True
     
 
     
-    db.init_app(app)
-    init_db(db)    
+    main_db.init_app(app)
+    init_db(main_db)
 
     return app_instance, app
 app, flask = create_app()
