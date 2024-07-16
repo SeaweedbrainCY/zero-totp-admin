@@ -5,6 +5,8 @@
 # pre commit hook
 .pre-commit-config.yaml
 
+#exclude sqlite db
+*.db 
 
 # Logs
 logs
