@@ -4,8 +4,8 @@ import { NgChartsConfiguration } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions, ChartType, UpdateMode } from "chart.js";
 import { HttpClient } from '@angular/common/http';
 import { OnInit } from '@angular/core';
-import {formatDate} from '@angular/common';
-
+import { Utils } from '../common/Utils/utils.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -19,6 +19,8 @@ export class OverviewComponent implements OnInit {
   total_user:number|undefined;
   total_verified_user:number|undefined;
   total_blocked_user:number|undefined;
+  rate_limited_ip:number|undefined;
+  rate_limited_emails:number|undefined;
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     labels: [ "01", "02"
     ],
@@ -40,8 +42,9 @@ export class OverviewComponent implements OnInit {
 
 
   constructor(
-    private http: HttpClient
-
+    private http: HttpClient,
+    private utils: Utils,
+    private toastr: ToastrService,
   ) { 
     
   }
@@ -49,6 +52,8 @@ export class OverviewComponent implements OnInit {
   ngOnInit(): void {
    this.getStats();
    this.getTimeChart();
+   this.getRateLimitedStats();
+   
   }
 
 
@@ -65,6 +70,7 @@ export class OverviewComponent implements OnInit {
      
   }, (error) => {
     console.error(error);
+    this.utils.toastError(this.toastr, "Impossible to get users stats", error.error.message)
   });
   }
 
@@ -96,6 +102,8 @@ export class OverviewComponent implements OnInit {
       }
   }, (error) => {
     console.error(error);
+    this.utils.toastError(this.toastr, "Impossible to get new users stats", error.error.message)
+
   });
   }
 
@@ -104,6 +112,23 @@ export class OverviewComponent implements OnInit {
         return Date.parse(a) - Date.parse(b) ;
 
     });
+}
+
+public getRateLimitedStats() {
+  
+  this.http.get("/api/v1/stats/server/rate-limiting",  {withCredentials:true, observe: 'response'}).subscribe((response) => {
+    if (response.status === 200) {
+      const body = JSON.parse(JSON.stringify(response.body));
+      console.log(body)
+      this.rate_limited_ip = body.rate_limited_ip;
+      this.rate_limited_emails = body.rate_limited_emails;
+    } else {
+      this.utils.toastError(this.toastr, "Failed to get rate limited stats", "")
+    }
+  }, (error) => {
+    console.error(error);
+    this.utils.toastError(this.toastr, "Impossible to get rate limiting stats", error.error.message)
+  });
 }
 
 }

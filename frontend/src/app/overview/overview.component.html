@@ -56,21 +56,25 @@
             
 
             <div class="card m-4" style="width:25%">
-                <div class="card-content has-background-warning-light has-text-centered ">
-                    <div class="content has-text-warning is-size-1 has-text-weight-bold" style="width:100%">
-                        0
+                <div class="card-content has-background-warning-light has-text-centered has-text-dark">
+                    <div class="content  is-size-1 has-text-weight-bold" style="width:100%">
+                        <fa-icon [icon]="faCircleNotch" animation="spin" *ngIf="rate_limited_ip == undefined"></fa-icon>
+                        <span *ngIf="rate_limited_ip != undefined">{{rate_limited_ip}}</span>
+                        
                     </div>
-                    <div class="content has-text-warning  has-text-weight-bold" style="width:100%">
+                    <div class="content   has-text-weight-bold" style="width:100%">
                         rate limited IP
                     </div>
                 </div>
                 </div>
                 <div class="card m-4" style="width:25%">
-                <div class="card-content has-background-warning-light has-text-centered ">
-                    <div class="content has-text-warning is-size-1 has-text-weight-bold" style="width:100%">
-                        0
+                <div class="card-content has-background-warning-light has-text-centered has-text-dark">
+                    <div class="content  is-size-1 has-text-weight-bold" style="width:100%">
+                        <fa-icon [icon]="faCircleNotch" animation="spin" *ngIf="rate_limited_emails == undefined"></fa-icon>
+                        <span *ngIf="rate_limited_emails != undefined">{{rate_limited_emails}}</span>
+                        
                     </div>
-                    <div class="content has-text-warning  has-text-weight-bold" style="width:100%">
+                    <div class="content   has-text-weight-bold" style="width:100%">
                         rate limited emails
                     </div>
                 </div>
