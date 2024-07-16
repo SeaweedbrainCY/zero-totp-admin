@@ -64,3 +64,30 @@ paths:
           description: Unauthorized
         "403":
           description: Access denied
+  
+  /stats/server/rate-limiting:
+    get:
+      operationId: controllers.stats.get_rate_limiting
+      tags:
+        - Stats
+      summary: Return rate limiting statistics
+      responses:
+        "200": # status code
+          description: Return rate limiting statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ip_rate_limited:
+                    type: number
+                    description: IP rate limited
+                    example: 10
+                  user_rate_limited:
+                    type: number
+                    description: User rate limited
+                    example: 20
+        "401":
+          description: Unauthorized
+        "403":
+          description: Access denied
