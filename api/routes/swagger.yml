@@ -91,3 +91,27 @@ paths:
           description: Unauthorized
         "403":
           description: Access denied
+  /login:
+    post:
+      operationId: controllers.auth.login
+      tags:
+        - Auth
+      summary: Login to the application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: User email
+                  example:
+      responses:
+        "200": 
+          description: Login successful
+        "400":
+          description: Invalid request
+        "403":
+          description: Login failed
