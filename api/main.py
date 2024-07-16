@@ -1,8 +1,7 @@
 import connexion
 from flask_cors import CORS
 from environment.configuration import conf
-from main_database.db import db as main_db
-from admin_database.db import db as admin_db
+from flask_sqlalchemy import SQLAlchemy
 from zero_totp_db_model.model_init import init_db
 import uvicorn
 from starlette.middleware.cors import CORSMiddleware
@@ -32,14 +31,16 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["PROPAGATE_EXCEPTIONS"] = True
     
-
+    db = SQLAlchemy()
     
-    main_db.init_app(app)
-    init_db(main_db)
+    db.init_app(app)
+    init_db(db)
+    with app.app_context():
+        db.create_all(bind_key="admin_db")
+    
 
-    return app_instance, app
-app, flask = create_app()
-
+    return app_instance, app,db
+app, flask,db = create_app()
 
 
 
