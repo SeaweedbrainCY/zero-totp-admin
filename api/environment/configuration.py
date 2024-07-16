@@ -4,6 +4,12 @@ import yaml
 from .env_requirements_check import test_conf
 
 
+class SecurityConfig:
+    scrypt_n = 2**14
+    scrypt_r = 8
+    scrypt_p = 1
+    
+
 class EnvironmentConfig:
     required_keys = [ "config_version"]
     def __init__(self, data) -> None:
@@ -85,6 +91,7 @@ class Config:
         self.environment = EnvironmentConfig(data["environment"] if data["environment"] != None else {})
         self.api = APIConfig(data["api"] if data["api"] != None else [])
         self.database = DatabaseConfig(data["database"] if data["database"] != None else [])
+        self.security = SecurityConfig()
 
 
 
