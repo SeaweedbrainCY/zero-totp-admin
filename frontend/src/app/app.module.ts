@@ -22,7 +22,7 @@ import {
   withDefaultRegisterables,
   } from 'ng2-charts';
 import { UsersComponent } from './users/users.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -48,6 +48,7 @@ export class MissingTranslationHelper implements MissingTranslationHandler {
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
+    BrowserAnimationsModule,
     FormsModule,
     BaseChartDirective,
     ToastrModule.forRoot(),
