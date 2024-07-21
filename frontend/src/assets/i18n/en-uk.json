@@ -14,12 +14,14 @@
     "bug": "Report a bug",
     "opensource": "Open-Source Component"
   },
+  "generic_errors": {
+    "error": "An error occured"
+  },
   "loading": "Loading ...",
   "log_in": "Log in",
   "login": {
     "authorize": "Authorize",
     "errors": {
-      "invalid": "Invalid username or password",
       "account_blocked": "Your account has been blocked for security reasons. Please contact the administrator at developer[at]zero-totp.com to unlock it",
       "confirm_passphrase": "To continue, please confirm your passphrase",
       "email": "Are your sure about your email ?",
@@ -37,6 +39,7 @@
         "parse_fail": "Error : Impossible to parse your file",
         "wrong_passphrase": "Wrong passphrase"
       },
+      "invalid": "Invalid username or password",
       "no_connection": "Impossible to chat with the server ! \nCheck your internet connection or status.zero-totp.com",
       "oauth": "One last step, please confirm your password to complete the synchronization",
       "rate_limited": "You are rate limited ! Your IP as generated too much failed login attempts in a short period of time. You will be able to try to login again in {{time}} min. If you are using a VPN, try another location or disable it.",
@@ -58,6 +61,10 @@
     "title": "Zero-TOTP Admin Dashboard"
   },
   "logout": "Logout",
+  "logout_component": {
+    "error": "Failed to logout",
+    "success": "Logout successfull "
+  },
   "my_vault": "My vault",
   "navbar": {
     "account": "Account",
@@ -82,8 +89,5 @@
   "seconds": "seconds",
   "sign_up": "Sign up",
   "unlock": "Unlock",
-  "username": "Username",
-  "generic_errors":{
-    "error": "An error occured"
-  }
+  "username": "Username"
 }
