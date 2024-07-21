@@ -81,8 +81,12 @@ export class LoginComponent implements OnInit {
       username: this.username,
       password: this.password
     }
-    this.http.post(ApiService.API_URL+"/login",  data, {withCredentials: true, observe: 'response'}).subscribe((response) => {
+    this.http.post("/api/v1/login",  data, {withCredentials: true, observe: 'response'}).subscribe((response) => {
       try{
+        if (response.status === 200) {
+          this.isLoading=false;
+          this.router.navigate(['/overview']);
+        }
         
       } catch(e){
         this.isLoading=false;
@@ -97,7 +101,11 @@ export class LoginComponent implements OnInit {
       console.log(error);
       console.log(error.error.message)
       this.isLoading=false;
-      if(error.status == 429){
+      if (error.status == 403){
+        this.translate.get("login.errors.invalid").subscribe((translation)=>{
+        this.utils.toastError(this.toastr,translation,"")
+        });
+        } else if(error.status == 429){
         const ban_time = error.error.ban_time || "few";
         this.translate.get("login.errors.rate_limited",{time:String(ban_time)} ).subscribe((translation)=>{
         this.utils.toastError(this.toastr,translation,"")
