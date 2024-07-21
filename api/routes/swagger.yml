@@ -5,6 +5,8 @@ info:
   version: "1.0"
 servers:
   - url: /api/v1
+security:
+  - cookieAuth: []
 paths:
   /stats/users/category:
     get:
@@ -93,6 +95,7 @@ paths:
           description: Access denied
   /login:
     post:
+      security: []
       operationId: controllers.auth.login
       tags:
         - Auth
@@ -117,3 +120,34 @@ paths:
           description: Invalid request
         "403":
           description: Login failed
+  /whoami:
+    get:
+      operationId: controllers.auth.whoami
+      tags:
+        - Auth
+      summary: Return the current user
+      responses:
+        "200": 
+          description: Return the current user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    description: Username
+                    example: admin
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access denied
+
+components:
+  securitySchemes:
+    cookieAuth:       
+      type: apiKey
+      in: cookie
+      name: session_id  
+      x-apikeyInfoFunc: security.session_verification.verify_session
+
