@@ -23,6 +23,7 @@ import {
   } from 'ng2-charts';
 import { UsersComponent } from './users/users.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LogoutComponent } from './logout/logout.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -42,7 +43,8 @@ export class MissingTranslationHelper implements MissingTranslationHandler {
     FooterComponent,
     NavbarComponent,
     OverviewComponent,
-   UsersComponent
+   UsersComponent,
+   LogoutComponent
   ],
   imports: [
     BrowserModule,
