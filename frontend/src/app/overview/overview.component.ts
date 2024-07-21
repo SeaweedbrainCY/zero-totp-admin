@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { OnInit } from '@angular/core';
 import { Utils } from '../common/Utils/utils.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -39,23 +41,46 @@ export class OverviewComponent implements OnInit {
     responsive: false
   };
   public lineChartLegend = true;
+  isCurrentlyRedirecting = false;
 
 
   constructor(
     private http: HttpClient,
     private utils: Utils,
     private toastr: ToastrService,
+    private router:Router
   ) { 
     
   }
 
   ngOnInit(): void {
-   this.getStats();
-   this.getTimeChart();
-   this.getRateLimitedStats();
-   
+    this.verifyAuthentication().then((isAuthenticated) => {
+      if(isAuthenticated) {
+        this.getStats();
+        this.getTimeChart();
+        this.getRateLimitedStats();
+      }
+    });
   }
 
+  private verifyAuthentication(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.http.get("/api/v1/whoami",  {withCredentials:true, observe: 'response'}).subscribe((response) => {
+        if (response.status === 200) {
+          resolve(true);
+        }
+    }, (error) => {
+      if(error.status === 401) {
+        this.redirectToLogin();
+        resolve(false);
+      } else {
+          console.error(error);
+          this.utils.toastError(this.toastr, "Impossible to verify authentication", error.error.message)
+          resolve(false);
+      }
+    });
+    });
+  }
 
   private getStats() {
     this.http.get("/api/v1/stats/users/category",  {withCredentials:true, observe: 'response'}).subscribe((response) => {
@@ -69,8 +94,13 @@ export class OverviewComponent implements OnInit {
       }
      
   }, (error) => {
-    console.error(error);
-    this.utils.toastError(this.toastr, "Impossible to get users stats", error.error.message)
+    if(error.status === 401) {
+      this.redirectToLogin();
+      return;
+    } else {
+      console.error(error);
+      this.utils.toastError(this.toastr, "Impossible to get users stats", error.error.message)
+    }
   });
   }
 
@@ -101,6 +131,10 @@ export class OverviewComponent implements OnInit {
         
       }
   }, (error) => {
+    if(error.status === 401) {
+      this.redirectToLogin();
+      return;
+    }
     console.error(error);
     this.utils.toastError(this.toastr, "Impossible to get new users stats", error.error.message)
 
@@ -126,9 +160,20 @@ public getRateLimitedStats() {
       this.utils.toastError(this.toastr, "Failed to get rate limited stats", "")
     }
   }, (error) => {
+    if(error.status === 401) {
+      this.redirectToLogin();
+      return;
+    }
     console.error(error);
     this.utils.toastError(this.toastr, "Impossible to get rate limiting stats", error.error.message)
   });
+}
+
+private redirectToLogin() {
+
+  this.utils.toastError(this.toastr, "You are not authenticated", "")
+  this.router.navigate(['/login']);
+  
 }
 
 }

@@ -19,6 +19,7 @@
   "login": {
     "authorize": "Authorize",
     "errors": {
+      "invalid": "Invalid username or password",
       "account_blocked": "Your account has been blocked for security reasons. Please contact the administrator at developer[at]zero-totp.com to unlock it",
       "confirm_passphrase": "To continue, please confirm your passphrase",
       "email": "Are your sure about your email ?",
@@ -81,5 +82,8 @@
   "seconds": "seconds",
   "sign_up": "Sign up",
   "unlock": "Unlock",
-  "username": "Username"
+  "username": "Username",
+  "generic_errors":{
+    "error": "An error occured"
+  }
 }
