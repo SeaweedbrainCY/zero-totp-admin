@@ -8,6 +8,8 @@ from environment.configuration import logging, conf
 
 def delete_session(session_id) -> None:
     session = db.session.query(Session).filter(Session.id == session_id).first()
+    if not session:
+        return None
     db.session.delete(session)
     db.session.commit()
 
