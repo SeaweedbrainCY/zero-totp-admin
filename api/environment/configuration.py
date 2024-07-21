@@ -60,7 +60,8 @@ class APIConfig:
             logging.warning("api.port is not valid. Ignoring it. Setting default value: 8080")
             self.port = 8080
         
-        self.jwt_secret = data["jwt_secret"]          
+        self.jwt_secret = data["jwt_secret"] 
+        self.session_ttl = 3600 * 2 # 2 hours          
 
 class DatabaseConfig:
     required_keys = ["zero_totp_db_uri", "zero_totp_admin_uri"]
