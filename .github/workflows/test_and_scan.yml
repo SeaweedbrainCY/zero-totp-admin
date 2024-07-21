@@ -1,0 +1,81 @@
+name: "Test and Coverage"
+
+on: 
+  push:
+    branches:
+      - '*'
+      - '**'
+      - '*/*'
+      - '**/**'
+      - '!dev'
+    tags-ignore:
+      - '**'
+  workflow_call:
+      secrets:
+        GITGUARDIAN_API_KEY:
+          required: true
+  
+  
+
+jobs:
+  semgrep_scan:
+    name: Smegrep Scan Analysis
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.x
+    
+    - name: Install semgrep
+      run: python3 -m pip install semgrep
+    
+    - name: Run semgrep
+      run:  semgrep scan --error
+
+  #python_test_and_coverage:
+  #  name: Units tests and coverage
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #  - name: Checkout code
+  #    uses: actions/checkout@v3
+
+  #  - name: Set up Python
+  #    uses: actions/setup-python@v4
+  #    with:
+  #      python-version: 3.11
+
+  #  - name: Install dependencies
+  #    working-directory: ./api
+  #    run:  pip install --upgrade pip && pip install -r requirements.txt && pip install -r test-requirements.txt
+  #  
+  #  - name: Moving config file
+  #    run: cp api/tests/ressources/test-config.yml api/config/config.yml
+
+  #  - name: Run tests with pytest
+  #    working-directory: ./api
+  #    run: python -m pytest --cov=. --cov-report=lcov --cov-report=term --cov-report=xml  --cov-fail-under=90
+  #  - name: Upload coverage report
+  #    uses: coverallsapp/github-action@v2
+  
+
+  gitguardian_scanning:
+    name: GitGuardian scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # fetch all history so multiple commits can be scanned
+      - name: GitGuardian scan
+        uses: GitGuardian/ggshield/actions/secret@v1.29.0
+        env:
+          GITHUB_PUSH_BEFORE_SHA: ${{ github.event.before }}
+          GITHUB_PUSH_BASE_SHA: ${{ github.event.base }}
+          GITHUB_PULL_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
+        
