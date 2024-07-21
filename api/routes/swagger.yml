@@ -142,6 +142,19 @@ paths:
           description: Not authenticated
         "403":
           description: Access denied
+  /logout:
+     post:
+      operationId: controllers.auth.logout
+      tags:
+        - Auth
+      summary: Logout from the application
+      responses:
+        "200": 
+          description: Logout successful
+        "401":
+          description: Not authenticated
+        "403":
+          description: Access denied
 
 components:
   securitySchemes:

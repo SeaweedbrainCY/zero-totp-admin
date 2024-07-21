@@ -38,3 +38,10 @@ def whoami(user):
         return {"error": "User not found"}, 401
     
     return {"username": user_obj.username}, 200
+
+def logout(user):
+    cookie = request.cookies.get("session_id")
+    session_repo.delete_session(cookie)
+    response = Response(status=200, mimetype="application/json", response=json.dumps({"status":"OK"}))
+    response.delete_cookie("session_id")
+    return response
