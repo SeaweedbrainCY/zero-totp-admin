@@ -1,0 +1,12 @@
+api:
+  port: 8080
+  jwt_secret: AqjjxTzGqG8VSCWuBrmuTKrnJYR9w88pGw9eAKEnzBPmJLnxoEwzvsbi9JuWjGcqZ9mtdDAw2nNSo3G5zGkwptnpV9nzkj5CSbdyiDeH5PXgas
+
+database:
+  zero_totp_db_uri: "sqlite:///:memory:"
+  zero_totp_admin_uri: "sqlite:///:memory:"
+
+
+environment:
+  config_version: 1.0
+  type: development
