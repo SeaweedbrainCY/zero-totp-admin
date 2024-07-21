@@ -15,7 +15,7 @@ print("########################\n")
 password = getpass(prompt="New root password: ")
 confirm_password = getpass(prompt="Confirm new root password: ")
 salt = os.urandom(16)
-hased_pass = b64encode(scrypt(password.encode(), salt=salt, n=conf.security.scrypt_n, r=conf.security.
+hashed_pass = b64encode(scrypt(password.encode(), salt=salt, n=conf.security.scrypt_n, r=conf.security.
 scrypt_r, p=conf.security.scrypt_p))
 salt_b64 = b64encode(salt)
 if password != confirm_password:
@@ -27,11 +27,11 @@ engine = create_engine(conf.database.zero_totp_admin_uri)
 with Session(engine) as session:
     admin = session.query(Admin).filter(Admin.username == "root").first()
     if admin:
-        admin.password = hased_pass
+        admin.password = hashed_pass
         admin.password_salt = salt_b64
         session.commit()
     else:
-        admin = Admin(id=str(uuid4()), username="root", password=hased_pass, password_salt=salt_b64)
+        admin = Admin(id=str(uuid4()), username="root", password=hashed_pass, password_salt=salt_b64)
         session.add(admin)
         session.commit()
 
