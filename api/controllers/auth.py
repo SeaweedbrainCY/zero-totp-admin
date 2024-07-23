@@ -10,8 +10,6 @@ import json
 def login():
     username = request.json.get("username")
     password = request.json.get("password")
-    if not username or not password:
-        return {"error": "Missing username or password"}, 400
     user = admin_repo.get_user_by_username(username)
     if not user:
         #fight against timing attacks
