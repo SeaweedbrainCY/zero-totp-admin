@@ -11,7 +11,7 @@ from base64 import b64encode
 import datetime as dt
 
 
-class TestLogin(unittest.TestCase):
+class TestWhoami(unittest.TestCase):
     def setUp(self):
         if conf.database.zero_totp_admin_uri != "sqlite:///:memory:" or conf.database.zero_totp_db_uri != "sqlite:///:memory:":
                 raise Exception("Test must be run with in memory database")

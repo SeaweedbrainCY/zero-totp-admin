@@ -4,9 +4,7 @@ from unittest.mock import patch
 from environment.configuration import conf
 from uuid import uuid4
 import os
-from hashlib import scrypt
-from base64 import b64encode
-import pytest
+
 
 
 class TestLogin(unittest.TestCase):
