@@ -113,6 +113,9 @@ paths:
                 password:
                   type: string
                   description: Password
+              required:
+                  - username
+                  - password
       responses:
         "200": 
           description: Login successful
