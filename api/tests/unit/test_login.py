@@ -27,6 +27,7 @@ scrypt_r, p=conf.security.scrypt_p))
         salt_b64 = b64encode(salt)
 
         with self.application.app_context():
+            db.create_all()
             admin = AdminModel(id=self.admin_id, username=self.admin_username, password=hashed_pass, password_salt=salt_b64)
             db.session.add(admin)
             db.session.commit()
@@ -50,7 +51,28 @@ scrypt_r, p=conf.security.scrypt_p))
             self.assertIn("Expires", response.headers["Set-Cookie"])
             session_id = response.headers["Set-Cookie"].strip().split("session_id=")[1].split(";")[0]
             self.assertTrue(session_repo.verify_session(session_id))
+     
+    def test_login_bad_arg(self):
+        with self.application.app_context():
+                response = self.client.post(self.endpoint, json={"username": self.admin_username})
+                self.assertEqual(response.status_code, 400)
+                response = self.client.post(self.endpoint, json={"password": self.admin_password})
+                self.assertEqual(response.status_code, 400)
+                response = self.client.post(self.endpoint, json={})
+                self.assertEqual(response.status_code, 400)
 
+    def test_login_bad_user(self):
+        with self.application.app_context():
+            response = self.client.post(self.endpoint, json={"username": "bad_user", "password": self.admin_password})
+            self.assertEqual(response.status_code, 403)
+            self.assertNotIn("session_id", response.headers)
+    
+     
+    def test_login_bad_password(self):
+        with self.application.app_context():
+            response = self.client.post(self.endpoint, json={"username":self.admin_username, "password": "not_the_password"})
+            self.assertEqual(response.status_code, 403)
+            self.assertNotIn("session_id", response.headers)
          
 
 
