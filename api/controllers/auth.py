@@ -18,8 +18,6 @@ def login():
     else:
         salt = b64decode(user.password_salt)
         hashed_pass = b64encode(scrypt(password.encode(), salt=salt, n=conf.security.scrypt_n, r=conf.security.scrypt_r, p=conf.security.scrypt_p))
-        print(hashed_pass)
-        print(user.password)
         if hashed_pass != user.password:
             return {"error": "Invalid username or password"}, 403
         else:
