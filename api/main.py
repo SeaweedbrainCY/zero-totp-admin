@@ -39,8 +39,8 @@ def create_app():
     
     db.init_app(app)
     init_db(db)
-    with app.app_context():
-        db.create_all(bind_key="admin_db")
+    #with app.app_context():
+    #    db.create_all() 
     
 
     return app_instance, app,db
