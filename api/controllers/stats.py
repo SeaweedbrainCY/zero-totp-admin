@@ -22,16 +22,20 @@ def get_user_timechart():
     users = user_repo.get_all_users()
     new_users_per_months = {}
     for user in users:
-        creation_date = dt.datetime.strptime(user.createdAt, "%d/%m/%Y").replace(day=1)
+        # if created mid month, will count for the 1st of the next month. if created on the 1st, will count for the 1st of the same month. We fake the creation date for all of them to be on the 1st of the next month : 
+        if dt.datetime.strptime(user.createdAt, "%d/%m/%Y").day == 1:
+            creation_date = dt.datetime.strptime(user.createdAt, "%d/%m/%Y")
+        else: # we fake it
+            creation_date = (dt.datetime.strptime(user.createdAt, "%d/%m/%Y").replace(day=1) + dt.timedelta(days=40)).replace(day=1) # + 40d to be sure to be in the next month
         if creation_date >= first_date_to_count:
             new_users_per_months[creation_date.strftime("%Y-%m-%d")] = new_users_per_months.get(creation_date.strftime("%Y-%m-%d"), 0) + 1
         else:
             new_users_per_months[first_date_to_count.strftime("%Y-%m-%d")] = new_users_per_months.get(first_date_to_count.strftime("%Y-%m-%d"), 0) + 1
-    total_users_per_months = {first_date_to_count.strftime("%Y-%m-%d") : 0}
+    previously_counted_users = new_users_per_months[first_date_to_count.strftime("%Y-%m-%d")]
+    total_users_per_months = {first_date_to_count.strftime("%Y-%m-%d") : previously_counted_users}
     # instantiate a dict with all months from the first month to count to now
     previous_month = first_date_to_count
-    previously_counted_users = 0
-    for _ in range(1, 12):
+    for _ in range(0, 12):
         next_month = (previous_month + dt.timedelta(days=40)).replace(day=1)# + 40d to be sure to be in the next month
         previously_counted_users += new_users_per_months.get(next_month.strftime("%Y-%m-%d"), 0)
         total_users_per_months[next_month.strftime("%Y-%m-%d")] = previously_counted_users
