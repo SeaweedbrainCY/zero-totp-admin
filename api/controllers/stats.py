@@ -31,7 +31,7 @@ def get_user_timechart():
             new_users_per_months[creation_date.strftime("%Y-%m-%d")] = new_users_per_months.get(creation_date.strftime("%Y-%m-%d"), 0) + 1
         else:
             new_users_per_months[first_date_to_count.strftime("%Y-%m-%d")] = new_users_per_months.get(first_date_to_count.strftime("%Y-%m-%d"), 0) + 1
-    previously_counted_users = new_users_per_months[first_date_to_count.strftime("%Y-%m-%d")]
+    previously_counted_users = new_users_per_months.get(first_date_to_count.strftime("%Y-%m-%d"), 0)
     total_users_per_months = {first_date_to_count.strftime("%Y-%m-%d") : previously_counted_users}
     # instantiate a dict with all months from the first month to count to now
     previous_month = first_date_to_count
