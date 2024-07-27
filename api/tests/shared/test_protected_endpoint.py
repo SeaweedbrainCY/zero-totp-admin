@@ -14,7 +14,7 @@ class TestLogin(unittest.TestCase):
     
     
     def test_GET_endpoint_requiring_session(self):
-        get_endpoints = ["/api/v1/whoami", "/api/v1/stats/users/category", "/api/v1/stats/users/timechart", "/api/v1/stats/server/rate-limiting"]
+        get_endpoints = ["/api/v1/whoami", "/api/v1/stats/users/category", "/api/v1/stats/users/timechart", "/api/v1/stats/server/rate-limiting", "/api/v1/users/all", "/api/v1/users/1"]
         for get_endpoint in get_endpoints:
             with self.application.app_context():
                 response = self.client.get(get_endpoint)
