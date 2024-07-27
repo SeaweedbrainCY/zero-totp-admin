@@ -76,6 +76,7 @@ export class OverviewComponent implements OnInit {
       } else {
           console.error(error);
           this.utils.toastError(this.toastr, "Impossible to verify authentication", error.error.message)
+          this.redirectToLogin();
           resolve(false);
       }
     });
