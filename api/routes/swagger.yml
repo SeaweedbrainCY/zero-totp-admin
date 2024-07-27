@@ -158,6 +158,95 @@ paths:
           description: Not authenticated
         "403":
           description: Access denied
+  /users/all:
+    get:
+      operationId: controllers.users.get_all_users
+      tags:
+        - Users
+      summary: Return all users
+      responses:
+        "200": 
+          description: Return all users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        username:
+                          type: string
+                          description: Username
+                          example: admin
+                        email:
+                          type: string
+                          description: Email
+                          example: user@example.com
+                        id: 
+                          type: number
+                          description: User ID
+                          example: 1
+                        isVerified:
+                          type: boolean
+                          description: User verification status
+                          example: true
+                        isBlocked:
+                          type: boolean
+                          description: User block status
+                          example: false
+                        signup_date:
+                          type: string
+                          description: Signup date
+                          example: "2021-01-01"
+  /users/{user_id}:
+    get:
+      operationId: controllers.users.get_user
+      tags:
+        - Users
+      summary: Return a user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+      responses:
+        "200": 
+          description: Return a user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    description: Username
+                    example: admin
+                  email:
+                    type: string
+                    description: Email
+                    example: user@example.com
+                  id: 
+                    type: number
+                    description: User ID
+                    example: 1
+                  isVerified:
+                    type: boolean
+                    description: User verification status
+                    example: true
+                  isBlocked:
+                    type: boolean
+                    description: User block status
+                    example: false
+                  signup_date:
+                    type: string
+                    description: Signup date
+                    example: "2021-01-01"
+                        
 
 components:
   securitySchemes:
