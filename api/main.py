@@ -2,6 +2,7 @@ import connexion
 from flask_cors import CORS
 from environment.configuration import conf
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.inspection import inspect
 from zero_totp_db_model.model_init import init_db
 import uvicorn
 from starlette.middleware.cors import CORSMiddleware
@@ -40,7 +41,11 @@ def create_app():
     db.init_app(app)
     init_db(db)
     #with app.app_context():
-    #    db.create_all() 
+    #    inspector = inspect(db.engine)
+    #    if not inspector.has_table("admin") or not inspector.has_table("session"):
+    #        db.create_all()
+    #        logging.warning("Missing tables have been created")
+
     
 
     return app_instance, app,db
