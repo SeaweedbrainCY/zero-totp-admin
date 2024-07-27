@@ -15,6 +15,7 @@ from sqlalchemy.orm import Session
 class TestRegenerateRootPassword(unittest.TestCase):
     engine = None 
     def setUp(self):
+        self.old_uri = conf.database.zero_totp_admin_uri
         zero_totp_admin_uri = "sqlite:////tmp/test.db"
         self.engine = create_engine(zero_totp_admin_uri)
         with Session(self.engine) as session:
@@ -26,11 +27,11 @@ class TestRegenerateRootPassword(unittest.TestCase):
             session.commit()
             
     def tearDown(self):
-        conf.database.zero_totp_admin_uri = "sqlite:////tmp/test.db"
         with Session(self.engine) as session:
             metadata = AdminModel.metadata
             metadata.drop_all(self.engine)
             patch.stopall()
+        tools.regenerate_root_password.conf.database.zero_totp_admin_uri = self.old_uri
     
     def hash_password(self, password, salt):
         return b64encode(scrypt(password.encode(), salt=salt, n=conf.security.scrypt_n, r=conf.security.scrypt_r, p=conf.security.scrypt_p))
