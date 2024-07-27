@@ -12,42 +12,23 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-                <td>John Doe</td>
-                <td>john.doe&64;zero-totp.com</td>
-                <td><span class="tag is-success is-light">Verified</span></td>
-                <td class="has-text-grey">01/30/2002</td>
+            <tr *ngFor="let user of users">
+              <td>{{user.id}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                  <span class="tag is-success is-light mr-1" *ngIf="user.isVerified">Verified</span>
+                  <span class="tag is-danger is-light mr-1" *ngIf="!user.isVerified">Not verified</span>
+                  <span class="tag is-danger is-light" *ngIf="user.isBlocked">Blocked</span>
+                  <span class="tag is-danger is-light" *ngIf="!user.isBlocked">Enabled</span>
+                </td>
+                <td class="has-text-grey">{{user.signup_date}}</td>
                 <td class="is-flex">
                     <button class="button is-primary has-text-white mr-2 ml-2"><fa-icon [icon]="faEye"></fa-icon></button>
                     <button class="button is-warning has-text-white mr-2 ml-2"><fa-icon [icon]="faUserLock"></fa-icon>
                     </button><button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button>
                 </td>
               </tr>
-              <tr>
-                <td>1</td>
-                  <td>John Doe</td>
-                  <td>john.doe&64;zero-totp.com</td>
-                  <td><span class="tag is-success is-light">Verified</span></td>
-                  <td>01/30/2002</td>
-                  <td><button class="button is-primary has-text-white mr-2 ml-2"><fa-icon [icon]="faEye"></fa-icon></button><button class="button is-warning has-text-white mr-2 ml-2"><fa-icon [icon]="faUserLock"></fa-icon></button><button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                      <td>John Doe</td>
-                      <td>john.doe&64;zero-totp.com</td>
-                      <td><span class="tag is-success is-light">Verified</span></td>
-                      <td>01/30/2002</td>
-                      <td><button class="button is-primary has-text-white mr-2 ml-2"><fa-icon [icon]="faEye"></fa-icon></button><button class="button is-warning has-text-white mr-2 ml-2"><fa-icon [icon]="faUserLock"></fa-icon></button><button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                          <td>John Doe</td>
-                          <td>john.doe&64;zero-totp.com</td>
-                          <td><span class="tag is-success is-light">Verified</span></td>
-                          <td>01/30/2002</td>
-                          <td><button class="button is-primary has-text-white mr-2 ml-2"><fa-icon [icon]="faEye"></fa-icon></button><button class="button is-warning has-text-white mr-2 ml-2"><fa-icon [icon]="faUserLock"></fa-icon></button><button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button></td>
-                        </tr>
             </tbody>
         </table>
 </section>
