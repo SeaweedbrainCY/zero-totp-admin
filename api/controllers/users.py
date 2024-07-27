@@ -10,7 +10,7 @@ def get_all_users():
     all_users = user_repo.get_all_users()
     users_info = []
     for user in all_users:
-        info, status = get_user(user.id)
+        info, status = get_user_by_id(user.id)
         if status == 200:
             users_info.append(info)
         else:
@@ -18,7 +18,7 @@ def get_all_users():
     return {"users": users_info}, 200
 
 
-def get_user(user_id):
+def get_user_by_id(user_id):
     user = user_repo.get_user_by_id(user_id)
     if not user:
         return {"error": "User not found"}, 404

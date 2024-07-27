@@ -203,7 +203,7 @@ paths:
                           example: "2021-01-01"
   /users/{user_id}:
     get:
-      operationId: controllers.users.get_user
+      operationId: controllers.users.get_user_by_id
       tags:
         - Users
       summary: Return a user
