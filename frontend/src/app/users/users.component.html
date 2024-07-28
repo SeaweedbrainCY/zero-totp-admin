@@ -20,7 +20,7 @@
                   <span class="tag is-success is-light mr-1" *ngIf="user.isVerified">Verified</span>
                   <span class="tag is-danger is-light mr-1" *ngIf="!user.isVerified">Not verified</span>
                   <span class="tag is-danger is-light" *ngIf="user.isBlocked">Blocked</span>
-                  <span class="tag is-danger is-light" *ngIf="!user.isBlocked">Enabled</span>
+                  <span class="tag is-success is-light" *ngIf="!user.isBlocked">Enabled</span>
                 </td>
                 <td class="has-text-grey">{{user.signup_date}}</td>
                 <td class="is-flex">
