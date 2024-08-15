@@ -266,6 +266,26 @@ paths:
           description: Invalid request
         "403":
           description: Access denied
+  /users/unblock/{user_id}:
+    put:
+      operationId: controllers.users.unblock_user
+      tags:
+        - Users
+      summary: Unblock a user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+      responses:
+        "201": 
+          description: User unblocked
+        "400":
+          description: Invalid request
+        "403":
+          description: Access denied
                         
 
 components:
