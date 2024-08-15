@@ -31,3 +31,11 @@ def get_user_by_id(user_id):
         "isVerified": user.isVerified,
         "isBlocked": user.isBlocked
     }, 200
+
+def block_user(user_id):
+    user = user_repo.block_user_by_id(user_id)
+    if not user:
+        return {"error": "User not found"}, 404
+    return {
+       "message": "User blocked successfully"
+    }, 201
