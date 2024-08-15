@@ -246,6 +246,26 @@ paths:
                     type: string
                     description: Signup date
                     example: "2021-01-01"
+  /users/block/{user_id}:
+    put:
+      operationId: controllers.users.block_user
+      tags:
+        - Users
+      summary: Block a user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+      responses:
+        "201": 
+          description: User blocked
+        "400":
+          description: Invalid request
+        "403":
+          description: Access denied
                         
 
 components:
