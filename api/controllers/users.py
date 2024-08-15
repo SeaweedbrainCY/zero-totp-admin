@@ -33,9 +33,17 @@ def get_user_by_id(user_id):
     }, 200
 
 def block_user(user_id):
-    user = user_repo.block_user_by_id(user_id)
+    user = user_repo.update_blocked_status_by_userid(user_id, is_blocked=True)
     if not user:
         return {"error": "User not found"}, 404
     return {
        "message": "User blocked successfully"
+    }, 201
+
+def unblock_user(user_id):
+    user = user_repo.update_blocked_status_by_userid(user_id, is_blocked=False)
+    if not user:
+        return {"error": "User not found"}, 404
+    return {
+       "message": "User unblocked successfully"
     }, 201
