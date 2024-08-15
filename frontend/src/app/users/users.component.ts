@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faUsers, faUserLock, faEye, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faUserLock, faEye, faTrash, faXmark,faCircleNotch, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { Utils } from '../common/Utils/utils.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +14,8 @@ export class UsersComponent implements OnInit{
   faUserLock = faUserLock;
   faEye = faEye;
   faTrash = faTrash;
+  faLockOpen = faLockOpen;
+  faCircleNotch = faCircleNotch;
   faXmark = faXmark;
   user_info_modal_id : string | undefined;
   users: any[] = [];
@@ -22,6 +24,7 @@ export class UsersComponent implements OnInit{
   is_disabling: boolean = false;
   confirm_delete_modal_active = false;
   deleting_user_id: string | undefined;
+  loading = true;
 
  
   constructor(
@@ -76,7 +79,7 @@ export class UsersComponent implements OnInit{
         console.log(body.users)
         this.users = body.users;
       }
-     
+      this.loading = false;
   }, (error) => {
     if(error.status === 401) {
       this.redirectToLogin();
@@ -85,6 +88,7 @@ export class UsersComponent implements OnInit{
       console.error(error);
       this.utils.toastError(this.toastr, "Impossible to get users", error.error.message)
     }
+    this.loading = false;
   });
   }
 
@@ -111,11 +115,15 @@ export class UsersComponent implements OnInit{
 
   confirm_disable_user() {
     this.is_disabling = true;
-    this.http.put("/api/v1/users/block", {user_id: this.disabling_user_id}, {withCredentials:true, observe: 'response'}).subscribe((response) => {
-      if (response.status === 200) {
+    this.http.put("/api/v1/users/block/"+this.disabling_user_id, {}, {withCredentials:true, observe: 'response'}).subscribe((response) => {
+      if (response.status === 201) {
         this.get_all_users();
         this.is_disabling = false;
-        this.utils.toastSuccess(this.toastr, "User disabled", "User "+ this.disabling_user_id + " diabled")
+        this.utils.toastSuccess(this.toastr, "Operation success", "User #"+ this.disabling_user_id + " diabled")
+        this.close_disable_modal();
+      } else {
+        this.is_disabling = false;
+        this.utils.toastError(this.toastr, "The user might not be blocked ", "Got unexpected status code " + response.status) 
         this.close_disable_modal();
       }
      
@@ -131,4 +139,10 @@ export class UsersComponent implements OnInit{
     }
   });
   }
+
+  unblock(user_id: string) {
+    
+  }
+
+  
 }

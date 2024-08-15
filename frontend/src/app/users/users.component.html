@@ -27,12 +27,17 @@
                 </td>
                 <td class="has-text-grey">{{user.signup_date}}</td>
                 <td class="is-flex">
-                    <button class="button is-warning has-text-white mr-2 ml-2" (click)="disable_user(user.id)"><fa-icon [icon]="faUserLock"></fa-icon>
-                    </button><button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button>
+                    <button class="button is-warning has-text-white mr-2 ml-2" (click)="disable_user(user.id)" *ngIf="!user.isBlocked"><fa-icon [icon]="faUserLock"></fa-icon></button>
+                    <button class="button is-success has-text-white mr-2 ml-2" (click)="unblock(user.id)" *ngIf="user.isBlocked"><fa-icon [icon]="faLockOpen"></fa-icon></button>
+                    
+                    <button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button>
                 </td>
               </tr>
             </tbody>
         </table>
+        <div class="is-flex is-justify-content-center">
+          <fa-icon [icon]="faCircleNotch" animation="spin" class="is-large mt-5"  size="xl" *ngIf="loading"></fa-icon>
+        </div>
         </article>
 </section>
 <div  class="modal modal-fx-fadeInScale"
