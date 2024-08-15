@@ -25,6 +25,7 @@ export class UsersComponent implements OnInit{
   confirm_delete_modal_active = false;
   deleting_user_id: string | undefined;
   loading = true;
+  is_unblocking= false;
 
  
   constructor(
@@ -73,6 +74,7 @@ export class UsersComponent implements OnInit{
   }
 
   private get_all_users() {
+    this.loading = true
     this.http.get("/api/v1/users/all",  {withCredentials:true, observe: 'response'}).subscribe((response) => {
       if (response.status === 200) {
         const body = JSON.parse(JSON.stringify(response.body));
@@ -142,6 +144,29 @@ export class UsersComponent implements OnInit{
 
   unblock(user_id: string) {
     
+    this.is_unblocking = true;
+    this.http.put("/api/v1/users/unblock/"+user_id, {}, {withCredentials:true, observe: 'response'}).subscribe((response) => {
+      if (response.status === 201) {
+        this.get_all_users();
+        this.is_unblocking = false;
+        this.utils.toastSuccess(this.toastr, "Operation success", "User #"+ user_id + " unblocked")
+        this.close_disable_modal();
+      } else {
+        this.is_unblocking = false;
+        this.utils.toastError(this.toastr, "The user might not be unblocked ", "Got unexpected status code " + response.status) 
+        this.close_disable_modal();
+      }
+  }, (error) => {
+    if(error.status === 401) {
+      this.redirectToLogin();
+      return;
+    } else {
+      console.error(error);
+      this.utils.toastError(this.toastr, "Impossible to unblock user", error.error.message)
+      this.close_disable_modal();
+      this.is_unblocking = false;
+    }
+  });
   }
 
   

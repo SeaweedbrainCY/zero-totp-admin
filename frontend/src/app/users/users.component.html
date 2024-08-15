@@ -1,7 +1,7 @@
 <section class="hero is-halfheight mt-6 p-6" style="min-height: 70vh;">
   <article>
     <h1 class="is-size-1  has-text-weight-bold"><fa-icon [icon]="faUsers" class="mr-2"></fa-icon> Users</h1>
-    <table class="table is-striped is-fullwidth is-hoverable ">
+    <table class="table is-striped is-fullwidth is-hoverable " >
         <thead>
             <tr  class="has-text-centered">
               <th class="has-text-centered">ID</th>
@@ -12,7 +12,7 @@
               <th class="has-text-centered">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="!loading">
             <tr *ngFor="let user of users">
               <td>{{user.id}}</td>
                 <td>{{user.username}}</td>
@@ -28,15 +28,15 @@
                 <td class="has-text-grey">{{user.signup_date}}</td>
                 <td class="is-flex">
                     <button class="button is-warning has-text-white mr-2 ml-2" (click)="disable_user(user.id)" *ngIf="!user.isBlocked"><fa-icon [icon]="faUserLock"></fa-icon></button>
-                    <button class="button is-success has-text-white mr-2 ml-2" (click)="unblock(user.id)" *ngIf="user.isBlocked"><fa-icon [icon]="faLockOpen"></fa-icon></button>
-                    
+                    <button class="button is-success has-text-white mr-2 ml-2" (click)="unblock(user.id)" *ngIf="user.isBlocked" [ngClass]="{'is-loading':is_unblocking}"><fa-icon [icon]="faLockOpen"></fa-icon></button>
+
                     <button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button>
                 </td>
               </tr>
             </tbody>
         </table>
-        <div class="is-flex is-justify-content-center">
-          <fa-icon [icon]="faCircleNotch" animation="spin" class="is-large mt-5"  size="xl" *ngIf="loading"></fa-icon>
+        <div class="is-flex is-justify-content-center" *ngIf="loading">
+          <fa-icon [icon]="faCircleNotch" animation="spin" class="is-large mt-5"  size="xl" ></fa-icon>
         </div>
         </article>
 </section>
