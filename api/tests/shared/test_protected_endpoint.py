@@ -27,4 +27,11 @@ class TestLogin(unittest.TestCase):
                 response = self.client.put(put_endpoint)
                 self.assertEqual(response.status_code, 401, f"PUT {put_endpoint} should return 401. Got {response.status_code}")
 
+    def test_DELETE_endpoint_requiring_session(self):
+        put_endpoints = ["/api/v1/users/1"]
+        for put_endpoint in put_endpoints:
+            with self.application.app_context():
+                response = self.client.delete(put_endpoint)
+                self.assertEqual(response.status_code, 401, f"DELETE {put_endpoint} should return 401. Got {response.status_code}")
+
         
