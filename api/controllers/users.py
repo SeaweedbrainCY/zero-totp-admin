@@ -49,3 +49,15 @@ def unblock_user(user_id):
     return {
        "message": "User unblocked successfully"
     }, 201
+
+
+def delete_user(user_id):
+    if not conf.features.admin_can_delete:
+        return {"error": "Admin cannot delete users. This feature is deactivated for security reasons and can only be enabled in API configuration at startup"}, 403
+    user = user_repo.delete_user_by_id(user_id)
+    if not user:
+        return {"error": "User not found"}, 404
+    logging.info(f"User {user_id} deleted")
+    return {
+       "message": "User deleted successfully"
+    }, 201
