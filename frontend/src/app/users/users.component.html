@@ -30,7 +30,7 @@
                     <button class="button is-warning has-text-white mr-2 ml-2" (click)="disable_user(user.id)" *ngIf="!user.isBlocked"><fa-icon [icon]="faUserLock"></fa-icon></button>
                     <button class="button is-success has-text-white mr-2 ml-2" (click)="unblock(user.id)" *ngIf="user.isBlocked" [ngClass]="{'is-loading':is_unblocking}"><fa-icon [icon]="faLockOpen"></fa-icon></button>
 
-                    <button class="button is-danger has-text-white mr-2 ml-2"><fa-icon [icon]="faTrash"></fa-icon></button>
+                    <button class="button is-danger has-text-white mr-2 ml-2" (click)="delete_user(user.id)"><fa-icon [icon]="faTrash"></fa-icon></button>
                 </td>
               </tr>
             </tbody>
@@ -45,7 +45,7 @@
     <div class="modal-background" (click)="close_disable_modal()"></div>
     <div class="modal-card">
         <header class="modal-card-head">
-            <p class="modal-card-title has-text-danger has-text-weight-bold">You are about to disable a user</p>
+            <p class="modal-card-title has-text-danger has-text-weight-bold">You are about to disable an user</p>
             <button class="delete" aria-label="close" (click)="close_disable_modal()"></button>
           </header>
           <section class="modal-card-body content">
@@ -55,6 +55,35 @@
           <footer class="modal-card-foot is-flex is-justify-content-space-around">
             <button class="button is-dark" (click)="close_disable_modal()" [disabled]="is_disabling"><fa-icon [icon]="faXmark" class="mr-2"></fa-icon> Cancel</button>
               <a class="button is-warning "  [ngClass]="{'is-loading':is_disabling}" (click)="confirm_disable_user()"><fa-icon [icon]="faUserLock" class="mr-2"></fa-icon> Block</a>
+         
+
+          </footer>
+
+    </div>
+</div>
+
+<div  class="modal modal-fx-fadeInScale"
+    [ngClass]="{'is-active': confirm_delete_modal_active}">
+    <div class="modal-background" (click)="close_delete_modal()"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title has-text-danger has-text-weight-bold">You are about to delete an user</p>
+            <button class="delete" aria-label="close" (click)="close_delete_modal()"></button>
+          </header>
+          <section class="modal-card-body content">
+            <p class="has-text-weight-bold has-text-danger">Are you sure you want to delete <code >{{get_email_by_id(deleting_user_id)}}</code> (#{{deleting_user_id}}) ? This action will be logged and cannot be canceled .</p>
+          </section>
+
+          <footer class="modal-card-foot is-flex is-justify-content-space-around">
+            <button class="button is-dark" (click)="close_delete_modal()" [disabled]="is_deleting"><fa-icon [icon]="faXmark" class="mr-2"></fa-icon> Cancel</button>
+              <button class="button is-danger " [disabled]="deletion_timer>0" [ngClass]="{'is-loading':is_deleting}" (click)="confirm_delete_user()">
+                <span *ngIf="deletion_timer==0">
+                  <fa-icon [icon]="faTrash" class="mr-2" ></fa-icon> Delete 
+                </span>
+                <span *ngIf="deletion_timer>0">
+                  <fa-icon [icon]="faHand" class="mr-2" ></fa-icon> {{deletion_timer}} s 
+                </span>
+              </button>
          
 
           </footer>

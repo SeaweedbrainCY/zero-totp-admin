@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faUsers, faUserLock, faEye, faTrash, faXmark,faCircleNotch, faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faUserLock, faEye, faTrash, faXmark,faCircleNotch, faLockOpen, faHand } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { Utils } from '../common/Utils/utils.service';
 import { ToastrService } from 'ngx-toastr';
@@ -15,6 +15,7 @@ export class UsersComponent implements OnInit{
   faEye = faEye;
   faTrash = faTrash;
   faLockOpen = faLockOpen;
+  faHand = faHand;
   faCircleNotch = faCircleNotch;
   faXmark = faXmark;
   user_info_modal_id : string | undefined;
@@ -26,6 +27,9 @@ export class UsersComponent implements OnInit{
   deleting_user_id: string | undefined;
   loading = true;
   is_unblocking= false;
+  is_deleting=false;
+  deletion_timer = 5;
+  interval:any=undefined;
 
  
   constructor(
@@ -78,7 +82,6 @@ export class UsersComponent implements OnInit{
     this.http.get("/api/v1/users/all",  {withCredentials:true, observe: 'response'}).subscribe((response) => {
       if (response.status === 200) {
         const body = JSON.parse(JSON.stringify(response.body));
-        console.log(body.users)
         this.users = body.users;
       }
       this.loading = false;
@@ -168,6 +171,66 @@ export class UsersComponent implements OnInit{
     }
   });
   }
+
+  confirm_delete_user(){
+    this.is_deleting = true;
+    this.http.delete("/api/v1/users/"+this.deleting_user_id, {withCredentials:true, observe: 'response'}).subscribe((response) => {
+      if (response.status === 201) {
+        this.get_all_users();
+        this.is_deleting = false;
+        this.utils.toastSuccess(this.toastr, "Operation success", "User #"+ this.deleting_user_id + " permanently deleted")
+        this.close_delete_modal();
+      } else {
+        this.is_deleting = false;
+        this.utils.toastError(this.toastr, "The user might not be deleted ", "Got unexpected status code " + response.status) 
+        this.close_delete_modal();
+      }
+  }, (error) => {
+    if(error.status === 401) {
+      this.redirectToLogin();
+      return;
+    } else if (error.status === 403) {
+      this.utils.toastError(this.toastr, "Impossible to delete user",  error.error.error)
+      this.close_delete_modal();
+      this.is_deleting = false
+    } else {
+      this.utils.toastError(this.toastr, "Impossible to delete user", error.error.message)
+      this.close_delete_modal();
+      this.is_deleting = false;
+    }
+  });
+  }
+
+  close_delete_modal(){
+    if(!this.is_deleting){
+      this.confirm_delete_modal_active = false;
+      this.deleting_user_id = undefined;
+    }
+  }
+
+  delete_user(user_id: string) {
+    this.confirm_delete_modal_active = true;
+    this.deleting_user_id = user_id;
+    this.deletion_timer = 5;
+    this.start_interval();
+  }
+
+  start_interval() {
+   this.interval = setInterval(() => {
+      this.deletion_timer -= 1;
+      if(this.deletion_timer <= 0) {
+        this.stop_interval();
+      }
+    }, 1000);
+  }
+
+  stop_interval() {
+    if(this.interval != undefined){
+      clearInterval(this.interval);
+    }
+  }
+
+
 
   
 }
