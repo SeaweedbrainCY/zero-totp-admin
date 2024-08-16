@@ -6,6 +6,8 @@ database:
   zero_totp_db_uri: "change_me"
   zero_totp_admin_uri: "sqlite://zero_totp_admin.db"
 
+features: # optional
+  admin_can_delete: false # default
 
 environment:
   config_version: 1.0

@@ -9,6 +9,17 @@ class SecurityConfig:
     scrypt_r = 8
     scrypt_p = 1
     
+class Features:
+    def __init__(self, data) -> None:
+        if not "admin_can_delete" in data:
+            self.admin_can_delete = False
+            logging.warning("features.admin_can_delete is not set. Using default value: False")
+        else:
+            self.admin_can_delete = data["admin_can_delete"]
+            if  data["admin_can_delete"] :
+                logging.warning("Admin can delete users. This feature should only be enabled temporarily and disabled as soon as the feature is no longer needed.")
+    
+
 
 class EnvironmentConfig:
     required_keys = [ "config_version"]
@@ -89,9 +100,10 @@ class Config:
         for key in self.required_keys:
             if key not in data:
                 exit(1)
-        self.environment = EnvironmentConfig(data["environment"] if data["environment"] != None else {})
-        self.api = APIConfig(data["api"] if data["api"] != None else [])
-        self.database = DatabaseConfig(data["database"] if data["database"] != None else [])
+        self.environment = EnvironmentConfig(data["environment"] if "environment" in data else {})
+        self.api = APIConfig(data["api"] if "api" in data  else [])
+        self.database = DatabaseConfig(data["database"] if "database" in data else [])
+        self.features = Features(data["features"] if "features" in data else {})
         self.security = SecurityConfig()
 
 
