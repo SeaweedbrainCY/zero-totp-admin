@@ -16,3 +16,11 @@ def update_blocked_status_by_userid(user_id, is_blocked):
     user.isBlocked = is_blocked
     db.session.commit()
     return user
+
+def delete_user_by_id(user_id):
+    user = db.session.query(User).filter(User.id == user_id).first()
+    if not user:
+        return None
+    db.session.delete(user)
+    db.session.commit()
+    return True
