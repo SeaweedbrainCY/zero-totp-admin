@@ -19,5 +19,12 @@ class TestLogin(unittest.TestCase):
             with self.application.app_context():
                 response = self.client.get(get_endpoint)
                 self.assertEqual(response.status_code, 401, f"GET {get_endpoint} should return 401. Got {response.status_code}")
+    
+    def test_PUT_endpoint_requiring_session(self):
+        put_endpoints = ["/api/v1/users/block/1", "/api/v1/users/unblock/1"]
+        for put_endpoint in put_endpoints:
+            with self.application.app_context():
+                response = self.client.put(put_endpoint)
+                self.assertEqual(response.status_code, 401, f"PUT {put_endpoint} should return 401. Got {response.status_code}")
 
         
