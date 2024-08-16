@@ -45,7 +45,7 @@ def unblock_user(user_id):
     user = user_repo.update_blocked_status_by_userid(user_id, is_blocked=False)
     if not user:
         return {"error": "User not found"}, 404
-    logging.info(f"User {user_id} ubblocked")
+    logging.info(f"User {user_id} unblocked")
     return {
        "message": "User unblocked successfully"
     }, 201
