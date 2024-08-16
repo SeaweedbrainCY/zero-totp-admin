@@ -1,7 +1,7 @@
 import unittest
 from main import app,db
 from unittest.mock import patch
-from zero_totp_db_model.model import User
+from zero_totp_db_model import model
 from environment.configuration import conf
 from admin_database.models import Admin as AdminModel, Session as SessionModel
 from main_database.repositories.user import get_user_by_id
@@ -21,7 +21,7 @@ class TestDeleteUser(unittest.TestCase):
 
         with self.application.app_context():
             db.create_all()
-            self.user = User(id=self.user_id, username=f"user1", mail=f"user1@example.com", password="random", passphraseSalt="doesn't matter", isVerified=True, derivedKeySalt="doesn't matter", createdAt="date", isBlocked=False)
+            self.user = model.User(id=self.user_id, username=f"user1", mail=f"user1@example.com", password="random", passphraseSalt="doesn't matter", isVerified=True, derivedKeySalt="doesn't matter", createdAt="date", isBlocked=False)
             db.session.add(self.user)
 
             admin = AdminModel(id=str(uuid4()), username="root", password="random", password_salt="doesn't matter")
