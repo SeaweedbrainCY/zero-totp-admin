@@ -4,12 +4,14 @@ import { LoginComponent } from './login/login.component';
 import { OverviewComponent } from './overview/overview.component';
 import { UsersComponent } from './users/users.component';
 import { LogoutComponent } from './logout/logout.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:"logout", component: LogoutComponent},
   {path:"overview", component: OverviewComponent},
   {path:"users", component: UsersComponent},
+  {path:"notifications", component: NotificationsComponent},
   {path:'', component: LoginComponent},
 ];
 
