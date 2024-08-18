@@ -24,6 +24,7 @@ import {
 import { UsersComponent } from './users/users.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LogoutComponent } from './logout/logout.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -44,7 +45,8 @@ export class MissingTranslationHelper implements MissingTranslationHandler {
     NavbarComponent,
     OverviewComponent,
    UsersComponent,
-   LogoutComponent
+   LogoutComponent,
+   NotificationsComponent
   ],
   imports: [
     BrowserModule,
