@@ -18,8 +18,11 @@
         <a class="navbar-item" (click)="navigateToRoute('overview')" [ngClass]="{'has-text-weight-bold':currentUrl == '/overview'}">
           {{ 'navbar.overview' | translate }}
         </a>
-        <a class="navbar-item" (click)="navigateToRoute('users')" [ngClass]="{'has-text-weight-bold':currentUrl == '/vault'}">
+        <a class="navbar-item" (click)="navigateToRoute('users')" [ngClass]="{'has-text-weight-bold':currentUrl == '/users'}">
           {{ 'navbar.users' | translate }}
+        </a>
+        <a class="navbar-item" (click)="navigateToRoute('notifications')" [ngClass]="{'has-text-weight-bold':currentUrl == '/notifications'}">
+          {{ 'navbar.notifications' | translate }}
         </a>
       </div>
   
