@@ -5,6 +5,15 @@
     "not_found": "Page not found.",
     "oops": "Oops!"
   },
+  "notif":{
+    "config":{
+      "title":"Configure notification",
+      "message":{
+        "label":"Message"
+    }},
+      "title":"Notification banner"
+    
+  },
   "about": "About",
   "cancel": "Cancel",
   "changelog": "Changelog",
@@ -78,6 +87,7 @@
     },
     "login_button": "Login",
     "lose": "Never lose your data",
+    "notifications": "Notifications",
     "overview": "Overview",
     "preferences": "Preferences",
     "users": "Users",

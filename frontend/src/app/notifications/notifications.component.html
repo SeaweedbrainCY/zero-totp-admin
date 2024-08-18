@@ -1,1 +1,17 @@
-<p>notifications works!</p>
+<section class="hero is-halfheight mt-6 p-6" style="min-height: 70vh;">
+    <article>
+      <h1 class="is-size-1  has-text-weight-bold"><fa-icon [icon]="faBell" class="mr-2"></fa-icon> {{'notif.title' | translate}}</h1>
+      <div class="is-flex is-justify-content-center mt-6" >
+        <div class="box" style="width:90%">
+          <h3 class="is-size-3  has-text-weight-bold">{{'notif.config.title' | translate}}</h3>
+          <div class="field">
+            <label class="label">{{'notif.config.message.label' | translate}}</label>
+            <div class="control">
+              <textarea class="textarea" placeholder="Textarea"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </article>
+</section>
