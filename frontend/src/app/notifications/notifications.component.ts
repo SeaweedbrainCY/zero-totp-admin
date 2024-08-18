@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCheckToSlot, faUserCheck } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { Utils } from '../common/Utils/utils.service';
 import { Router } from '@angular/router';
@@ -13,12 +13,19 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class NotificationsComponent implements OnInit {
   faBell=faBell;
+  expiration: string | undefined;
+  faCheckToSlot=faCheckToSlot;
+  faUserCheck=faUserCheck;
+  notif_enabled: boolean = false;
+  notif_auth_user_only: boolean = false;
+  edit_notif_uuid: string | undefined;
 
   constructor(
     private http: HttpClient,
     private utils: Utils,
     private router:Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    
   ) { }
   
   
@@ -53,6 +60,17 @@ export class NotificationsComponent implements OnInit {
 
     this.utils.toastError(this.toastr, "You are not authenticated", "")
     this.router.navigate(['/login']);
+  }
+
+  public selectNotification(uuid:string){
     
+  }
+
+  public saveNotificationConfig(){
+    
+  }
+
+  public isNotificationDisplayed(uuid:string){
+    return false;
   }
 }

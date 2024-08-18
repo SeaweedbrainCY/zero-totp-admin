@@ -1,17 +1,72 @@
 <section class="hero is-halfheight mt-6 p-6" style="min-height: 70vh;">
     <article>
-      <h1 class="is-size-1  has-text-weight-bold"><fa-icon [icon]="faBell" class="mr-2"></fa-icon> {{'notif.title' | translate}}</h1>
+      <h1 class="is-size-1  has-text-weight-bold"><fa-icon [icon]="faBell" class="mr-2"></fa-icon> 
+        {{'notif.title' | translate}}
+        
+        
+      </h1>
       <div class="is-flex is-justify-content-center mt-6" >
-        <div class="box" style="width:90%">
-          <h3 class="is-size-3  has-text-weight-bold">{{'notif.config.title' | translate}}</h3>
+        <div class="box" style="width:85vw">
+          <div class="is-flex is-align-items-center	">
+            <h3 class="is-size-3  has-text-weight-bold"  *ngIf="edit_notif_uuid != undefined">{{'notif.config.title' | translate}} </h3>
+            <h3 class="is-size-3  has-text-weight-bold"  *ngIf="edit_notif_uuid == undefined">{{'notif.config.new.title' | translate}} </h3>
+            <span class="tag is-light is-danger is-rounded ml-3 has-text-danger is-medium" *ngIf="!notif_enabled">{{'Disabled'|translate}}</span>  
+            <span class="tag is-light is-success is-rounded ml-3 has-text-success is-medium" *ngIf="notif_enabled">{{'enabled'|translate}}</span>  
+            
+            <span class="tag is-light  has-text-danger is-danger is-rounded ml-3 is-medium" *ngIf="notif_auth_user_only">{{'notif.config.auth_user_only'|translate}}</span>
+            <span class="tag is-light  has-text-danger is-danger is-rounded ml-3 is-medium" *ngIf="!notif_auth_user_only">{{'notif.config.all_user'|translate}}</span>
+            
+            <span class="tag is-light  has-text-danger is-danger is-rounded ml-3 is-medium" *ngIf="!isNotificationDisplayed('new')">{{'notif.config.no_display'|translate}}</span>
+            <span class="tag is-light  has-text-success is-success is-rounded ml-3 is-medium" *ngIf="isNotificationDisplayed('new')">{{'notif.config.display'|translate}}</span>
+          </div>
           <div class="field">
             <label class="label">{{'notif.config.message.label' | translate}}</label>
             <div class="control">
-              <textarea class="textarea" placeholder="Textarea"></textarea>
+              <textarea class="textarea" placeholder="{{'notif.config.message.placeholder' | translate}}"></textarea>
+            </div>
+            
+            <label class="checkbox mt-4">
+              <input type="checkbox" />
+              <span class="has-text-weight-bold has-text-dark ml-1"><fa-icon [icon]="faCheckToSlot"></fa-icon> {{'enabled'| translate}}</span>
+            </label><br>
+            <label class="checkbox mt-4">
+              <input type="checkbox" />
+              <span class="has-text-weight-bold has-text-dark ml-1"><fa-icon [icon]="faUserCheck"></fa-icon> {{'notif.config.auth_user_only'| translate}}</span>
+            </label>
+            <div class="mt-4 control">
+              <label class="label">{{'notif.config.datetime.label' | translate}}</label>
+              <input type="datetime-local" name="expiration" [ngModel]="expiration"/>
+
+            </div>
+            <div class="mt-6 is-flex is-flex-direction-row-reverse	">
+              <button class="button is-info has-text-white" (click)="saveNotificationConfig()">{{'notif.config.save' | translate}}</button>
             </div>
           </div>
         </div>
       </div>
+      <div class="mt-6 ml-4">
+      <h3 class="is-size-3  has-text-weight-bold">{{'notif.history.title' | translate}} </h3>
+      <div class="is-flex is-flex-direction-column	">
+        <div class="is-flex is-justify-content-center">
+          <div class="box  mt-4" style="width:75vw; border:#63a375 2px solid; cursor: pointer;" (click)="selectNotification('uuid')">
+            <div class="is-flex is-justify-content-space-between is-align-items-center" >
+              <div> 
+                <h5 class="is-size-5  has-text-weight-bold" >Notification message</h5>
+                <span class="has-text-grey">uuid • date</span>
+              </div>
+           
+            <div class="is-flex is-justify-content-right is-flex-wrap-wrap">
+              <span class="tag is-light is-success is-rounded ml-3 has-text-success is-medium">{{'displayed'|translate}}</span>  
+              <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium">{{'enabled'|translate}}</span>  
+              <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium">{{'notif.config.auth_user_only'|translate}}</span>
+              <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium">{{'No expiration'|translate}}</span>
+
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
       
     </article>
 </section>

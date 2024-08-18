@@ -5,20 +5,14 @@
     "not_found": "Page not found.",
     "oops": "Oops!"
   },
-  "notif":{
-    "config":{
-      "title":"Configure notification",
-      "message":{
-        "label":"Message"
-    }},
-      "title":"Notification banner"
-    
-  },
+  "Disabled": "Disabled",
   "about": "About",
   "cancel": "Cancel",
   "changelog": "Changelog",
   "close": "Close",
+  "displayed": "Displayed",
   "email": "Email",
+  "enabled": "Enabled",
   "footer": {
     "bug": "Report a bug",
     "opensource": "Open-Source Component"
@@ -93,6 +87,30 @@
     "users": "Users",
     "vault_backup": "Vault backup",
     "why": "Why Zero-TOTP"
+  },
+  "notif": {
+    "config": {
+      "all_user": "All users",
+      "auth_user_only": "Authenticated user only",
+      "datetime": {
+        "label": "Expiration datetime (optional, local time)"
+      },
+      "display": "Will be displayed",
+      "message": {
+        "label": "Message",
+        "placeholder": "Notification message"
+      },
+      "new": {
+        "title": "Configure new notification"
+      },
+      "no_display": "Will not be displayed",
+      "save": "Save",
+      "title": "Configure notification"
+    },
+    "history": {
+      "title": "History"
+    },
+    "title": "Notification banner"
   },
   "passphrase": "Passphrase",
   "privacy_policy": "Privacy Policy",
