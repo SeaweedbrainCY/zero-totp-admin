@@ -305,6 +305,197 @@ paths:
           description: Invalid request
         "403":
           description: Access denied
+  /notfication/{notif_id}:
+    get:
+      operationId: controllers.notifications.get_notification_by_id
+      tags:
+        - Notifications
+      summary: Return a notification
+      parameters:
+        - name: notif_id
+          in: path
+          required: true
+          description: Notification id 
+          schema:
+            type: string
+      responses:
+        "200": 
+          description: Return a user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  notification:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Notification ID
+                        example: 9f4bc3c8-49aa-4e52-80d5-8334f85964d2
+                      title:
+                        type: string
+                        description: Notification title
+                        example: "An ongoing maintenance"
+                      timestamp:
+                        type: number
+                        description: Notification creation date
+                        example: 1724102799
+                      expiration_timestamp:
+                        type: number
+                        description: Notification expiration date
+                        example: 1724102799
+                      auth_user_only:
+                        type: boolean
+                        description: Notification for authenticated users only
+                        example: true
+                      enabled:
+                        type: boolean
+                        description: Notification status
+                        example: true
+        "404":
+          description: Notification not found
+        "403":
+          description: Access denied
+    put:
+      operationId: controllers.notifications.update_notification
+      tags:
+        - Notifications
+      summary: Update a notification. Empty fields will be ignored.
+      parameters:
+        - name: notif_id
+          in: path
+          required: true
+          description: Notification id 
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Notification title
+                expiration_timestamp_utc:
+                  type: number
+                  description: Notification expiration date
+                auth_user_only:
+                  type: boolean
+                  description: Notification for authenticated users only
+                enabled:
+                  type: boolean
+                  description: Notification status
+      responses:
+        "201": 
+          description: Notification updated
+        "400":
+          description: Invalid request
+        "403":
+          description: Access denied
+    delete:
+      operationId: controllers.notifications.delete_notification
+      tags:
+        - Notifications
+      summary: Delete a notification
+      parameters:
+        - name: notif_id
+          in: path
+          required: true
+          description: Notification id 
+          schema:
+            type: string
+      responses:
+        "200": 
+          description: Notification deleted
+        "400":
+          description: Invalid request
+        "403":
+          description: Access denied
+  /notifications/all:
+    get:
+      operationId: controllers.notifications.get_all_notifications
+      tags:
+        - Notifications
+      summary: Return all notifications
+      responses:
+        "200": 
+          description: Return all notifications
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  notifications:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: Notification ID
+                          example: 9f4bc3c8-49aa-4e52-80d5-8334f85964d2
+                        title:
+                          type: string
+                          description: Notification title
+                          example: "An ongoing maintenance"
+                        timestamp:
+                          type: number
+                          description: Notification creation date
+                          example: 1724102799
+                        expiration_timestamp:
+                          type: number
+                          description: Notification expiration date
+                          example: 1724102799
+                        auth_user_only:
+                          type: boolean
+                          description: Notification for authenticated users only
+                          example: true
+                        enabled:
+                          type: boolean
+                          description: Notification status
+                          example: true
+        "403":
+          description: Access denied
+  /notification: 
+    post: 
+      operationId: controllers.notifications.create_notification
+      tags:
+        - Notifications
+      summary: Create a notification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Notification title
+                expiration_timestamp_utc:
+                  type: number
+                  description: Notification expiration date
+                auth_user_only:
+                  type: boolean
+                  description: Notification for authenticated users only
+                enabled:
+                  type: boolean
+                  description: Notification status
+              required:
+                  - title
+                  - expiration_timestamp
+                  - auth_user_only
+                  - enabled
+      responses:
+        "201": 
+          description: Notification created
+        "400":
+          description: Invalid request
+        "403":
+          description: Access denied
                         
 
 components:
