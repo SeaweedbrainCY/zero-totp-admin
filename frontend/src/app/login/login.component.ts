@@ -116,7 +116,7 @@ export class LoginComponent implements OnInit {
       });
       } else {
         this.translate.get("generic_errors.error").subscribe((translation)=>{
-          this.utils.toastError(this.toastr,translation + " : "+ this.translate.instant((error.error.message) ? error.error.message : ""),"")
+          this.utils.toastError(this.toastr,translation + " : Error " + error.status + " "+ error.message,"")
         });
       }
       

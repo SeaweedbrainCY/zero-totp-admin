@@ -166,7 +166,7 @@ public getRateLimitedStats() {
       return;
     }
     console.error(error);
-    this.utils.toastError(this.toastr, "Impossible to get rate limiting stats", error.error.message)
+    this.utils.toastError(this.toastr, "Impossible to get rate limiting stats", error.message)
   });
 }
 

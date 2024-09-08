@@ -49,7 +49,7 @@ export class NotificationsComponent implements OnInit {
         resolve(false);
       } else {
           console.error(error);
-          this.utils.toastError(this.toastr, "Impossible to verify authentication", error.error.message)
+          this.utils.toastError(this.toastr, "Impossible to verify authentication", error.message)
           this.redirectToLogin();
           resolve(false);
       }
