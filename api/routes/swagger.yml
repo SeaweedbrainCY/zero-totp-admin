@@ -336,11 +336,11 @@ paths:
                         example: "An ongoing maintenance"
                       timestamp:
                         type: number
-                        description: Notification creation date
+                        description: Notification creation date.  UNIX timestamp is expected
                         example: 1724102799
                       expiration_timestamp:
                         type: number
-                        description: Notification expiration date
+                        description: Notification expiration date. UNIX timestamp is expected
                         example: 1724102799
                       auth_user_only:
                         type: boolean
@@ -378,7 +378,7 @@ paths:
                   description: Notification message
                 expiration_timestamp_utc:
                   type: number
-                  description: Notification expiration date
+                  description: Notification expiration date.  UNIX timestamp is expected
                 auth_user_only:
                   type: boolean
                   description: Notification for authenticated users only
@@ -440,11 +440,11 @@ paths:
                           example: "An ongoing maintenance"
                         timestamp:
                           type: number
-                          description: Notification creation date
+                          description: Notification creation date.  UNIX timestamp is expected
                           example: 1724102799
                         expiration_timestamp:
                           type: number
-                          description: Notification expiration date
+                          description: Notification expiration date. UNIX timestamp is expected
                           example: 1724102799
                         auth_user_only:
                           type: boolean
@@ -474,7 +474,7 @@ paths:
                   description: Notification message
                 expiration_timestamp_utc:
                   type: number
-                  description: Notification expiration date 
+                  description: Notification expiration date .  UNIX timestamp is expected
                 auth_user_only:
                   type: boolean
                   description: Notification for authenticated users only (default false)
@@ -501,11 +501,11 @@ paths:
                         example: "An ongoing maintenance"
                       timestamp:
                         type: number
-                        description: Notification creation date
+                        description: Notification creation date  UNIX timestamp is expected
                         example: 1724102799
                       expiration_timestamp:
                         type: number
-                        description: Notification expiration date
+                        description: Notification expiration date  UNIX timestamp is expected
                         example: 1724102799
                       auth_user_only:
                         type: boolean
