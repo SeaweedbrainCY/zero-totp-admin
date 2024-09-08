@@ -56,7 +56,7 @@ class TestCreateNotification(unittest.TestCase):
     def test_create_notification_with_expiry(self):
         with self.application.app_context():
             self.client.cookies = {"session_id": self.session_id}
-            expiry = dt.datetime.now(dt.UTC).timestamp()
+            expiry = dt.datetime.now(dt.UTC).timestamp()  + 3600
             response = self.client.post(self.endpoint, json={"message": "Hello, World!", "expiration_timestamp_utc": expiry})
             self.assertEqual(response.status_code, 201)
             response_data = response.json()
@@ -96,7 +96,7 @@ class TestCreateNotification(unittest.TestCase):
     def test_create_notification_with_all_fields(self):
         with self.application.app_context():
             self.client.cookies = {"session_id": self.session_id}
-            expiry = dt.datetime.now(dt.UTC).timestamp()
+            expiry = dt.datetime.now(dt.UTC).timestamp() + 3600
             response = self.client.post(self.endpoint, json={"message": "Hello, World!", "expiration_timestamp_utc": expiry, "enabled": True, "auth_user_only": True})
             self.assertEqual(response.status_code, 201)
             response_data = response.json()
