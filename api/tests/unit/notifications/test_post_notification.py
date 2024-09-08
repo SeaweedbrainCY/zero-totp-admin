@@ -106,3 +106,37 @@ class TestCreateNotification(unittest.TestCase):
             self.assertEqual(response_data["expiration_timestamp"][:10],  str(expiry)[:10])
             self.assertIsNotNone(response_data["id"], "Was expecting an id but got None")
             self.assertIsNotNone(response_data["timestamp"],  "Was expecting timestamp but got None")
+    
+    def test_create_notification_with_past_expiration(self):
+        with self.application.app_context():
+            self.client.cookies = {"session_id": self.session_id}
+            expiry = dt.datetime.now(dt.UTC).timestamp() - 1
+            response = self.client.post(self.endpoint, json={"message": "Hello, World!", "expiration_timestamp_utc": expiry})
+            self.assertEqual(response.status_code, 400)
+            response_data = response.json()
+            self.assertEqual(response_data["error"], "Expiration date must be in the future")
+    
+    def test_create_notification_with_future_expiration_too_long(self):
+        with self.application.app_context():
+            self.client.cookies = {"session_id": self.session_id}
+            expiry = dt.datetime.now(dt.UTC).timestamp() + 365*6*24*60*60 + 1
+            response = self.client.post(self.endpoint, json={"message": "Hello, World!", "expiration_timestamp_utc": expiry})
+            self.assertEqual(response.status_code, 400)
+            response_data = response.json()
+            self.assertEqual(response_data["error"], "Expiration date cannot be more than 5 years in the future. Set expiration to None to keep a notification indefinitely.")
+    
+    def test_create_notification_with_empty_message(self):
+        with self.application.app_context():
+            self.client.cookies = {"session_id": self.session_id}
+            response = self.client.post(self.endpoint, json={"message": ""})
+            self.assertEqual(response.status_code, 400)
+            response_data = response.json()
+            self.assertEqual(response_data["error"], "Message cannot be empty")
+    
+    def test_create_notification_with_long_message(self):
+        with self.application.app_context():
+            self.client.cookies = {"session_id": self.session_id}
+            response = self.client.post(self.endpoint, json={"message": "a"*766})
+            self.assertEqual(response.status_code, 400)
+            response_data = response.json()
+            self.assertEqual(response_data["error"], "Message cannot be longer than 765 characters")
