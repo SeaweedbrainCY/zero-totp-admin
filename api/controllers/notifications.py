@@ -4,6 +4,7 @@ from main_database.repositories import notifications as notif_repo
 from base64 import b64encode, b64decode
 from environment.configuration import conf, logging
 import json
+import datetime as dt
 
 def get_notification_by_id(notif_id):
     notif = notif_repo.get_notification_by_id(notif_id)  
@@ -47,7 +48,16 @@ def create_notification():
     expiry = request.json.get("expiration_timestamp_utc") if request.json.get("expiration_timestamp_utc") else None
     enabled = request.json.get("enabled") if request.json.get("enabled") else False 
     authenticated_user_only = request.json.get("auth_user_only") if request.json.get("auth_user_only") else False
-
+    if expiry :
+        try:
+            if float(expiry) < dt.datetime.now().timestamp():
+                return {"error": "Expiration date must be in the future"}, 400
+            if float(expiry) > (dt.datetime.now() + dt.timedelta(days=365*5)).timestamp(): 
+                return {"error": "Expiration date cannot be more than 5 years in the future. Set expiration to None to keep a notification indefinitely."}, 400
+        except ValueError:
+            return {"error": "Invalid expiration date format. UNIX timestamp expected"}, 400
+    if message == "":
+        return {"error": "Message cannot be empty"}, 400    
     notif = notif_repo.create_notification(message, expiry, enabled, authenticated_user_only)
     if not notif:
         return {"error": "Internal server error"}, 500
