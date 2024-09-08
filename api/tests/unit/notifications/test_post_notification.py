@@ -51,7 +51,7 @@ class TestCreateNotification(unittest.TestCase):
             self.assertEqual(response_data["auth_user_only"], False)
             self.assertIsNotNone(response_data["id"], "Was expecting an id but got None")
             self.assertIsNotNone(response_data["timestamp"],  "Was expecting timestamp but got None")
-            self.assertIsNone(response_data["expiration_timestamp"],  f"Was expecting expiration_timestamp at None but got {response_data["expiration_timestamp"]}")
+            self.assertIsNone(response_data["expiration_timestamp"],  f"Was expecting expiration_timestamp at None but got {response_data['expiration_timestamp']}")
     
     def test_create_notification_with_expiry(self):
         with self.application.app_context():
@@ -78,7 +78,7 @@ class TestCreateNotification(unittest.TestCase):
             self.assertEqual(response_data["auth_user_only"], False)
             self.assertIsNotNone(response_data["id"], "Was expecting an id but got None")
             self.assertIsNotNone(response_data["timestamp"],  "Was expecting timestamp but got None")
-            self.assertIsNone(response_data["expiration_timestamp"],  f"Was expecting expiration_timestamp at None but got {response_data["expiration_timestamp"]}")
+            self.assertIsNone(response_data["expiration_timestamp"],  f"Was expecting expiration_timestamp at None but got {response_data['expiration_timestamp']}")
     
     def test_create_notification_with_auth_user_only(self):
         with self.application.app_context():
@@ -91,7 +91,7 @@ class TestCreateNotification(unittest.TestCase):
             self.assertEqual(response_data["auth_user_only"], True)
             self.assertIsNotNone(response_data["id"], "Was expecting an id but got None")
             self.assertIsNotNone(response_data["timestamp"],  "Was expecting timestamp but got None")
-            self.assertIsNone(response_data["expiration_timestamp"],  f"Was expecting expiration_timestamp at None but got {response_data["expiration_timestamp"]}")
+            self.assertIsNone(response_data["expiration_timestamp"],  f"Was expecting expiration_timestamp at None but got {response_data['expiration_timestamp']}")
     
     def test_create_notification_with_all_fields(self):
         with self.application.app_context():
