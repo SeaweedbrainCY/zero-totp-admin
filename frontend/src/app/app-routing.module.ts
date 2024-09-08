@@ -12,6 +12,7 @@ const routes: Routes = [
   {path:"overview", component: OverviewComponent},
   {path:"users", component: UsersComponent},
   {path:"notifications", component: NotificationsComponent},
+  {path:"notifications/{id}", component: NotificationsComponent},
   {path:'', component: LoginComponent},
 ];
 
