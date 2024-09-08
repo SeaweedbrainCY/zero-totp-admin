@@ -50,9 +50,9 @@ def create_notification():
     authenticated_user_only = request.json.get("auth_user_only") if request.json.get("auth_user_only") else False
     if expiry :
         try:
-            if float(expiry) < dt.datetime.now().timestamp():
+            if int(expiry) < dt.datetime.now().timestamp():
                 return {"error": "Expiration date must be in the future"}, 400
-            if float(expiry) > (dt.datetime.now() + dt.timedelta(days=365*5)).timestamp(): 
+            if int(expiry) > (dt.datetime.now() + dt.timedelta(days=365*5)).timestamp(): 
                 return {"error": "Expiration date cannot be more than 5 years in the future. Set expiration to None to keep a notification indefinitely."}, 400
         except ValueError:
             return {"error": "Invalid expiration date format. UNIX timestamp expected"}, 400
