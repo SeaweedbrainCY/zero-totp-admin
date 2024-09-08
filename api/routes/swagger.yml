@@ -305,7 +305,7 @@ paths:
           description: Invalid request
         "403":
           description: Access denied
-  /notfication/{notif_id}:
+  /notification/{notif_id}:
     get:
       operationId: controllers.notifications.get_notification_by_id
       tags:
@@ -333,9 +333,9 @@ paths:
                         type: string
                         description: Notification ID
                         example: 9f4bc3c8-49aa-4e52-80d5-8334f85964d2
-                      title:
+                      message:
                         type: string
-                        description: Notification title
+                        description: Notification message
                         example: "An ongoing maintenance"
                       timestamp:
                         type: number
@@ -437,9 +437,9 @@ paths:
                           type: string
                           description: Notification ID
                           example: 9f4bc3c8-49aa-4e52-80d5-8334f85964d2
-                        title:
+                        message:
                           type: string
-                          description: Notification title
+                          description: Notification message
                           example: "An ongoing maintenance"
                         timestamp:
                           type: number
