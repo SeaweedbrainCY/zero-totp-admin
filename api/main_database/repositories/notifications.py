@@ -13,3 +13,6 @@ def create_notification(message, expiry=None, enabled=False, authenticated_user_
     db.session.add(notif)
     db.session.commit()
     return notif
+
+def get_all_notifications():
+    return db.session.query(Notifications).all()
