@@ -29,4 +29,22 @@ def get_all_notifications():
     pass
 
 def create_notification():
-    pass
+    message = request.json.get("message")
+    expiry = request.json.get("expiration_timestamp_utc") if request.json.get("expiration_timestamp_utc") else None
+    enabled = request.json.get("enabled") if request.json.get("enabled") else False 
+    authenticated_user_only = request.json.get("auth_user_only") if request.json.get("auth_user_only") else False
+
+    notif = notif_repo.create_notification(message, expiry, enabled, authenticated_user_only)
+    if not notif:
+        return {"error": "Internal server error"}, 500
+    return {
+        "id": notif.id,
+        "message": notif.message,
+        "timestamp": notif.timestamp,
+        "expiration_timestamp": notif.expiry,
+        "enabled": notif.enabled,
+        "auth_user_only": notif. authenticated_user_only
+    }, 201
+
+    
+
