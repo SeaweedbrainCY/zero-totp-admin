@@ -26,7 +26,21 @@ def delete_notification(notif_id):
     pass
 
 def get_all_notifications():
-    pass
+    notifs = notif_repo.get_all_notifications()
+    if not notifs:
+        return{"error": "Notifications not found"}, 404
+    body = {"notifications": []}
+    for notif in notifs:
+        body["notifications"].append({
+            "id": notif.id,
+            "message": notif.message,
+            "timestamp": notif.timestamp,
+            "expiration_timestamp": notif.expiry,
+            "enabled": notif.enabled,
+            "auth_user_only": notif. authenticated_user_only
+        })
+    return body, 200
+    
 
 def create_notification():
     message = request.json.get("message")
