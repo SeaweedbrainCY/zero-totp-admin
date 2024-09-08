@@ -93,7 +93,7 @@
       "all_user": "All users",
       "auth_user_only": "Authenticated user only",
       "datetime": {
-        "label": "Expiration datetime (optional, local time)"
+        "label": "Expiration datetime (optional, local time i.e. "
       },
       "display": "Will be displayed",
       "message": {
@@ -111,6 +111,12 @@
       "title": "History"
     },
     "title": "Notification banner"
+  },
+  "notifications": {
+    "errors": {
+      "empty": "Notification message cannot be empty",
+      "save": "An error occured. Please refresh this page and try again."
+    }
   },
   "passphrase": "Passphrase",
   "privacy_policy": "Privacy Policy",
