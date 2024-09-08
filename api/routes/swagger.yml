@@ -326,9 +326,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  notification:
-                    type: object
-                    properties:
                       id:
                         type: string
                         description: Notification ID
@@ -376,9 +373,9 @@ paths:
             schema:
               type: object
               properties:
-                title:
+                message:
                   type: string
-                  description: Notification title
+                  description: Notification message
                 expiration_timestamp_utc:
                   type: number
                   description: Notification expiration date
@@ -472,26 +469,52 @@ paths:
             schema:
               type: object
               properties:
-                title:
+                message:
                   type: string
-                  description: Notification title
+                  description: Notification message
                 expiration_timestamp_utc:
                   type: number
-                  description: Notification expiration date
+                  description: Notification expiration date 
                 auth_user_only:
                   type: boolean
-                  description: Notification for authenticated users only
+                  description: Notification for authenticated users only (default false)
                 enabled:
                   type: boolean
-                  description: Notification status
+                  description: Notification status (default false)
               required:
-                  - title
-                  - expiration_timestamp
-                  - auth_user_only
-                  - enabled
+                  - message
       responses:
         "201": 
           description: Notification created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                      id:
+                        type: string
+                        description: Notification ID
+                        example: 9f4bc3c8-49aa-4e52-80d5-8334f85964d2
+                      message:
+                        type: string
+                        description: Notification message
+                        example: "An ongoing maintenance"
+                      timestamp:
+                        type: number
+                        description: Notification creation date
+                        example: 1724102799
+                      expiration_timestamp:
+                        type: number
+                        description: Notification expiration date
+                        example: 1724102799
+                      auth_user_only:
+                        type: boolean
+                        description: Notification for authenticated users only
+                        example: true
+                      enabled:
+                        type: boolean
+                        description: Notification status
+                        example: true
         "400":
           description: Invalid request
         "403":
