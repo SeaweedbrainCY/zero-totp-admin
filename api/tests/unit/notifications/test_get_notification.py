@@ -57,3 +57,10 @@ class TestGetNotification(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
             for key in self.notif.keys():
                 self.assertEqual(response.json()[key], self.notif[key])
+    
+    def test_get_notification_by_id_not_found(self):
+        with self.application.app_context():
+            self.client.cookies = {"session_id": self.session_id}
+            response = self.client.get(f"{self.endpoint}{str(uuid4())}")
+            self.assertEqual(response.status_code, 404)
+            self.assertEqual(response.json()["error"], "Notification not found")
