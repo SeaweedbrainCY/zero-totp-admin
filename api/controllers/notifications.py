@@ -58,6 +58,8 @@ def create_notification():
             return {"error": "Invalid expiration date format. UNIX timestamp expected"}, 400
     if message == "":
         return {"error": "Message cannot be empty"}, 400    
+    if len(message) > 765:
+        return {"error": "Message cannot be longer than 765 characters"}, 400
     notif = notif_repo.create_notification(message, expiry, enabled, authenticated_user_only)
     if not notif:
         return {"error": "Internal server error"}, 500
