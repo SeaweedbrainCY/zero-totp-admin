@@ -7,12 +7,21 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
 
-interface notification_data {
+interface notification_body {
   message:string,
   expiration_timestamp_utc?:number,
   auth_user_only?:boolean,
   enabled?:boolean
 }
+
+interface notification_data {
+    id: string,
+    message: string,
+    timestamp: number,
+    expiration_timestamp: number | null,
+    auth_user_only: boolean,
+    enabled: boolean
+  }
 
 @Component({
   selector: 'app-notifications',
@@ -57,6 +66,7 @@ export class NotificationsComponent implements OnInit {
       if (response.status === 200) {
         const body = JSON.parse(JSON.stringify(response.body));
         this.notifications = body.notifications;
+        console.log(this.notifications)
       }
   }, (error) => {
     if(error.status != 404) {
@@ -103,12 +113,11 @@ export class NotificationsComponent implements OnInit {
         return;
       });
     } else {
-      let body: notification_data = {
+      let body: notification_body = {
         "message": this.notifMessage,
         "auth_user_only": this.notif_auth_user_only,
         "enabled": this.notif_enabled
       }
-      console.log(this.notifExpiration);
       if(this.notifExpiration != undefined && this.notifExpiration != "" && this.notifExpiration != null){
         const expiration_utc = new Date(this.notifExpiration).getTime();
         const unix_timestamp = expiration_utc / 1000;
