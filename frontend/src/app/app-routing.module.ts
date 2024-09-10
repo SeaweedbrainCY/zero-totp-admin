@@ -6,13 +6,13 @@ import { UsersComponent } from './users/users.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:"logout", component: LogoutComponent},
   {path:"overview", component: OverviewComponent},
   {path:"users", component: UsersComponent},
   {path:"notifications", component: NotificationsComponent},
-  {path:"notifications/{id}", component: NotificationsComponent},
+  {path:"notifications/:id", component: NotificationsComponent},
   {path:'', component: LoginComponent},
 ];
 
