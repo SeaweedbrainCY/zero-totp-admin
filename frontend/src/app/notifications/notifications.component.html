@@ -16,26 +16,26 @@
             <span class="tag is-light  has-text-danger is-danger is-rounded ml-3 is-medium" *ngIf="notif_auth_user_only">{{'notif.config.auth_user_only'|translate}}</span>
             <span class="tag is-light  has-text-success is-success is-rounded ml-3 is-medium" *ngIf="!notif_auth_user_only">{{'notif.config.all_user'|translate}}</span>
             
-            <span class="tag is-light  has-text-danger is-danger is-rounded ml-3 is-medium" *ngIf="!isNotificationDisplayed('new')">{{'notif.config.no_display'|translate}}</span>
-            <span class="tag is-light  has-text-success is-success is-rounded ml-3 is-medium" *ngIf="isNotificationDisplayed('new')">{{'notif.config.display'|translate}}</span>
+            <span class="tag is-light  has-text-danger is-danger is-rounded ml-3 is-medium" *ngIf="!(notification_id_displayed_to_users == 'new' || notification_id_displayed_to_users == notifcation_id_to_display) ">{{'notif.config.no_display'|translate}}</span>
+            <span class="tag is-light  has-text-success is-success is-rounded ml-3 is-medium" *ngIf="notification_id_displayed_to_users == 'new' || notification_id_displayed_to_users == notifcation_id_to_display">{{'notif.config.display'|translate}}</span>
           </div>
           <div class="field">
             <label class="label">{{'notif.config.message.label' | translate}}</label>
             <div class="control">
-              <textarea class="textarea" [(ngModel)]="notifMessage" name="notifMessage" placeholder="{{'notif.config.message.placeholder' | translate}}"></textarea>
+              <textarea class="textarea" [(ngModel)]="notifMessage" name="notifMessage" placeholder="{{'notif.config.message.placeholder' | translate}}" (change)="defineNotificationToDisplayToUsers()"></textarea>
             </div>
             
             <label class="checkbox mt-4">
-              <input type="checkbox" [(ngModel)]="notif_enabled" name="notif_enabled"/>
+              <input type="checkbox" [(ngModel)]="notif_enabled" name="notif_enabled" (change)="defineNotificationToDisplayToUsers()"/>
               <span class="has-text-weight-bold has-text-dark ml-1"><fa-icon [icon]="faCheckToSlot"></fa-icon> {{'enabled'| translate}}</span>
             </label><br>
             <label class="checkbox mt-4">
-              <input type="checkbox" [(ngModel)]="notif_auth_user_only" name="notif_auth_user_only"/>
+              <input type="checkbox" [(ngModel)]="notif_auth_user_only" name="notif_auth_user_only" (change)="defineNotificationToDisplayToUsers()"/>
               <span class="has-text-weight-bold has-text-dark ml-1"><fa-icon [icon]="faUserCheck"></fa-icon> {{'notif.config.auth_user_only'| translate}}</span>
             </label>
             <div class="mt-4 control">
               <label class="label">{{'notif.config.datetime.label' | translate}} {{localTimezone}})</label>
-              <input type="datetime-local" name="notifExpiration" [(ngModel)]="notifExpiration"/>
+              <input type="datetime-local" name="notifExpiration" [(ngModel)]="notifExpiration" (change)="defineNotificationToDisplayToUsers()"/>
 
             </div>
             <div class="mt-6 is-flex is-justify-content-space-between	">
@@ -63,8 +63,8 @@
               </div>
            
             <div class="is-flex is-justify-content-right is-flex-wrap-wrap">
-              <span class="tag is-light is-success is-rounded ml-3 has-text-success is-medium" *ngIf="isNotificationDisplayed(notif.id)">{{'displayed'|translate}}</span>  
-              <span class="tag is-light is-danger is-rounded ml-3 has-text-danger is-medium" *ngIf="!isNotificationDisplayed(notif.id)">{{'notif.config.not_displayed'|translate}}</span> 
+              <span class="tag is-light is-success is-rounded ml-3 has-text-success is-medium" *ngIf="notification_id_displayed_to_users == notif.id">{{'displayed'|translate}}</span>  
+              <span class="tag is-light is-danger is-rounded ml-3 has-text-danger is-medium" *ngIf="notification_id_displayed_to_users != notif.id">{{'notif.config.not_displayed'|translate}}</span> 
               <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium" *ngIf="notif.enabled">{{'enabled'|translate}}</span>  
               <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium" *ngIf="!notif.enabled">{{'Disabled'|translate}}</span>  
               <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium" *ngIf="notif.auth_user_only">{{'notif.config.auth_user_only'|translate}}</span>
