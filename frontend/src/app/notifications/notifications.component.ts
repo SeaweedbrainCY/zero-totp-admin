@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faBell, faCheckToSlot, faUserCheck } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCheckToSlot, faUserCheck, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { Utils } from '../common/Utils/utils.service';
 import { Router } from '@angular/router';
@@ -32,11 +32,12 @@ export class NotificationsComponent implements OnInit {
   faBell=faBell;
   notifExpiration: string | undefined;
   faCheckToSlot=faCheckToSlot;
+  faCircleNotch=faCircleNotch;
   faUserCheck=faUserCheck;
   notif_enabled: boolean = false;
   notif_auth_user_only: boolean = false;
   edit_notif_uuid: string | undefined;
-  notifications: notification_data[] = [];
+  notifications: notification_data[] | undefined;
   notifMessage= "";
   localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   displayed_notification: notification_data | undefined;
@@ -147,5 +148,13 @@ export class NotificationsComponent implements OnInit {
 
   public isNotificationDisplayed(uuid:string){
     return false;
+  }
+
+  public timestampToLocaleDate(timestamp:number){
+    return new Date(timestamp * 1000).toLocaleString() + " (" + this.localTimezone + ")";
+  }
+
+  public isNotifSelected(uuid:string){
+    return this.displayed_notification != undefined && this.displayed_notification.id == uuid;
   }
 }

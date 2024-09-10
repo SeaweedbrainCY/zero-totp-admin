@@ -46,20 +46,28 @@
       </div>
       <div class="mt-6 ml-4">
       <h3 class="is-size-3  has-text-weight-bold">{{'notif.history.title' | translate}} </h3>
+      <div class="is-flex is-justify-content-center" *ngIf="notifications == undefined">
+        <div>
+          <fa-icon [icon]="faCircleNotch" animation="spin" class="is-large mt-5"  size="xl" ></fa-icon>
+        </div>
+      </div>
       <div class="is-flex is-flex-direction-column	">
-        <div class="is-flex is-justify-content-center">
-          <div class="box  mt-4" style="width:75vw; border:#63a375 2px solid; cursor: pointer;" (click)="selectNotification('uuid')">
+        <div class="is-flex is-justify-content-center" *ngFor="let notif of notifications">
+          <div class="box  mt-4" [ngClass]="{'notifSelected':isNotifSelected(notif.id)}" style="width:75vw; cursor: pointer;" (click)="selectNotification(notif.id)" >
             <div class="is-flex is-justify-content-space-between is-align-items-center" >
               <div> 
-                <h5 class="is-size-5  has-text-weight-bold" >Notification message</h5>
-                <span class="has-text-grey">uuid • date</span>
+                <h5 class="is-size-5  has-text-weight-bold" >{{notif.message}}</h5>
+                <span class="has-text-black ">{{timestampToLocaleDate(notif.timestamp)}}</span><br>
+                <span class="has-text-grey">{{notif.id}}</span>
               </div>
            
             <div class="is-flex is-justify-content-right is-flex-wrap-wrap">
-              <span class="tag is-light is-success is-rounded ml-3 has-text-success is-medium">{{'displayed'|translate}}</span>  
-              <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium">{{'enabled'|translate}}</span>  
-              <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium">{{'notif.config.auth_user_only'|translate}}</span>
-              <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium">{{'No expiration'|translate}}</span>
+              <span class="tag is-light is-success is-rounded ml-3 has-text-success is-medium" >{{'displayed'|translate}}</span>  
+              <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium" *ngIf="notif.enabled">{{'enabled'|translate}}</span>  
+              <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium" *ngIf="!notif.enabled">{{'Disabled'|translate}}</span>  
+              <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium" *ngIf="notif.auth_user_only">{{'notif.config.auth_user_only'|translate}}</span>
+              <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium" *ngIf="!notif.auth_user_only">{{'notif.config.all_user'|translate}}</span>
+              <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium" *ngIf="notif.expiration_timestamp == null">{{'No expiration'|translate}}</span>
 
             </div>
           </div>
