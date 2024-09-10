@@ -25,6 +25,8 @@ import { UsersComponent } from './users/users.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LogoutComponent } from './logout/logout.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { RouterModule } from '@angular/router';
+import { routes } from './app-routing.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -54,6 +56,7 @@ export class MissingTranslationHelper implements MissingTranslationHandler {
     FontAwesomeModule,
     BrowserAnimationsModule,
     FormsModule,
+    //RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
     BaseChartDirective,
     ToastrModule.forRoot(),
     TranslateModule.forRoot({
