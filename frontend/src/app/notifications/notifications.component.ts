@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faBell, faCheckToSlot, faUserCheck, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { Utils } from '../common/Utils/utils.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -36,11 +36,11 @@ export class NotificationsComponent implements OnInit {
   faUserCheck=faUserCheck;
   notif_enabled: boolean = false;
   notif_auth_user_only: boolean = false;
-  edit_notif_uuid: string | undefined;
   notifications: notification_data[] | undefined;
   notifMessage= "";
   localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   displayed_notification: notification_data | undefined;
+  notifcation_id_to_display: string | undefined;
 
 
   constructor(
@@ -48,16 +48,37 @@ export class NotificationsComponent implements OnInit {
     private utils: Utils,
     private router:Router,
     private toastr: ToastrService,
-    private translate: TranslateService
+    private translate: TranslateService, 
+    private route: ActivatedRoute
     
-  ) { }
+  ) { 
+    
+  }
 
   
   
   
   ngOnInit(): void {
+    
     this.verifyAuthentication().then((isAuthenticated) => {
       if(isAuthenticated) {
+        this.route.params.subscribe(params => {
+          if(params['id'] != undefined){
+            this.notifcation_id_to_display = params['id']; 
+            console.log("Displaying notification with id: " + this.notifcation_id_to_display);
+            if(this.notifications != undefined){
+              this.displayNotification();
+          }
+        } else {
+          this.displayed_notification = undefined;
+          this.notifcation_id_to_display = undefined;
+        }
+        window.scroll({ 
+          top: 0, 
+          left: 0, 
+          behavior: 'smooth' 
+      });
+       });
         this.getAllNotifcations();
       }});
   }
@@ -67,7 +88,9 @@ export class NotificationsComponent implements OnInit {
       if (response.status === 200) {
         const body = JSON.parse(JSON.stringify(response.body));
         this.notifications = body.notifications;
-        console.log(this.notifications)
+        if (this.notifcation_id_to_display != undefined){
+          this.displayNotification();
+        }
       }
   }, (error) => {
     if(error.status != 404) {
@@ -75,6 +98,14 @@ export class NotificationsComponent implements OnInit {
         this.utils.toastError(this.toastr, "Impossible to retrieve authentications. ", error.message)
     }
   });
+  }
+
+  displayNotification(){
+    this.displayed_notification = this.notifications!.find((element) => element.id == this.notifcation_id_to_display);
+    this.notifMessage = this.displayed_notification!.message;
+    this.notif_enabled = this.displayed_notification!.enabled;
+    this.notif_auth_user_only = this.displayed_notification!.auth_user_only;
+    this.isNotificationDisplayed(this.notifcation_id_to_display!);
   }
 
 
@@ -101,10 +132,6 @@ export class NotificationsComponent implements OnInit {
 
     this.utils.toastError(this.toastr, "You are not authenticated", "")
     this.router.navigate(['/login']);
-  }
-
-  public selectNotification(uuid:string){
-    
   }
 
   public saveNotificationConfig(){
@@ -148,6 +175,34 @@ export class NotificationsComponent implements OnInit {
 
   public isNotificationDisplayed(uuid:string){
     return false;
+  }
+  
+  private hasNotificationBennModified(){
+    return this.notifcation_id_to_display != undefined && ( this.notifMessage != this.displayed_notification?.message || this.notif_enabled != this.displayed_notification?.enabled || this.notif_auth_user_only != this.displayed_notification?.auth_user_only || !(this.notifExpiration == undefined && this.displayed_notification?.expiration_timestamp == null) || ((this.notifExpiration != undefined || this.displayed_notification?.expiration_timestamp != null) && this.displayed_notification!.expiration_timestamp != Number(new Date(this.notifExpiration!).getTime() / 1000)))
+  }
+
+  public cancelNotification(){
+    if(this.hasNotificationBennModified()){
+      this.translate.get("notifications.confirm.cancel").subscribe((translation)=>{
+        if(confirm(translation)){
+          this.router.navigate(['/notifications']);
+        }
+      });
+    } else {
+      this.router.navigate(['/notifications']);
+    }
+  }
+
+  public selectNotification(uuid:string){
+    if(this.hasNotificationBennModified()){
+      this.translate.get("notifications.confirm.cancel").subscribe((translation)=>{
+        if(confirm(translation)){
+          this.router.navigate(['/notifications/' + uuid]);
+        }
+      });
+    } else {
+      this.router.navigate(['/notifications/' + uuid]);
+    }
   }
 
   public timestampToLocaleDate(timestamp:number){

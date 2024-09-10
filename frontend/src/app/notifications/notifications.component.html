@@ -8,8 +8,8 @@
       <div class="is-flex is-justify-content-center mt-6" >
         <div class="box" style="width:85vw">
           <div class="is-flex is-align-items-center	">
-            <h3 class="is-size-3  has-text-weight-bold"  *ngIf="edit_notif_uuid != undefined">{{'notif.config.title' | translate}} </h3>
-            <h3 class="is-size-3  has-text-weight-bold"  *ngIf="edit_notif_uuid == undefined">{{'notif.config.new.title' | translate}} </h3>
+            <h3 class="is-size-3  has-text-weight-bold"  *ngIf="notifcation_id_to_display != undefined">{{'notif.config.title' | translate}} </h3>
+            <h3 class="is-size-3  has-text-weight-bold"  *ngIf="notifcation_id_to_display == undefined">{{'notif.config.new.title' | translate}} </h3>
             <span class="tag is-light is-danger is-rounded ml-3 has-text-danger is-medium" *ngIf="!notif_enabled">{{'Disabled'|translate}}</span>  
             <span class="tag is-light is-success is-rounded ml-3 has-text-success is-medium" *ngIf="notif_enabled">{{'enabled'|translate}}</span>  
             
@@ -38,7 +38,8 @@
               <input type="datetime-local" name="notifExpiration" [(ngModel)]="notifExpiration"/>
 
             </div>
-            <div class="mt-6 is-flex is-flex-direction-row-reverse	">
+            <div class="mt-6 is-flex is-justify-content-space-between	">
+              <div><button class="button is-info is-light" (click)="cancelNotification()" *ngIf="notifcation_id_to_display != undefined">{{'Cancel' | translate}}</button></div>
               <button class="button is-info has-text-white" (click)="saveNotificationConfig()">{{'notif.config.save' | translate}}</button>
             </div>
           </div>
@@ -62,7 +63,8 @@
               </div>
            
             <div class="is-flex is-justify-content-right is-flex-wrap-wrap">
-              <span class="tag is-light is-success is-rounded ml-3 has-text-success is-medium" >{{'displayed'|translate}}</span>  
+              <span class="tag is-light is-success is-rounded ml-3 has-text-success is-medium" *ngIf="isNotificationDisplayed(notif.id)">{{'displayed'|translate}}</span>  
+              <span class="tag is-light is-danger is-rounded ml-3 has-text-danger is-medium" *ngIf="!isNotificationDisplayed(notif.id)">{{'notif.config.not_displayed'|translate}}</span> 
               <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium" *ngIf="notif.enabled">{{'enabled'|translate}}</span>  
               <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium" *ngIf="!notif.enabled">{{'Disabled'|translate}}</span>  
               <span class="tag is-light is-info is-rounded ml-3 has-text-info is-medium" *ngIf="notif.auth_user_only">{{'notif.config.auth_user_only'|translate}}</span>

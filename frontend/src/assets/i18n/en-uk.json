@@ -5,6 +5,7 @@
     "not_found": "Page not found.",
     "oops": "Oops!"
   },
+  "Cancel": "Cancel",
   "Disabled": "Disabled",
   "about": "About",
   "cancel": "Cancel",
@@ -101,11 +102,12 @@
         "placeholder": "Notification message"
       },
       "new": {
-        "title": "Configure new notification"
+        "title": "Configure a new notification"
       },
       "no_display": "Will not be displayed",
+      "not_displayed": "Not displayed",
       "save": "Save",
-      "title": "Configure notification"
+      "title": "Edit notification"
     },
     "history": {
       "title": "History"
@@ -113,6 +115,9 @@
     "title": "Notification banner"
   },
   "notifications": {
+    "confirm": {
+      "cancel": "Are you sure ? You'll lose all modifications"
+    },
     "errors": {
       "empty": "Notification message cannot be empty",
       "save": "An error occured. Please refresh this page and try again."
