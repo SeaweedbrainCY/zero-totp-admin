@@ -211,7 +211,7 @@ export class NotificationsComponent implements OnInit {
   }
   
   private hasNotificationBennModified(){
-    return this.notifcation_id_to_display == undefined || ( this.notifMessage != this.displayed_notification?.message || this.notif_enabled != this.displayed_notification?.enabled || this.notif_auth_user_only != this.displayed_notification?.auth_user_only || !(this.notifExpiration == undefined && this.displayed_notification?.expiration_timestamp == null) || ((this.notifExpiration != undefined || this.displayed_notification?.expiration_timestamp != null) && this.displayed_notification!.expiration_timestamp != Number(new Date(this.notifExpiration!).getTime() / 1000)))
+    return (this.notifcation_id_to_display == undefined && this.notifMessage != "") || this.notifcation_id_to_display != undefined && ( this.notifMessage != this.displayed_notification?.message || this.notif_enabled != this.displayed_notification?.enabled || this.notif_auth_user_only != this.displayed_notification?.auth_user_only || !(this.notifExpiration == undefined && this.displayed_notification?.expiration_timestamp == null) || ((this.notifExpiration != undefined || this.displayed_notification?.expiration_timestamp != null) && this.displayed_notification!.expiration_timestamp != Number(new Date(this.notifExpiration!).getTime() / 1000)))
   }
 
   public cancelNotification(){
