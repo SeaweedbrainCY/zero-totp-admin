@@ -21,7 +21,38 @@ def get_notification_by_id(notif_id):
     
 
 def update_notification(notif_id):
-    pass
+    notif = notif_repo.get_notification_by_id(notif_id)
+    if not notif:
+        return {"error": "Notification not found"}, 404
+    message = request.json.get("message") if request.json.get("message") is not None else notif.message
+    expiry = request.json.get("expiration_timestamp_utc") if request.json.get("expiration_timestamp_utc") is not None else notif.expiry
+    enabled = request.json.get("enabled") if request.json.get("enabled") is not None else notif.enabled
+    authenticated_user_only = request.json.get("auth_user_only") if request.json.get("auth_user_only") is not None else notif.authenticated_user_only
+    print("expiry", expiry)
+    if expiry:
+        try:
+            if int(float(expiry)) < dt.datetime.now().timestamp():
+                return {"error": "Expiration date must be in the future"}, 400
+            if int(float(expiry)) > (dt.datetime.now() + dt.timedelta(days=365*5)).timestamp(): 
+                return {"error": "Expiration date cannot be more than 5 years in the future. Set expiration to None to keep a notification indefinitely."}, 400
+        except ValueError as e:
+            logging.error(f"Invalid expiration date format. UNIX timestamp expected. {e}")
+            return {"error": "Invalid expiration date format. UNIX timestamp expected"}, 400
+    if message == "":
+        return {"error": "Message cannot be empty"}, 400    
+    if len(message) > 765:
+        return {"error": "Message cannot be longer than 765 characters"}, 400
+    notif = notif_repo.update_notification(notif_id, message, expiry, enabled, authenticated_user_only)
+    if not notif:
+        return {"error": "Internal server error"}, 500
+    return {
+        "id": notif.id,
+        "message": notif.message,
+        "timestamp": notif.timestamp,
+        "expiration_timestamp": notif.expiry,
+        "enabled": notif.enabled,
+        "auth_user_only": notif. authenticated_user_only
+    }, 200
 
 def delete_notification(notif_id):
     pass
@@ -50,9 +81,9 @@ def create_notification():
     authenticated_user_only = request.json.get("auth_user_only") if request.json.get("auth_user_only") else False
     if expiry :
         try:
-            if int(expiry) < dt.datetime.now().timestamp():
+            if int(float(expiry))  < dt.datetime.now().timestamp():
                 return {"error": "Expiration date must be in the future"}, 400
-            if int(expiry) > (dt.datetime.now() + dt.timedelta(days=365*5)).timestamp(): 
+            if int(float(expiry))  > (dt.datetime.now() + dt.timedelta(days=365*5)).timestamp(): 
                 return {"error": "Expiration date cannot be more than 5 years in the future. Set expiration to None to keep a notification indefinitely."}, 400
         except ValueError:
             return {"error": "Invalid expiration date format. UNIX timestamp expected"}, 400
