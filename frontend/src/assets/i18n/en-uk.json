@@ -97,6 +97,10 @@
         "label": "Expiration datetime (optional, local time i.e. "
       },
       "display": "Will be displayed",
+      "id": {
+        "label": "Notification id : ",
+        "unknown": "Not defined yet ... "
+      },
       "message": {
         "label": "Message",
         "placeholder": "Notification message"
@@ -118,9 +122,15 @@
     "confirm": {
       "cancel": "Are you sure ? You'll lose all modifications"
     },
+    "create": {
+      "success": "Notification created with success ! "
+    },
     "errors": {
       "empty": "Notification message cannot be empty",
       "save": "An error occured. Please refresh this page and try again."
+    },
+    "update": {
+      "success": "Notification updated with success ! "
     }
   },
   "passphrase": "Passphrase",

@@ -84,6 +84,8 @@ export class NotificationsComponent implements OnInit {
 
 
 
+
+
   private getAllNotifcations(){
     this.http.get("/api/v1/notifications/all",  {withCredentials:true, observe: 'response'}).subscribe((response) => {
       if (response.status === 200) {
@@ -162,31 +164,59 @@ export class NotificationsComponent implements OnInit {
         const unix_timestamp = expiration_utc / 1000;
         body["expiration_timestamp_utc"] = unix_timestamp;
       }
-      this.http.post("/api/v1/notification", body, {withCredentials:true, observe: 'response'}).subscribe((response) => {
-        if (response.status === 201) {
-          const body = JSON.parse(JSON.stringify(response.body));
-          this.router.navigate(['/notifications/' + body.id]);
+      if(this.notifcation_id_to_display == undefined){
+          this.http.post("/api/v1/notification" , body, {withCredentials:true, observe: 'response'}).subscribe((response) => {
+            if (response.status === 201) {
+              const body = JSON.parse(JSON.stringify(response.body));
+              this.translate.get("notifications.create.success").subscribe((translation)=>{
+                this.utils.toastSuccess(this.toastr, translation, "")
+              });
+              this.router.navigate(['/notifications/' + body.id]);
+            } else {
+              this.translate.get("notifications.errors.save").subscribe((translation)=>{
+                this.utils.toastSuccess(this.toastr, translation, "")
+              });
+            }
+          }, (error) => {
+            if(error.status === 401) {
+              this.redirectToLogin();
+            } else if (error.status === 400){
+              this.utils.toastError(this.toastr, "Impossible to save this user", error.error.error)
+            } else {
+                console.error(error);
+                this.utils.toastError(this.toastr, "Impossible to save this user", error.message)
+            }
+          });
         } else {
-          this.translate.get("notifications.errors.save").subscribe((translation)=>{
-            this.utils.toastError(this.toastr, translation, "")
+          this.http.put("/api/v1/notification/"+this.notifcation_id_to_display , body, {withCredentials:true, observe: 'response'}).subscribe((response) => {
+            if (response.status === 201) {
+              this.translate.get("notifications.update.success").subscribe((translation)=>{
+                this.utils.toastSuccess(this.toastr, translation, "")
+              });
+              this.getAllNotifcations();
+            } else {
+              this.translate.get("notifications.errors.save").subscribe((translation)=>{
+                this.utils.toastError(this.toastr, translation, "")
+              });
+            }
+          }, (error) => {
+            if(error.status === 401) {
+              this.redirectToLogin();
+            } else if (error.status === 400){
+              this.utils.toastError(this.toastr, "Impossible to save this user", error.error.error)
+            } else {
+                console.error(error);
+                this.utils.toastError(this.toastr, "Impossible to save this user", error.message)
+            }
           });
         }
-      }, (error) => {
-        if(error.status === 401) {
-          this.redirectToLogin();
-        } else if (error.status === 400){
-          this.utils.toastError(this.toastr, "Impossible to save this user", error.error.error)
-        } else {
-            console.error(error);
-            this.utils.toastError(this.toastr, "Impossible to save this user", error.message)
-        }
-      });
     }
   }
 
   public defineNotificationToDisplayToUsers(){
+    console.log("defineNotificationToDisplayToUsers");
     let enabled_notif: notification_data[] = this.notifications!.filter((element) => element.enabled)
-    if(this.notifcation_id_to_display == undefined && this.notifMessage != "" && this.notif_enabled){
+    if( this.notifMessage != "" && this.notif_enabled){
       const current_notif : notification_data = {
         id: 'new',
         message: this.notifMessage,

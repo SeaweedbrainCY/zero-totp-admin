@@ -19,6 +19,9 @@
             <span class="tag is-light  has-text-danger is-danger is-rounded ml-3 is-medium" *ngIf="!(notification_id_displayed_to_users == 'new' || notification_id_displayed_to_users == notifcation_id_to_display) ">{{'notif.config.no_display'|translate}}</span>
             <span class="tag is-light  has-text-success is-success is-rounded ml-3 is-medium" *ngIf="notification_id_displayed_to_users == 'new' || notification_id_displayed_to_users == notifcation_id_to_display">{{'notif.config.display'|translate}}</span>
           </div>
+          <div>
+            <span class="has-text-grey">{{'notif.config.id.label' | translate}} <span *ngIf="notifcation_id_to_display">{{notifcation_id_to_display}}</span><span *ngIf="!notifcation_id_to_display">{{'notif.config.id.unknown' | translate}}</span></span>
+          </div>
           <div class="field">
             <label class="label">{{'notif.config.message.label' | translate}}</label>
             <div class="control">
