@@ -140,3 +140,17 @@ class TestCreateNotification(unittest.TestCase):
             self.assertEqual(response.status_code, 400)
             response_data = response.json()
             self.assertEqual(response_data["error"], "Message cannot be longer than 765 characters")
+    
+    def test_create_notification_with_invalid_expiry_format(self):
+        with self.application.app_context():
+            self.client.cookies = {"session_id": self.session_id}
+            response = self.client.post(self.endpoint, json={"message": "Hello, World!", "expiration_timestamp_utc": "invalid"})
+            self.assertEqual(response.status_code, 400)
+    
+    def test_create_notification_no_message_with_expiry(self):
+        with self.application.app_context():
+            self.client.cookies = {"session_id": self.session_id}
+            response = self.client.post(self.endpoint, json={"expiration_timestamp_utc": dt.datetime.now(dt.UTC).timestamp()})
+            self.assertEqual(response.status_code, 400)
+    
+
