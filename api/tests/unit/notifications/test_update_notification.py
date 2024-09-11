@@ -54,7 +54,7 @@ class TestUpdateNotification(unittest.TestCase):
             self.client.cookies = {"session_id": self.session_id}
             response = self.client.put(f"{self.endpoint}/{self.notif['id']}", json={"message": "Hello, World!2"})
             print("response_data", response.json())
-            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.status_code, 201)
             response_data = response.json()
             self.assertEqual(response_data["message"], "Hello, World!2")
             self.assertEqual(response_data["enabled"], self.notif["enabled"])
@@ -69,7 +69,7 @@ class TestUpdateNotification(unittest.TestCase):
             self.client.cookies = {"session_id": self.session_id}
             expiry = dt.datetime.now(dt.UTC).timestamp()  + 3600
             response = self.client.put(f"{self.endpoint}/{self.notif['id']}", json={"expiration_timestamp_utc": expiry})
-            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.status_code, 201)
             response_data = response.json()
             self.assertEqual(response_data["message"], self.notif["message"])
             self.assertEqual(response_data["enabled"], self.notif["enabled"])
@@ -82,7 +82,7 @@ class TestUpdateNotification(unittest.TestCase):
         with self.application.app_context():
             self.client.cookies = {"session_id": self.session_id}
             response = self.client.put(f"{self.endpoint}/{self.notif['id']}", json={"enabled": False})
-            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.status_code, 201)
             response_data = response.json()
             self.assertEqual(response_data["message"], self.notif["message"])
             self.assertEqual(response_data["enabled"], False)
@@ -95,7 +95,7 @@ class TestUpdateNotification(unittest.TestCase):
         with self.application.app_context():
             self.client.cookies = {"session_id": self.session_id}
             response = self.client.put(f"{self.endpoint}/{self.notif['id']}", json={"auth_user_only": True})
-            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.status_code, 201)
             response_data = response.json()
             self.assertEqual(response_data["message"], self.notif["message"])
             self.assertEqual(response_data["enabled"], self.notif["enabled"])

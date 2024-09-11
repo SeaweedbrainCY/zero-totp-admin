@@ -52,7 +52,7 @@ def update_notification(notif_id):
         "expiration_timestamp": notif.expiry,
         "enabled": notif.enabled,
         "auth_user_only": notif. authenticated_user_only
-    }, 200
+    }, 201
 
 def delete_notification(notif_id):
     pass
