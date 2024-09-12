@@ -27,3 +27,12 @@ def update_notification(notif_id, message, expiry=None, enabled=False, authentic
 
 def get_all_notifications():
     return db.session.query(Notifications).all()
+
+
+def delete_notification(notif_id):
+    notif = db.session.query(Notifications).filter_by(id=notif_id).first()
+    if not notif:
+        return False
+    db.session.delete(notif)
+    db.session.commit()
+    return True
