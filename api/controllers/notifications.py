@@ -55,7 +55,13 @@ def update_notification(notif_id):
     }, 201
 
 def delete_notification(notif_id):
-    pass
+    notif = notif_repo.get_notification_by_id(notif_id)
+    if not notif:
+        return {"error": "Notification not found"}, 404
+    if notif_repo.delete_notification(notif_id):
+        return {"message": "Success"}, 200
+    logging.error(f"Internal server error. Impossible to delete notification {notif_id}. notif_repo.delete_notification returned False")
+    return {"error": "Internal server error"}, 500
 
 def get_all_notifications():
     notifs = notif_repo.get_all_notifications()
