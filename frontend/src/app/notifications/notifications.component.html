@@ -7,17 +7,22 @@
       </h1>
       <div class="is-flex is-justify-content-center mt-6" >
         <div class="box" style="width:85vw">
-          <div class="is-flex is-align-items-center	">
-            <h3 class="is-size-3  has-text-weight-bold"  *ngIf="notifcation_id_to_display != undefined">{{'notif.config.title' | translate}} </h3>
-            <h3 class="is-size-3  has-text-weight-bold"  *ngIf="notifcation_id_to_display == undefined">{{'notif.config.new.title' | translate}} </h3>
-            <span class="tag is-light is-danger is-rounded ml-3 has-text-danger is-medium" *ngIf="!notif_enabled">{{'Disabled'|translate}}</span>  
-            <span class="tag is-light is-success is-rounded ml-3 has-text-success is-medium" *ngIf="notif_enabled">{{'enabled'|translate}}</span>  
+          <div class="is-flex is-justify-content-space-between">
+            <div class="is-flex is-align-items-center	">
+              <h3 class="is-size-3  has-text-weight-bold"  *ngIf="notifcation_id_to_display != undefined">{{'notif.config.title' | translate}} </h3>
+              <h3 class="is-size-3  has-text-weight-bold"  *ngIf="notifcation_id_to_display == undefined">{{'notif.config.new.title' | translate}} </h3>
+              <span class="tag is-light is-danger is-rounded ml-3 has-text-danger is-medium" *ngIf="!notif_enabled">{{'Disabled'|translate}}</span>  
+              <span class="tag is-light is-success is-rounded ml-3 has-text-success is-medium" *ngIf="notif_enabled">{{'enabled'|translate}}</span>  
+
+              <span class="tag is-light  has-text-danger is-danger is-rounded ml-3 is-medium" *ngIf="notif_auth_user_only">{{'notif.config.auth_user_only'|translate} }</span>
+              <span class="tag is-light  has-text-success is-success is-rounded ml-3 is-medium" *ngIf="!notif_auth_user_only">{{'notif.config.all_user'|translate}}</span>
             
-            <span class="tag is-light  has-text-danger is-danger is-rounded ml-3 is-medium" *ngIf="notif_auth_user_only">{{'notif.config.auth_user_only'|translate}}</span>
-            <span class="tag is-light  has-text-success is-success is-rounded ml-3 is-medium" *ngIf="!notif_auth_user_only">{{'notif.config.all_user'|translate}}</span>
-            
-            <span class="tag is-light  has-text-danger is-danger is-rounded ml-3 is-medium" *ngIf="!will_the_current_notification_be_displayed">{{'notif.config.no_display'|translate}}</span>
+              <span class="tag is-light  has-text-danger is-danger is-rounded ml-3 is-medium" *ngIf="!will_the_current_notification_be_displayed">{{'notif.config.no_display'|translate}}</span>
             <span class="tag is-light  has-text-success is-success is-rounded ml-3 is-medium" *ngIf="will_the_current_notification_be_displayed">{{'notif.config.display'|translate}}</span>
+          </div>
+          <div>
+            <button class="button is-danger has-text-white" *ngIf="notifcation_id_to_display != undefined" (click)="open_delete_modal(notifcation_id_to_display)"><fa-icon [icon]="faTrashCan"></fa-icon> </button>
+          </div>
           </div>
           <div>
             <span class="has-text-grey">{{'notif.config.id.label' | translate}} <span *ngIf="notifcation_id_to_display">{{notifcation_id_to_display}}</span><span *ngIf="!notifcation_id_to_display">{{'notif.config.id.unknown' | translate}}</span></span>
@@ -83,3 +88,28 @@
       
     </article>
 </section>
+
+<div  class="modal modal-fx-fadeInScale"
+    [ngClass]="{'is-active': confirm_delete_modal_active}">
+    <div class="modal-background" (click)="close_delete_modal()"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title has-text-danger has-text-weight-bold">You are about to delete an user</p>
+            <button class="delete" aria-label="close" (click)="close_delete_modal()"></button>
+          </header>
+          <section class="modal-card-body content">
+            <p class="has-text-weight-bold has-text-danger">Are you sure you want to delete the notification <code >{{notification_id_to_delete}}</code> ?<br> Notification message : <br>  
+              <code >{{get_notification_by_id(notification_id_to_delete)!.message}}</code></p>
+          </section>
+
+          <footer class="modal-card-foot is-flex is-justify-content-space-around">
+            <button class="button is-dark" (click)="close_delete_modal()" [disabled]="is_deleting"><fa-icon [icon]="faXmark" class="mr-2"></fa-icon> Cancel</button>
+              <button class="button is-danger has-text-white"  [ngClass]="{'is-loading':is_deleting}" (click)="confirm_delete()">
+                  <fa-icon [icon]="faTrashCan" class="mr-2" ></fa-icon> Delete 
+              </button>
+         
+
+          </footer>
+
+    </div>
+</div>

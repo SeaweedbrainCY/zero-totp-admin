@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { faBell, faCheckToSlot, faUserCheck, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCheckToSlot, faUserCheck, faCircleNotch, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { Utils } from '../common/Utils/utils.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,6 +34,8 @@ export class NotificationsComponent implements OnInit {
   faCheckToSlot=faCheckToSlot;
   faCircleNotch=faCircleNotch;
   faUserCheck=faUserCheck;
+  faXmark=faXmark;
+  faTrashCan=faTrashCan;
   notif_enabled: boolean = false;
   notif_auth_user_only: boolean = false;
   notifications: notification_data[] | undefined;
@@ -43,6 +45,9 @@ export class NotificationsComponent implements OnInit {
   notifcation_id_to_display: string | undefined;
   zero_totp_displayed_notification_id: string | undefined;
   will_the_current_notification_be_displayed: boolean = false;
+  confirm_delete_modal_active=false;
+  notification_id_to_delete: string | undefined;
+  is_deleting: boolean = false;
 
 
   constructor(
@@ -214,6 +219,13 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
+  get_notification_by_id(uuid:string|undefined){
+    if(uuid == undefined){
+      return {id: 'error', message: "If you see this, an error occurred. You should try again and not try to delete.", timestamp: Number(new Date().getTime() / 1000), expiration_timestamp: null, auth_user_only: false, enabled: false}
+    }
+    return this.notifications!.find((element) => element.id == uuid);
+  }
+
   public defineNotificationToDisplayInZeroTOTP(){
     console.log("defineNotificationToDisplayToUsers");
     let enabled_notif: notification_data[] = this.notifications!.filter((element) => element.enabled)
@@ -281,4 +293,48 @@ export class NotificationsComponent implements OnInit {
   public isNotifSelected(uuid:string){
     return this.displayed_notification != undefined && this.displayed_notification.id == uuid;
   }
+
+  public confirm_delete(){
+    this.is_deleting = true;
+    this.http.delete("/api/v1/notification/"+this.notification_id_to_delete, {withCredentials:true, observe: 'response'}).subscribe((response) => {
+      if (response.status === 200) {
+        this.translate.get("notifications.delete.success").subscribe((translation)=>{
+          this.utils.toastSuccess(this.toastr, translation, "")
+        });
+        this.close_delete_modal();
+        this.router.navigate(['/notifications']);
+      } else {
+        this.translate.get("notifications.errors.delete").subscribe((translation)=>{
+          this.utils.toastError(this.toastr, translation, "")
+        });
+        this.is_deleting = false;
+      }
+    }, (error) => {
+      if(error.status === 401) {
+        this.redirectToLogin();
+      } else if (error.status === 400){
+        this.utils.toastError(this.toastr, "Impossible to delete this notification", error.error.error)
+      } else {
+          console.error(error);
+          this.utils.toastError(this.toastr, "Impossible to delete this notification", error.message)
+      }
+      this.is_deleting = false;
+    });
+   
+  }
+
+  public close_delete_modal(){
+    if (this.is_deleting){
+      return;
+    }
+    this.confirm_delete_modal_active = false;
+    this.notification_id_to_delete = undefined;
+  }
+
+  public open_delete_modal(uuid:string){
+    this.confirm_delete_modal_active = true;
+    this.notification_id_to_delete = uuid;
+  }
 }
+
+

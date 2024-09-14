@@ -125,7 +125,11 @@
     "create": {
       "success": "Notification created with success ! "
     },
+    "delete": {
+      "success": "Deleted with success !"
+    },
     "errors": {
+      "delete": "The status of the deletion is unknown. Please check and try again if needed",
       "empty": "Notification message cannot be empty",
       "save": "An error occured. Please refresh this page and try again."
     },
