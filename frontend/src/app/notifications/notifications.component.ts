@@ -41,7 +41,8 @@ export class NotificationsComponent implements OnInit {
   localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   displayed_notification: notification_data | undefined;
   notifcation_id_to_display: string | undefined;
-  notification_id_displayed_to_users: string | undefined;
+  zero_totp_displayed_notification_id: string | undefined;
+  will_the_current_notification_be_displayed: boolean = false;
 
 
   constructor(
@@ -95,7 +96,7 @@ export class NotificationsComponent implements OnInit {
         if (this.notifcation_id_to_display != undefined){
           this.displayNotification();
         }
-        this.defineNotificationToDisplayToUsers();
+        this.defineNotificationToDisplayInZeroTOTP();
       }
   }, (error) => {
     if(error.status != 404) {
@@ -213,7 +214,7 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
-  public defineNotificationToDisplayToUsers(){
+  public defineNotificationToDisplayInZeroTOTP(){
     console.log("defineNotificationToDisplayToUsers");
     let enabled_notif: notification_data[] = this.notifications!.filter((element) => element.enabled)
     if( this.notifMessage != "" && this.notif_enabled){
@@ -229,15 +230,20 @@ export class NotificationsComponent implements OnInit {
     }
     enabled_notif = enabled_notif.sort((a, b) => (a.timestamp > b.timestamp) ? -1 : 1);
     console.log(enabled_notif);
+    this.will_the_current_notification_be_displayed = false;
     for (let notif of enabled_notif){
       if(notif.expiration_timestamp == null || notif.expiration_timestamp > Number(new Date().getTime() / 1000)){
-        this.notification_id_displayed_to_users = notif.id;
-        console.log("notification_id_displayed_to_users: " + this.notification_id_displayed_to_users);
-        return;
+        if(notif.id == 'new'){
+          this.will_the_current_notification_be_displayed = true;
+        } else {
+          this.zero_totp_displayed_notification_id = notif.id;
+          console.log("notification_id_displayed_to_users: " + this.zero_totp_displayed_notification_id);
+          return;
+        }
       }
     }
     console.log("notification_id_displayed_to_users: undefined");
-    this.notification_id_displayed_to_users = undefined;
+    this.zero_totp_displayed_notification_id = undefined;
   }
   
   private hasNotificationBennModified(){
