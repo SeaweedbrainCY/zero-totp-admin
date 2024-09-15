@@ -52,13 +52,27 @@ export class LoginComponent implements OnInit {
 
 
     ngOnInit(){
-      console.log("init")
+      this.verifyAuthentication().then((isAuthenticated) => {
+        if(isAuthenticated) {
+          this.router.navigate(['/overview']);
+        }
+      });
       
     }
 
   
 
-
+    private verifyAuthentication(): Promise<boolean> {
+      return new Promise((resolve, reject) => {
+        this.http.get("/api/v1/whoami",  {withCredentials:true, observe: 'response'}).subscribe((response) => {
+          if (response.status === 200) {
+            resolve(true);
+          }
+      }, (_) => {
+          resolve(false);
+      });
+    });
+  }
   
   login(){
     if(this.username == "" || this.password == ""){
