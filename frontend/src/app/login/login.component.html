@@ -73,22 +73,29 @@
         <button class="delete" aria-label="close" (click)="reset_admin_passphrase_modal = !reset_admin_passphrase_modal"></button>
       </header>
         <section class="modal-card-body">
-          <article class="message is-primary">
+          <!--<article class="message is-primary">
             <div class="message-header" style="cursor:pointer" (click)="reset_root_doc_displayed=!reset_root_doc_displayed">
               <p><strong>Option 1 - </strong>Reset a non-root admin password</p>
               <button> <fa-icon [icon]="faChevronUp" *ngIf="reset_root_doc_displayed"></fa-icon> <fa-icon [icon]="faChevronDown" *ngIf="!reset_root_doc_displayed"></fa-icon> </button>
             </div>
             <div class="message-body" *ngIf="reset_root_doc_displayed">
-              TODO
+              Will come soon. For now
             </div>
-          </article>
+          </article>-->
           <article class="message is-primary mt-4">
             <div class="message-header" style="cursor:pointer" (click)="reset_root_pass_displayed=!reset_root_pass_displayed">
-              <p><strong>Option 2 - </strong>Reset the root password</p>
+              <p class="has-text-white"><strong>Option 1 - </strong>Reset the root password</p>
               <button> <fa-icon [icon]="faChevronUp" *ngIf="reset_root_pass_displayed"></fa-icon> <fa-icon [icon]="faChevronDown" *ngIf="!reset_root_pass_displayed"></fa-icon> </button>
             </div>
             <div class="message-body" *ngIf="reset_root_pass_displayed">
-              TODO
+              1. Go on your server where the docker container is running<br>
+              2. Enter the container :<br>
+              <code>docker exec -it &lt;container_name&gt; /bin/sh</code><br>
+              3. Go in the api folder :<br>
+              <code>cd /api</code><br>
+              4. Reset the root password using the script :<br>
+              <code>python tools/regenerate_root_password.py</code><br>
+              5. You're good to go !<br>
             </div>
           </article>
         </section>
