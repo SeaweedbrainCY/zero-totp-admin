@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 alembic check > /tmp/alembic_check.log 2>&1
 if [ $? -eq 0 ]; then 
     cat /tmp/alembic_check.log
