@@ -1,0 +1,64 @@
+name: "Zero-TOTP admin deployment"
+
+on:
+  push:
+    tags:
+      - '**'
+
+
+
+jobs:
+    tests_and_scans:
+      name: Tests and security analysis
+      uses: ./.github/workflows/sonarscan.yml  # use the callable tests job to run tests
+      secrets:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
+    publish_frontend:
+      needs: [tests_and_scans]
+      name: Publish Frontend Docker image
+      runs-on: ubuntu-latest
+      env:
+        DOCKER_IMAGE_NAME: "zero-totp-admin-frontend"
+      steps:
+        - uses: actions/checkout@v3
+        - name: Build
+          working-directory: ./frontend
+          run: |
+            current_version=$(echo ${{ github.ref_name }} | sed 's/\([0-9]*\.[0-9]*\).*$/\1/')
+            docker build -t $DOCKER_IMAGE_NAME:latest -t $DOCKER_IMAGE_NAME:$current_version .
+        - name: Login to GitHub Container Registry
+          run: echo ${{ secrets.TOKEN }} | docker login ghcr.io -u ${{ secrets.USERNAME }} --password-stdin
+        - name: Push Docker image to GitHub Container Registry
+          run: |
+            current_version=$(echo ${{ github.ref_name }} | sed 's/\([0-9]*\.[0-9]*\).*$/\1/')
+            docker tag $DOCKER_IMAGE_NAME:latest ghcr.io/${{ secrets.USERNAME }}/$DOCKER_IMAGE_NAME:latest
+            docker tag $DOCKER_IMAGE_NAME:$current_version ghcr.io/${{ secrets.USERNAME }}/$DOCKER_IMAGE_NAME:$current_version
+            docker push ghcr.io/${{ secrets.USERNAME }}/$DOCKER_IMAGE_NAME:latest
+            docker push ghcr.io/${{ secrets.USERNAME }}/$DOCKER_IMAGE_NAME:$current_version
+    publish_api:
+      needs: [tests_and_scans]
+      name: Publish API Docker image
+      runs-on: ubuntu-latest
+      env:
+        DOCKER_IMAGE_NAME: "zero-totp-admin-api"
+      steps:
+        - uses: actions/checkout@v3
+        - name: Create environment file
+          working-directory: ./frontend
+          run: bash generate-env.sh '${{ github.ref_name }}'
+        - name: Build
+          working-directory: ./api
+          run: |
+            current_version=$(echo ${{ github.ref_name }} | sed 's/\([0-9]*\.[0-9]*\).*$/\1/')
+            docker build -t $DOCKER_IMAGE_NAME:latest -t $DOCKER_IMAGE_NAME:$current_version .
+        - name: Login to GitHub Container Registry
+          run: echo ${{ secrets.TOKEN }} | docker login ghcr.io -u ${{ secrets.USERNAME }} --password-stdin
+        - name: Push Docker image to GitHub Container Registry
+          run: |
+            current_version=$(echo ${{ github.ref_name }} | sed 's/\([0-9]*\.[0-9]*\).*$/\1/')
+            docker tag $DOCKER_IMAGE_NAME:latest ghcr.io/${{ secrets.USERNAME }}/$DOCKER_IMAGE_NAME:latest
+            docker tag $DOCKER_IMAGE_NAME:$current_version ghcr.io/${{ secrets.USERNAME }}/$DOCKER_IMAGE_NAME:$current_version
+            docker push ghcr.io/${{ secrets.USERNAME }}/$DOCKER_IMAGE_NAME:latest
+            docker push ghcr.io/${{ secrets.USERNAME }}/$DOCKER_IMAGE_NAME:$current_version
