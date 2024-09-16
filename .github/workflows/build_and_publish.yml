@@ -20,11 +20,11 @@ jobs:
       name: Publish Frontend Docker image
       runs-on: ubuntu-latest
       env:
-        DOCKER_IMAGE_NAME: "zero-totp-admin-frontend"
+        DOCKER_IMAGE_NAME: "zero_totp_admin_frontend"
       steps:
         - uses: actions/checkout@v3
         - name: Create environment file
-          working-directory: ./api
+          working-directory: ./frontend
           run: bash generate-env.sh '${{ github.ref_name }}'
         - name: Build
           working-directory: ./frontend
@@ -45,7 +45,7 @@ jobs:
       name: Publish API Docker image
       runs-on: ubuntu-latest
       env:
-        DOCKER_IMAGE_NAME: "zero-totp-admin-api"
+        DOCKER_IMAGE_NAME: "zero_totp_admin_api"
       steps:
         - uses: actions/checkout@v3
         - name: Build
