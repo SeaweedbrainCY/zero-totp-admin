@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CSP_NONCE } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
@@ -72,7 +72,10 @@ export class MissingTranslationHelper implements MissingTranslationHandler {
     }),
     HttpClientModule,
   ],
-  providers: [Crypto, Utils, provideCharts(withDefaultRegisterables()),],
+  providers: [Crypto, Utils, provideCharts(withDefaultRegisterables()),{
+    provide: CSP_NONCE,
+    useValue: 'random-nonce-placeholder'
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { 
