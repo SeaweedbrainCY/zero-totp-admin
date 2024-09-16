@@ -5,7 +5,7 @@ WORKDIR /api
 
 RUN apk upgrade --no-cache
 
-RUN apk add --no-cache python3 py3-pip build-base python3-dev libffi-dev openssl-dev gcc  build-deps musl-dev
+RUN apk add --no-cache --virtual build-deps python3 py3-pip build-base python3-dev libffi-dev openssl-dev gcc musl-dev
 RUN pip3 install --no-cache --upgrade pip setuptools
 RUN apk add --no-cache mariadb-dev
 
