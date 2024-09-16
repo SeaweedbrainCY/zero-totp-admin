@@ -23,6 +23,9 @@ jobs:
         DOCKER_IMAGE_NAME: "zero-totp-admin-frontend"
       steps:
         - uses: actions/checkout@v3
+        - name: Create environment file
+          working-directory: ./api
+          run: bash generate-env.sh '${{ github.ref_name }}'
         - name: Build
           working-directory: ./frontend
           run: |
@@ -45,9 +48,6 @@ jobs:
         DOCKER_IMAGE_NAME: "zero-totp-admin-api"
       steps:
         - uses: actions/checkout@v3
-        - name: Create environment file
-          working-directory: ./frontend
-          run: bash generate-env.sh '${{ github.ref_name }}'
         - name: Build
           working-directory: ./api
           run: |
