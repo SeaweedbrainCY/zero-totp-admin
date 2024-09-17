@@ -84,15 +84,6 @@ class DatabaseConfig:
         self.zero_totp_db_uri = data["zero_totp_db_uri"] 
         self.zero_totp_admin_uri = data["zero_totp_admin_uri"] 
         
-class EnvironmentConfig:
-    required_keys = ["type"]
-    def __init__(self, data):
-        for key in self.required_keys:
-            if key not in data:
-                logging.error(f"[FATAL] Load config fail. Was expecting the key environment.{key}")
-                exit(1)
-        self.type = data["type"] 
-        self.config_version = data.get("config_version", "1.0.0")
 
 class Config:
     required_keys = ["api", "database"]
