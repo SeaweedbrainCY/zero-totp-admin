@@ -55,7 +55,7 @@
       </div>
       <div class="mt-6 ml-4">
       <h3 class="is-size-3  has-text-weight-bold">{{'notif.history.title' | translate}} </h3>
-      <div class="is-flex is-justify-content-center" *ngIf="notifications == undefined">
+      <div class="is-flex is-justify-content-center" *ngIf="notifications == []">
         <div>
           <fa-icon [icon]="faCircleNotch" animation="spin" class="is-large mt-5"  size="xl" ></fa-icon>
         </div>

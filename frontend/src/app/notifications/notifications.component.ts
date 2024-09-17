@@ -38,7 +38,7 @@ export class NotificationsComponent implements OnInit {
   faTrashCan=faTrashCan;
   notif_enabled: boolean = false;
   notif_auth_user_only: boolean = false;
-  notifications: notification_data[] | undefined;
+  notifications: notification_data[]=[];
   notifMessage= "";
   localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   displayed_notification: notification_data | undefined;
