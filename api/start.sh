@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-python admin_database/tool/init_database.py
+python -m admin_database.tool.init_database
 if [ $? -ne 0 ]; then 
     exit 1
 fi
