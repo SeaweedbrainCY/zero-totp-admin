@@ -22,5 +22,6 @@ services:
       - 8080:8080
     volumes:
       - /var/log/api:/var/log/api
-      - ./config:/api/config
+      - ./api/config:/api/config
+      - ./api/database:/api/database
     restart: always
