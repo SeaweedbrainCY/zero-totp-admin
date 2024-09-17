@@ -1,10 +1,10 @@
 api:
   port: 8080
-  jwt_secret: change_me
+  jwt_secret: change_me_with_a_long_alphanumeric_string
 
 database:
-  zero_totp_db_uri: "change_me"
-  zero_totp_admin_uri: "sqlite://zero_totp_admin.db"
+  zero_totp_db_uri: "change_me" # It should be a valid URI for a database like mysql://user:password@host:port/dbname
+  zero_totp_admin_uri: "sqlite:///database/zero_totp_admin.db"
 
 features: # optional
   admin_can_delete: false # default
