@@ -201,6 +201,14 @@ paths:
                           type: string
                           description: Signup date
                           example: "2021-01-01"
+                        total_of_2fa:
+                          type: number
+                          description: Total number of 2FA registered
+                          example: 2
+                        is_google_drive_enabled:
+                          type: boolean
+                          description: Google Drive status
+                          example: true
   /users/{user_id}:
     get:
       operationId: controllers.users.get_user_by_id
@@ -246,6 +254,14 @@ paths:
                     type: string
                     description: Signup date
                     example: "2021-01-01"
+                  total_of_2fa:
+                    type: number
+                    description: Total number of 2FA registered
+                    example: 2
+                  is_google_drive_enabled:
+                    type: boolean
+                    description: Google Drive status
+                    example: true
     delete:
       operationId: controllers.users.delete_user
       tags:

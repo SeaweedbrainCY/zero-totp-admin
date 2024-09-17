@@ -1,6 +1,6 @@
 from flask import request, Response
 import os
-from main_database.repositories import user as user_repo
+from main_database.repositories import user as user_repo, google_drive_integration as google_drive_repo, totp_codes as totp_codes_repo
 from base64 import b64encode, b64decode
 from environment.configuration import conf, logging
 import json
@@ -22,6 +22,8 @@ def get_user_by_id(user_id):
     user = user_repo.get_user_by_id(user_id)
     if not user:
         return {"error": "User not found"}, 404
+    total_totp_secrets = totp_codes_repo.count_totp_secrets_by_user_id(user_id)
+    google_drive_enabled = google_drive_repo.is_google_drive_enabled_by_userid(user_id)
 
     return {
         "username": user.username,
@@ -29,7 +31,9 @@ def get_user_by_id(user_id):
         "id": user.id, 
         "signup_date": user.createdAt, 
         "isVerified": user.isVerified,
-        "isBlocked": user.isBlocked
+        "isBlocked": user.isBlocked,
+        "total_of_2fa": total_totp_secrets,
+        "is_google_drive_enabled": google_drive_enabled
     }, 200
 
 def block_user(user_id):

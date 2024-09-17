@@ -1,7 +1,7 @@
 import unittest
 from main import app,db
 from unittest.mock import patch
-from zero_totp_db_model.model import User
+from zero_totp_db_model.model import User,  TOTP_secret, GoogleDriveIntegration
 from environment.configuration import conf
 from admin_database.models import Admin as AdminModel, Session as SessionModel
 from uuid import uuid4
@@ -24,7 +24,9 @@ class TestGetAllUsers(unittest.TestCase):
              "email":"users2@mail.com",
              "signup_date":"2021-10-10",
             "isVerified":True,
-            "isBlocked":False
+            "isBlocked":False, 
+            "total_of_2fa":3,
+            "is_google_drive_enabled":False
             },
             {
              "id":1,
@@ -32,7 +34,9 @@ class TestGetAllUsers(unittest.TestCase):
              "email":"users1@mail.com",
              "signup_date":"2022-10-10",
             "isVerified":True,
-            "isBlocked":True
+            "isBlocked":True,
+            "total_of_2fa":0,
+            "is_google_drive_enabled":False
             },
             {
              "id":22,
@@ -40,7 +44,9 @@ class TestGetAllUsers(unittest.TestCase):
              "email":"users22@mail.com",
              "signup_date":"2021-12-10",
             "isVerified":True,
-            "isBlocked":False
+            "isBlocked":False,
+            "total_of_2fa":20,
+            "is_google_drive_enabled":False
             },
             {
              "id":90,
@@ -48,7 +54,9 @@ class TestGetAllUsers(unittest.TestCase):
              "email":"users90@mail.com",
              "signup_date":"2021-10-31",
             "isVerified":False,
-            "isBlocked":False
+            "isBlocked":False,
+            "total_of_2fa":10,
+            "is_google_drive_enabled":False
             },
             {
              "id":62,
@@ -56,7 +64,9 @@ class TestGetAllUsers(unittest.TestCase):
              "email":"users62@mail.com",
              "signup_date":"2024-10-10",
             "isVerified":False,
-            "isBlocked":True
+            "isBlocked":True,
+            "total_of_2fa":0,
+            "is_google_drive_enabled":True
             },
             {
              "id":20,
@@ -64,15 +74,21 @@ class TestGetAllUsers(unittest.TestCase):
              "email":"users20@mail.com",
              "signup_date":"2021-20-10",
             "isVerified":True,
-            "isBlocked":False
+            "isBlocked":False,
+            "total_of_2fa":1,
+            "is_google_drive_enabled":False
             },
 
         ]
         with self.application.app_context():
             db.create_all()
             for user in self.users_info:
-                user = User(id=user["id"], username=user["username"], mail=user["email"], password="random", passphraseSalt="doesn't matter", isVerified=user["isVerified"], derivedKeySalt="doesn't matter", createdAt=user["signup_date"], isBlocked=user["isBlocked"])
-                db.session.add(user)
+                user_obj = User(id=user["id"], username=user["username"], mail=user["email"], password="random", passphraseSalt="doesn't matter", isVerified=user["isVerified"], derivedKeySalt="doesn't matter", createdAt=user["signup_date"], isBlocked=user["isBlocked"])
+                for _ in range(user["total_of_2fa"]):
+                    db.session.add(TOTP_secret(uuid=str(uuid4()), user_id=user["id"], secret_enc="test_test"))
+                db.session.add(GoogleDriveIntegration( user_id=user["id"], isEnabled=user["is_google_drive_enabled"]))
+                db.session.add(user_obj)
+
 
             admin = AdminModel(id=str(uuid4()), username="root", password="random", password_salt="doesn't matter")
             session = SessionModel(id=self.session_id, user_id=admin.id, expiration=dt.datetime.now(dt.UTC).timestamp() + 3600)
