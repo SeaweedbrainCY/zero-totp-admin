@@ -1,0 +1,26 @@
+############
+## This is a sample docker-compose file for running the frontend and api services for Zero-TOTP Admin
+## Follow the documentation to configure the services properly
+############
+
+services:
+  frontend:
+    container_name: frontend
+    image: ghcr.io/seaweedbraincy/zero_totp_admin_frontend:latest
+    user: "101:101"
+    ports:
+      - 4200:80
+    volumes:
+      - /var/log/nginx/frontend:/var/log/nginx
+    restart: always
+
+  api:
+    container_name: api
+    image: ghcr.io/seaweedbraincy/zero_totp_admin_api:latest
+    user: '1001:1001'
+    ports:
+      - 8080:8080
+    volumes:
+      - /var/log/api:/var/log/api
+      - ./config:/api/config
+    restart: always
