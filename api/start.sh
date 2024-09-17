@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
+python admin_database/tool/init_database.py
+if [ $? -ne 0 ]; then 
+    exit 1
+fi
 alembic check > /tmp/alembic_check.log 2>&1
 if [ $? -eq 0 ]; then 
     cat /tmp/alembic_check.log
