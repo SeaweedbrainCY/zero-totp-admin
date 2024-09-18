@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faUsers, faUserLock, faEye, faTrash, faXmark,faCircleNotch, faLockOpen, faHand } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faUserLock, faEye, faTrash, faXmark,faCircleNotch, faLockOpen, faHand, faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { Utils } from '../common/Utils/utils.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +14,8 @@ export class UsersComponent implements OnInit{
   faUserLock = faUserLock;
   faEye = faEye;
   faTrash = faTrash;
+  faChevronDown=faChevronDown;
+  faChevronRight=faChevronRight;
   faLockOpen = faLockOpen;
   faHand = faHand;
   faCircleNotch = faCircleNotch;
@@ -30,6 +32,7 @@ export class UsersComponent implements OnInit{
   is_deleting=false;
   deletion_timer = 5;
   interval:any=undefined;
+  selected_row_user_id: number = -1;
 
  
   constructor(
@@ -228,6 +231,18 @@ export class UsersComponent implements OnInit{
     if(this.interval != undefined){
       clearInterval(this.interval);
     }
+  }
+
+  select_row(user_id: number) {
+    if(this.selected_row_user_id === user_id) {
+      this.selected_row_user_id = -1;
+    } else {
+      this.selected_row_user_id = user_id;
+    }
+  }
+
+  boolean_to_string(value: boolean) {
+    return value ? "Enabled" : "Disabled";
   }
 
 

@@ -4,6 +4,7 @@
     <table class="table is-striped is-fullwidth is-hoverable " >
         <thead>
             <tr  class="has-text-centered">
+              <th></th>
               <th class="has-text-centered">ID</th>
               <th class="has-text-centered">Username</th>
               <th class="has-text-centered">Email</th>
@@ -13,9 +14,25 @@
             </tr>
           </thead>
           <tbody *ngIf="!loading">
-            <tr *ngFor="let user of users">
+            <tr *ngFor="let user of users" style="cursor:pointer ;" (click)="select_row(user.id)">
+              <td>
+                <fa-icon [icon]="faChevronRight" class="mr-2" *ngIf="user.id != selected_row_user_id"></fa-icon>
+                <fa-icon [icon]="faChevronDown" class="mr-2" *ngIf="user.id == selected_row_user_id"></fa-icon>
+              </td>
               <td>{{user.id}}</td>
-                <td>{{user.username}}</td>
+                <td>{{user.username}}
+                  <div *ngIf="user.id == selected_row_user_id"class="is-flex is-justify-content-space-around is-flex-direction-column mt-2 mb-2"> 
+                    
+                    <div class="tags has-addons">
+                      <span class="tag ">2FA configured</span>
+                      <span class="tag is-primary has-text-white has-text-weight-bold">{{user.total_of_2fa}}</span>
+                    </div>
+                    <div class="tags has-addons mt-2">
+                      <span class="tag">Google Drive</span>
+                      <span class="tag has-text-white has-text-weight-bold" [ngClass]="{'is-success':user.is_google_drive_enabled, 'is-danger':!user.is_google_drive_enabled}">{{boolean_to_string(user.is_google_drive_enabled)}}</span>
+                    </div>
+                  </div>
+                </td>
                 <td>{{user.email}}</td>
                 <td>
                   <div class="is-flex is-justify-content-space-around">
@@ -26,11 +43,13 @@
                     </div>
                 </td>
                 <td class="has-text-grey">{{user.signup_date}}</td>
-                <td class="is-flex">
+                <td>
+                  <div class="is-flex">
                     <button class="button is-warning has-text-white mr-2 ml-2" (click)="disable_user(user.id)" *ngIf="!user.isBlocked"><fa-icon [icon]="faUserLock"></fa-icon></button>
                     <button class="button is-success has-text-white mr-2 ml-2" (click)="unblock(user.id)" *ngIf="user.isBlocked" [ngClass]="{'is-loading':is_unblocking}"><fa-icon [icon]="faLockOpen"></fa-icon></button>
 
                     <button class="button is-danger has-text-white mr-2 ml-2" (click)="delete_user(user.id)"><fa-icon [icon]="faTrash"></fa-icon></button>
+                  </div>
                 </td>
               </tr>
             </tbody>
