@@ -34,7 +34,7 @@ def get_user_by_id(user_id):
         "isBlocked": user.isBlocked,
         "total_of_2fa": total_totp_secrets,
         "is_google_drive_enabled": google_drive_enabled,
-        "last_login_date": int(float(user.last_login_date))
+        "last_login_date": int(float(user.last_login_date)) if user.last_login_date else 0
     }, 200
 
 def block_user(user_id):

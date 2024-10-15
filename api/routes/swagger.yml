@@ -268,7 +268,7 @@ paths:
                     example: true
                   last_login_date:
                     type: number
-                    description: User's last login date UNIX timestamp 
+                    description: User's last login date UNIX timestamp. Is 0 if the user never logged in
                     example: 1729013981
     delete:
       operationId: controllers.users.delete_user
