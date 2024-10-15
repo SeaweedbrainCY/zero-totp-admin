@@ -209,6 +209,10 @@ paths:
                           type: boolean
                           description: Google Drive status
                           example: true
+                        last_login_date:
+                          type: number
+                          description: User's last login date UNIX timestamp 
+                          example: 1729013981
   /users/{user_id}:
     get:
       operationId: controllers.users.get_user_by_id
@@ -262,6 +266,10 @@ paths:
                     type: boolean
                     description: Google Drive status
                     example: true
+                  last_login_date:
+                    type: number
+                    description: User's last login date UNIX timestamp 
+                    example: 1729013981
     delete:
       operationId: controllers.users.delete_user
       tags:
