@@ -61,7 +61,10 @@ class TestGetUserById(unittest.TestCase):
             response = self.client.get(f"{self.endpoint}{self.user_info['id']}")
             self.assertEqual(response.status_code, 200)
             for key in self.user_info.keys():
-                self.assertEqual(response.json()[key], self.user_info[key])
+                if "last_login_date" == key:
+                    self.assertEqual(response.json()[key], int(float(self.user_info[key])) if self.user_info[key]else 0)
+                else:
+                    self.assertEqual(response.json()[key], self.user_info[key])
     
     def test_get_user_by_id_not_found(self):
         with self.application.app_context():

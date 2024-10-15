@@ -124,7 +124,10 @@ class TestGetAllUsers(unittest.TestCase):
                         break
                 self.assertNotEqual(infos, {}, f"User not found. Was looking for user with id {user['id']} in {returned_users}")
                 for key in user.keys():
-                    self.assertEqual(infos[key], user[key])
+                    if "last_login_date" == key:
+                        self.assertEqual(infos[key], int(float(user[key])) if user[key] else 0)
+                    else:
+                        self.assertEqual(infos[key], user[key])
     
 
 
