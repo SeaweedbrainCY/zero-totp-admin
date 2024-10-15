@@ -26,14 +26,15 @@ class TestGetUserById(unittest.TestCase):
             "isVerified":True,
             "isBlocked":False, 
             "total_of_2fa":3,
-            "is_google_drive_enabled":False
+            "is_google_drive_enabled":False,
+            "last_login_date": dt.datetime.now(dt.UTC).timestamp()
         }
         with self.application.app_context():
             db.create_all()
             random_user = User(id=1, username=f"user1", mail=f"user1@example.com", password="random", passphraseSalt="doesn't matter", isVerified=True, derivedKeySalt="doesn't matter", createdAt="date", isBlocked=False)
             db.session.add(random_user)
 
-            interesting_user = User(id=self.user_info["id"], username=self.user_info["username"], mail=self.user_info["email"], password="random", passphraseSalt="doesn't matter", isVerified=self.user_info["isVerified"], derivedKeySalt="random", createdAt=self.user_info["signup_date"], isBlocked=self.user_info["isBlocked"])
+            interesting_user = User(id=self.user_info["id"], username=self.user_info["username"], mail=self.user_info["email"], password="random", passphraseSalt="doesn't matter", isVerified=self.user_info["isVerified"], derivedKeySalt="random", createdAt=self.user_info["signup_date"], isBlocked=self.user_info["isBlocked"], last_login_date= self.user_info["last_login_date"])
             db.session.add(interesting_user)
             for _ in range(self.user_info["total_of_2fa"]):
                 db.session.add(TOTP_secret(uuid=str(uuid4()), user_id=self.user_info["id"], secret_enc="test_test"))
@@ -93,5 +94,14 @@ class TestGetUserById(unittest.TestCase):
             response = self.client.get(f"{self.endpoint}{self.user_info['id']}")
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response.json()["is_google_drive_enabled"], True)
+    
+    def test_get_user_by_id_no_login_date(self):
+        with self.application.app_context():
+            db.session.query(User).filter(User.id == self.user_info["id"]).update({"last_login_date": None})
+            db.session.commit()
+            self.client.cookies = {"session_id": self.session_id}
+            response = self.client.get(f"{self.endpoint}{self.user_info['id']}")
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.json()["last_login_date"], 0)
 
 

@@ -26,7 +26,8 @@ class TestGetAllUsers(unittest.TestCase):
             "isVerified":True,
             "isBlocked":False, 
             "total_of_2fa":3,
-            "is_google_drive_enabled":False
+            "is_google_drive_enabled":False,
+            "last_login_date": dt.datetime.now(dt.UTC).timestamp()
             },
             {
              "id":1,
@@ -36,7 +37,8 @@ class TestGetAllUsers(unittest.TestCase):
             "isVerified":True,
             "isBlocked":True,
             "total_of_2fa":0,
-            "is_google_drive_enabled":False
+            "is_google_drive_enabled":False,
+            "last_login_date": None
             },
             {
              "id":22,
@@ -46,7 +48,8 @@ class TestGetAllUsers(unittest.TestCase):
             "isVerified":True,
             "isBlocked":False,
             "total_of_2fa":20,
-            "is_google_drive_enabled":False
+            "is_google_drive_enabled":False,
+            "last_login_date": dt.datetime.now(dt.UTC).timestamp()
             },
             {
              "id":90,
@@ -56,7 +59,8 @@ class TestGetAllUsers(unittest.TestCase):
             "isVerified":False,
             "isBlocked":False,
             "total_of_2fa":10,
-            "is_google_drive_enabled":False
+            "is_google_drive_enabled":False,
+            "last_login_date": dt.datetime.now(dt.UTC).timestamp()
             },
             {
              "id":62,
@@ -66,7 +70,8 @@ class TestGetAllUsers(unittest.TestCase):
             "isVerified":False,
             "isBlocked":True,
             "total_of_2fa":0,
-            "is_google_drive_enabled":True
+            "is_google_drive_enabled":True,
+            "last_login_date": None
             },
             {
              "id":20,
@@ -76,14 +81,15 @@ class TestGetAllUsers(unittest.TestCase):
             "isVerified":True,
             "isBlocked":False,
             "total_of_2fa":1,
-            "is_google_drive_enabled":False
+            "is_google_drive_enabled":False,
+            "last_login_date": dt.datetime.now(dt.UTC).timestamp()
             },
 
         ]
         with self.application.app_context():
             db.create_all()
             for user in self.users_info:
-                user_obj = User(id=user["id"], username=user["username"], mail=user["email"], password="random", passphraseSalt="doesn't matter", isVerified=user["isVerified"], derivedKeySalt="doesn't matter", createdAt=user["signup_date"], isBlocked=user["isBlocked"])
+                user_obj = User(id=user["id"], username=user["username"], mail=user["email"], password="random", passphraseSalt="doesn't matter", isVerified=user["isVerified"], derivedKeySalt="doesn't matter", createdAt=user["signup_date"], isBlocked=user["isBlocked"], last_login_date=user["last_login_date"])
                 for _ in range(user["total_of_2fa"]):
                     db.session.add(TOTP_secret(uuid=str(uuid4()), user_id=user["id"], secret_enc="test_test"))
                 db.session.add(GoogleDriveIntegration( user_id=user["id"], isEnabled=user["is_google_drive_enabled"]))
