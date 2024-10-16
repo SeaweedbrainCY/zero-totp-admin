@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faUsers, faUserLock, faEye, faTrash, faXmark,faCircleNotch, faLockOpen, faHand, faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faUserLock, faEye, faTrash, faXmark,faCircleNotch, faLockOpen, faHand, faChevronRight, faChevronDown, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { Utils } from '../common/Utils/utils.service';
 import { ToastrService } from 'ngx-toastr';
@@ -12,6 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class UsersComponent implements OnInit{
   faUsers = faUsers;
   faUserLock = faUserLock;
+  faCheck = faCheck;
   faEye = faEye;
   faTrash = faTrash;
   faChevronDown=faChevronDown;
@@ -86,6 +87,7 @@ export class UsersComponent implements OnInit{
       if (response.status === 200) {
         const body = JSON.parse(JSON.stringify(response.body));
         this.users = body.users;
+        this.format_date()
       }
       this.loading = false;
   }, (error) => {
@@ -100,6 +102,15 @@ export class UsersComponent implements OnInit{
   });
   }
 
+  private format_date() {
+    this.users.forEach((user) => {
+      if (user.last_login_date != 0){
+        const date = new Date(user.last_login_date * 1000);
+      user.last_login_date = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+      }
+      
+    });
+  }
   disable_user(user_id: string) {
     this.confirm_disable_modal_active = true;
     this.disabling_user_id = user_id;
