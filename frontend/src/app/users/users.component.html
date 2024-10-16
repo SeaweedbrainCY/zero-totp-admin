@@ -15,12 +15,12 @@
           </thead>
           <tbody *ngIf="!loading">
             <tr *ngFor="let user of users" style="cursor:pointer ;" (click)="select_row(user.id)">
-              <td>
+              <td class="has-text-centered">
                 <fa-icon [icon]="faChevronRight" class="mr-2" *ngIf="user.id != selected_row_user_id"></fa-icon>
                 <fa-icon [icon]="faChevronDown" class="mr-2" *ngIf="user.id == selected_row_user_id"></fa-icon>
               </td>
-              <td>{{user.id}}</td>
-                <td>{{user.username}}
+              <td class="has-text-centered">{{user.id}}</td>
+                <td class="has-text-centered">{{user.username}}
                   <div *ngIf="user.id == selected_row_user_id"class="is-flex is-justify-content-space-around is-flex-direction-column mt-2 mb-2"> 
                     
                     <div class="tags has-addons">
@@ -31,10 +31,15 @@
                       <span class="tag">Google Drive</span>
                       <span class="tag has-text-white has-text-weight-bold" [ngClass]="{'is-success':user.is_google_drive_enabled, 'is-danger':!user.is_google_drive_enabled}">{{boolean_to_string(user.is_google_drive_enabled)}}</span>
                     </div>
+                    <div class="tags has-addons mt-2">
+                      <span class="tag ">Last login</span>
+                      <span class="tag is-primary has-text-white has-text-weight-bold" *ngIf="user.last_login_date != 0">{{user.last_login_date}}</span>
+                      <span class="tag is-primary has-text-white has-text-weight-bold" *ngIf="user.last_login_date == 0">N/A</span>
+                    </div>
                   </div>
                 </td>
-                <td>{{user.email}}</td>
-                <td>
+                <td class="has-text-centered">{{user.email}}</td>
+                <td class="has-text-centered">
                   <div class="is-flex is-justify-content-space-around">
                     <span class="tag is-success is-light mr-1" *ngIf="user.isVerified">Verified</span>
                     <span class="tag is-danger is-light mr-1" *ngIf="!user.isVerified">Not verified</span>
@@ -42,9 +47,9 @@
                     <span class="tag is-success is-light" *ngIf="!user.isBlocked">Enabled</span>
                     </div>
                 </td>
-                <td class="has-text-grey">{{user.signup_date}}</td>
-                <td>
-                  <div class="is-flex">
+                <td class="has-text-grey has-text-centered">{{user.signup_date}}</td>
+                <td class="has-text-centered">
+                  <div class="is-flex is-justify-content-center">
                     <button class="button is-warning has-text-white mr-2 ml-2" (click)="disable_user(user.id)" *ngIf="!user.isBlocked"><fa-icon [icon]="faUserLock"></fa-icon></button>
                     <button class="button is-success has-text-white mr-2 ml-2" (click)="unblock(user.id)" *ngIf="user.isBlocked" [ngClass]="{'is-loading':is_unblocking}"><fa-icon [icon]="faLockOpen"></fa-icon></button>
 
