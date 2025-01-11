@@ -43,6 +43,10 @@ export class OverviewComponent implements OnInit {
   public lineChartLegend = true;
   isCurrentlyRedirecting = false;
 
+  api_health_status = "NOT OK";
+  api_version = "0.0.0";
+  is_up_to_date = false;
+
 
   constructor(
     private http: HttpClient,
