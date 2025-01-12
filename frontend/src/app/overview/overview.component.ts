@@ -43,8 +43,9 @@ export class OverviewComponent implements OnInit {
   public lineChartLegend = true;
   isCurrentlyRedirecting = false;
 
-  api_health_status = "NOT OK";
-  api_version = "0.0.0";
+  api_health_status = "Unknown";
+  api_version = "Unknown";
+  last_published_version = "";
   is_up_to_date = false;
 
 
@@ -63,6 +64,7 @@ export class OverviewComponent implements OnInit {
         this.getStats();
         this.getTimeChart();
         this.getRateLimitedStats();
+        this.get_zero_totp_status();
       }
     });
   }
@@ -179,6 +181,39 @@ private redirectToLogin() {
   this.utils.toastError(this.toastr, "You are not authenticated", "")
   this.router.navigate(['/login']);
   
+}
+
+private get_zero_totp_status(){
+  this.http.get("/api/v1/zero-totp-api/status",  {withCredentials:true, observe: 'response'}).subscribe((response) => {
+    if (response.status === 200) {
+      const body = JSON.parse(JSON.stringify(response.body));
+      this.api_version = body.version;
+      this.api_health_status = body.healthcheck;
+      this.get_latest_version();
+    } else {
+      this.utils.toastError(this.toastr, "Failed to get the API status", "")
+    }
+  }, (error) => {
+    if(error.status === 401) {
+      this.redirectToLogin();
+      return;
+    }
+    console.error(error);
+    this.utils.toastError(this.toastr, "Impossible to get Zero-TOTP status", error.error.error)
+  });
+}
+
+private get_latest_version(){
+  this.http.get("https://api.github.com/repos/seaweedbraincy/zero-totp/releases/latest").subscribe((response) => {
+    const body = JSON.parse(JSON.stringify(response));
+    this.last_published_version = body.tag_name;
+    if(this.last_published_version === this.api_version) {
+      this.is_up_to_date = true;
+    } 
+  }, (error) => {
+    console.error(error);
+    this.utils.toastError(this.toastr, "Impossible to get the latest version", error.message)
+  });
 }
 
 }
