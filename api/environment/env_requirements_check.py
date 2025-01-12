@@ -1,3 +1,5 @@
+import re
+
 
 def test_conf(conf) -> bool:
     ## API
@@ -7,5 +9,9 @@ def test_conf(conf) -> bool:
 
     ## Environment
     assert conf.environment.type in ["local", "development", "production"], f"environment.type is not valid. Was expecting local, development or production, got {conf.environment.type}"
+
+    ## Zero-TOTP
+    assert re.match(r"^https?:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/[^\s]*)?$", conf.zero_totp.api_uri), "database.zero_totp_db_uri is not a valid URL"
+    assert isinstance(conf.zero_totp.bypass_cert_verification, bool), "zero_totp.bypass_cert_verification is not a boolean"
 
     # TODO: Add more checks here

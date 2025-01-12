@@ -83,10 +83,28 @@ class DatabaseConfig:
                 exit(1)
         self.zero_totp_db_uri = data["zero_totp_db_uri"] 
         self.zero_totp_admin_uri = data["zero_totp_admin_uri"] 
+
+class ZeroTOTPConfig:
+    required_keys = ["api_uri"]
+    def __init__(self, data):
+        for key in self.required_keys:
+            if key not in data:
+                logging.error(f"[FATAL] Load config fail. Was expecting the key zero_totp.{key}")
+                exit(1)
+        api_ui = data["api_uri"] 
+        if api_ui[-1] == "/":
+            self.api_uri = api_ui[:-1]
+        else:
+            self.api_uri = api_ui
+        
+        if "bypass_cert_verification" in data:
+            self.bypass_cert_verification = data["bypass_cert_verification"]
+        else:
+            self.bypass_cert_verification = False
         
 
 class Config:
-    required_keys = ["api", "database"]
+    required_keys = ["api", "database", "zero_totp"]
     def __init__(self, data):
         for key in self.required_keys:
             if key not in data:
@@ -94,6 +112,7 @@ class Config:
         self.environment = EnvironmentConfig(data["environment"] if "environment" in data else {})
         self.api = APIConfig(data["api"] if "api" in data  else [])
         self.database = DatabaseConfig(data["database"] if "database" in data else [])
+        self.zero_totp = ZeroTOTPConfig(data["zero_totp"] if "zero_totp" in data else {})
         self.features = Features(data["features"] if "features" in data else {})
         self.security = SecurityConfig()
 
