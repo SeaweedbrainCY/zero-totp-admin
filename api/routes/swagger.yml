@@ -543,6 +543,30 @@ paths:
           description: Invalid request
         "403":
           description: Access denied
+  /zero-totp-api/status:
+    get:
+      operationId: controllers.zero-totp-api.get_status
+      tags:
+        - Zero-TOTP API
+      summary: Return the Zero-TOTP API status
+      responses:
+        "200": 
+          description: Return the Zero-TOTP API status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    type: string
+                    example: "1.0"
+                    description: Zero-TOTP API version
+                  healtcheck:
+                    type: string
+                    example: "OK"
+                    description: Zero-TOTP API healtcheck status
+        "403":
+          description: Access denied
                         
 
 components:
