@@ -2,6 +2,18 @@ api:
   port: 8080
   jwt_secret: change_me_with_a_long_alphanumeric_string
 
+zero_totp: 
+  #  Complete Zero-TOTP API URL, including the version number
+  #  Example: https://example.com/api/v1
+  #  http(s):// prefix mandatory
+  api_uri: https://example.com/api/v1
+
+  # Don't check the certificate of the Zero-TOTP API
+  # Unsecure, use only for development
+  # Default: false
+  # Mandatory: false
+  # bypass_cert_verification : true
+
 database:
   zero_totp_db_uri: "change_me" # It should be a valid URI for a database like mysql://user:password@host:port/dbname
   zero_totp_admin_uri: "sqlite:///database/zero_totp_admin.db"
