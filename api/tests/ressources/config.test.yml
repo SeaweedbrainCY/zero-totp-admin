@@ -6,6 +6,8 @@ database:
   zero_totp_db_uri: "sqlite:///:memory:"
   zero_totp_admin_uri: "sqlite:///:memory:"
 
+zero_totp:
+  api_uri: https://zero-totp.com/api/v1
 
 environment:
   config_version: 1.0
